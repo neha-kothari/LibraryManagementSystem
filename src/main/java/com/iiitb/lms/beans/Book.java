@@ -1,5 +1,6 @@
 package com.iiitb.lms.beans;
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -16,6 +17,13 @@ public class Book {
 
     private String language;
     private int noOfPages;
+    @ManyToMany
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    Set<Author> authors;
+
 
     public Book() {
     }
@@ -24,12 +32,13 @@ public class Book {
         return bookId;
     }
 
-    public Book(String bookTitle, String isbnNumber, String publisher, String language, int noOfPages) {
+    public Book(String bookTitle, String isbnNumber, String publisher, String language, int noOfPages, Set<Author> authors) {
         this.bookTitle = bookTitle;
         this.isbnNumber = isbnNumber;
         this.publisher = publisher;
         this.language = language;
         this.noOfPages = noOfPages;
+        this.authors = authors;
     }
 
     public String getBookTitle() {
@@ -70,5 +79,13 @@ public class Book {
 
     public void setNoOfPages(int noOfPages) {
         this.noOfPages = noOfPages;
+    }
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 }

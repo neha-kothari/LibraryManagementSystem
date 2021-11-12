@@ -1,6 +1,7 @@
 package com.iiitb.lms.beans;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Author {
@@ -10,6 +11,9 @@ public class Author {
     private int authorId;
     private String authorName;
     private String description;
+
+    @ManyToMany(mappedBy = "authors")
+    Set<Book> books;
 
     public Author() {
     }
@@ -37,5 +41,13 @@ public class Author {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
     }
 }
