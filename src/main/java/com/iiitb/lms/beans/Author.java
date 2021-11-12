@@ -1,12 +1,12 @@
-package com.iiitb.lms.author;
+package com.iiitb.lms.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Author {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int authorId;
     private String authorName;
     private String description;
@@ -21,10 +21,6 @@ public class Author {
 
     public int getAuthorId() {
         return authorId;
-    }
-
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
     }
 
     public String getAuthorName() {
