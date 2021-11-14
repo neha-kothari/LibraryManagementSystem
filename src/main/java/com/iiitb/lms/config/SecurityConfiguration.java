@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	@Override
-	public AuthenticationManager authenticationManager() throws Exception {
+	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors();
 		http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-		.authorizeRequests().antMatchers("/registration/**", "/user/authenticate", "/userphotos/**").permitAll().anyRequest().authenticated();
+		.authorizeRequests().antMatchers("/registration/**", "/lms/v1/login", "/userphotos/**").permitAll().anyRequest().authenticated();
 		http.apply(new JwtTokenConfigurer(tokenProvider));
 	}
 
