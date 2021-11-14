@@ -1,6 +1,6 @@
 
 
-###Registration API:
+### Registration API:
 
 POST : http://localhost:8080/registration
 
@@ -18,7 +18,7 @@ Response JSON if successful : `{'data':'Registered Successfully'
 
 
 
-###Login API :
+### Login API :
 
 POST : http://localhost:8080/lms/v1/login
 
@@ -33,7 +33,7 @@ Response JSON if Successful returns **Authorization** token: `{
 "token": "eyJhb...neAZY"
 }`
 
-###Get User Details API :
+### Get User Details API :
 GET : http://localhost:8080/lms/v1/user/getdetails
 
 Request : Add **Authorization** Token in Request Header
