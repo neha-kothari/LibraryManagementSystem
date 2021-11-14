@@ -71,5 +71,13 @@ public class UserController {
         return new UserRegistrationDto();
     }
 
+    @GetMapping("/user/getdetails")
+    @ResponseBody
+    public User getUserDetails(Authentication auth) {
+
+        User user = userRepository.findByEmailAddress(auth.getName());
+        user.setPassword("");
+        return user;
+    }
 
 }
