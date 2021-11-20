@@ -11,7 +11,7 @@ class SignUp extends Component {
             email: "",
             password: "",
             name: "",
-            userType: "",
+            userType: "Student",
             phoneNumber: ""
         }
 
@@ -143,14 +143,13 @@ class SignUp extends Component {
                                 )}
                             </div>
                             <br/>
-                            <div className="input-group mb-3">
+                            <div className="input-group mb-3 ">
                                 <div className="input-group-prepend">
-                                    <label className="input-group-text" htmlFor="inputGroupSelect01">Options</label>
+                                    <label className="input-group-text" htmlFor="inputGroupSelect01">User Type</label>
                                 </div>
-                                <select className="custom-select" id="inputGroupSelect01">
-                                    <option selected>Unfinished...</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
+                                <select className="custom-select" id="userType"  name="userType" onChange={this.handleChange}>
+                                    <option value="Student">Student</option>
+                                    <option value="Librarian">Librarian</option>
                                 </select>
                             </div>
 
