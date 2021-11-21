@@ -1,7 +1,12 @@
 body{
  height: 100%;
   font: -apple-system-body;
+  background: #150f1a;
+  background: #1b1a1c;
 }
+
+/**********************************/
+/*Sign In*/
 .SignIn .text-justify{
   top:50%;
   transform: translate(0%, 50%);
@@ -26,7 +31,6 @@ background-color: #f5f5f5;
   -ms-user-select: none;
   user-select: none;
 }
-
 .form-signin .form-control {
   position: relative;
   box-sizing: border-box;
@@ -37,12 +41,12 @@ background-color: #f5f5f5;
 .form-signin .form-control:focus {
   z-index: 2;
 }
-
 .form-signin button{
   width: 100%;
 }
 
-
+/**********************************/
+/*Sign Up*/
 .SignUp{
   height: 100vh;
   background-color: #f5f5f5;
@@ -67,7 +71,6 @@ background-color: #f5f5f5;
   -ms-user-select: none;
   user-select: none;
 }
-
 .form-signup .form-control {
   position: relative;
   box-sizing: border-box;
@@ -83,13 +86,9 @@ background-color: #f5f5f5;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-
-
-
 .form-signup button{
   width: 100%;
 }
-
 .form-signup .custom-select{
   position: relative;
   box-sizing: border-box;
@@ -102,11 +101,11 @@ background-color: #f5f5f5;
   /* min-width: 0; */
 }
 
+/**********************************/
 
 form {
   width: 100%;
 }
-
 .loginBox {
   width: 50%;
   text-align: center;
@@ -117,11 +116,9 @@ form {
   background-color: white;
   box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.4);
 }
-
 .signUpSubmit {
   margin: 25px 0 15px 0;
 }
-
 .pwStrRow {
   width: 100%;
   text-align: left;
@@ -129,7 +126,6 @@ form {
   padding: 0;
   font-size: 12px;
 }
-
 .pwStrWeak {
   display: inline-block;
   position: relative;
@@ -138,7 +134,6 @@ form {
   margin: 0;
   color: gray;
 }
-
 .pwStrStrong {
   display: inline-block;
   position: relative;
@@ -148,3 +143,163 @@ form {
   color: gray;
 }
 
+/**********************************/
+/*DashBoard*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  list-style: none
+}
+.parent {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+.parent .left {
+  /*background-image: linear-gradient(to right,#24ff72, #9a4eff);*/
+  /*background-image: linear-gradient(to right, #eb3449, #ee3f47, #f04946, #f25244, #f45b43);*/
+  /*background-image: linear-gradient(to bottom, #c04c86, #9b40a7, #7947a4, #4d228d, #421680);*/
+/*background: #603e60;*/
+  background-image: linear-gradient(to bottom, #603e60, #c07dc0);
+  float: left;
+  height: 100vh;
+  width: 300px;
+  padding: 120px 20px;
+  color: #FDE8E8;
+}
+.parent .left h3 {
+  text-transform: uppercase;
+  font-weight:bold;
+  font-size: 18px;
+}
+.parent .left .logoutBtn{
+  background-color: #3456bd; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 2px;
+  box-shadow:  5px 5px 0 rgb(0 0 0 / 15%);
+
+}
+.parent .left .logoutBtn:hover{
+  transform: scale(1.1);
+}
+.parent .left ul li:nth-of-type(2) {
+  height: 60px;
+  width: 211px;
+  margin: 30px auto;
+}
+/************/
+
+.parent .right {
+  float: left;
+  width: calc(100% - 300px);
+  height: 100%;
+  padding: 60px 70px 20px 70px;
+}
+.parent .right .libCardContainer{
+  width: 100%;
+  margin: 0 auto;
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 1fr;
+  grid-row-gap: 100px
+}
+
+.parent .right .libCardContainer .addBookC{
+  grid-column: 1/2;
+
+}
+.parent .right .libCardContainer .manBookC{
+  grid-column: 2/2;
+
+}
+.parent .right .libCardContainer .manStudC{
+  grid-column: 1/2;
+
+}
+.parent .right .libCardContainer .approveC{
+  grid-column: 2/2;
+
+}
+
+
+/******************************************************/
+/*Dashboard Card*/
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  width: 298px;
+  height: 200px;
+  margin: 30px;
+  border-radius: 11px 11px 85px 85px;
+  box-shadow: 0 8px 0 #fff, inset 0 -9px 0 rgb(255 255 255 / 24%), 0 32px 0 rgb(0 0 0 / 15%);
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: -140px;
+  left: -40%;
+  padding: 0;
+  width: 100%;
+  height: 120%;
+  background: linear-gradient(
+          90deg
+          , transparent, rgba(255, 255, 255, 0.2));
+  transform: rotate(
+          35deg
+  );
+  pointer-events: none;
+  filter: blur(5px);
+}
+.card:nth-child(1) {
+  background: linear-gradient(to bottom, #842278, #5f58cb);
+}
+.card:nth-child(11) {
+  background: linear-gradient(to bottom, #ffec61, #f321d7);
+}
+.card:nth-child(2) {
+  background: linear-gradient(to bottom, #24ff72, #9a4eff);
+}
+.card:nth-child(2) {
+  background: linear-gradient(to bottom,  #eb3449, #ee3f47, #f04946, #f25244, #f45b43);
+}
+.card .content {
+  position: absolute;
+  width: 100%;
+  padding: 30px 30px 30px;
+  text-align: center;
+}
+.card .content h2 {
+  font-size: 1.8em;
+  color: #fff;
+  margin-bottom: 15px;
+}
+.card .content p {
+  color: #fff;
+  line-height: 1.5em;
+}
+.card:hover{
+  transform: scale(1.1);
+  transition: 0.2s;
+
+}
+
+/**********************************/
