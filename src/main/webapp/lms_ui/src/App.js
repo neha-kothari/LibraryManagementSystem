@@ -16,7 +16,7 @@ class App extends Component {
             <Route exact path="/LibraryDashboard" component={LibDashboard}/>
             <Route exact path="/SignUp" component={SignUp}/>
             {/*<Route path="*" element={<NotFound/>}/>*/}
-          </Switch>
+          </Routes>
         </Router>
     )
   }
