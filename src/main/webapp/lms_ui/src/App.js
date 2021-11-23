@@ -6,6 +6,7 @@ import SignUp from "./Component/SignUp";
 import LibDashboard from "./Component/LibDashboard";
 import AddBook from "./Component/AddBookItem";
 import RegisterBook from "./Component/RegisterBook";
+import AddBookItem from "./Component/AddBookItem";
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
             <Route exact path="/SignUp" component={SignUp}/>
             <Route exact path="/AddBook" component={AddBook}/>
             <Route exact path="/RegisterBook" component={RegisterBook}/>
+              <Route exact path="/AddBookItem" component={AddBookItem}/>
             {/*<Route path="*" element={<NotFound/>}/>*/}
           </Switch>
         </Router>

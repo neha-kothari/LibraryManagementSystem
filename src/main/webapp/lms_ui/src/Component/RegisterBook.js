@@ -12,7 +12,12 @@ class RegisterBook extends Component{
             isbn: "",
             language: "",
             pages: 0,
-            authors: [""]
+            authors: [""],
+            copies: 0,
+            isReferenceOnly : 0,
+            price: 0,
+            purchaseDate:"",
+            publicationYear : 0
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeArray = this.handleChangeArray.bind(this)
@@ -90,6 +95,28 @@ class RegisterBook extends Component{
                             <label htmlFor="title">Number of Pages</label>
                             <input type="number" id="pages" name="pages" className="form-control" required="true" value={this.state.pages} onChange={this.handleChange}/>
                         </div>
+
+                        <div className="register-book">
+                            <label htmlFor="Number of Copies">Number of Copies</label>
+                            <input type="number" id="copies" name = "copies" className="form-control" required="true" value={this.state.copies} onChange={this.handleChange} />
+                        </div>
+                        <div className="register-book">
+                            <label htmlFor="Reference only">Is Reference Only</label>
+                            <input type="number" id="isReferenceOnly" name = "isReferenceOnly" className="form-control" min="0" max="1" required="true" value={this.state.isReferenceOnly} onChange={this.handleChange} />
+                        </div>
+
+                        <div className="register-book">
+                            <label htmlFor="price">Price</label>
+                            <input type="number" id="price" name="price" className="form-control" required="true" value={this.state.price} onChange={this.handleChange}/>
+                        </div>
+                        <div className="register-book">
+                            <label htmlFor="purchaseDate">Date of Purchase</label>
+                            <input type="date" id="purchaseDate" name="purchaseDate" className="form-control" required="true" value={this.state.purchaseDate} onChange={this.handleChange}/>
+                        </div>
+                        <div className="register-book">
+                            <label htmlFor="publicationYear">Year of Publication</label>
+                            <input type="number" id="publicationYear" name="publicationYear" className="form-control" required="true" min="1000" max="9999" value={this.state.publicationYear} onChange={this.handleChange}/>
+                        </div>
                         <div className="register-book">
                             <label htmlFor="title">Authors</label>
                             {this.createUI()}
@@ -97,7 +124,9 @@ class RegisterBook extends Component{
                             {/*<input type="submit" value="Submit" />*/}
                         </div>
                         <br/>
-                        <input type="submit" value="Add Book Items" className="btn btn-primary btn-block"/>
+                        <div className="register-book">
+                            <button type="submit"  className="btn btn-primary btn-block"> Add Book Items</button>
+                        </div>
                     </form>
 
                 </div>
