@@ -1,38 +1,65 @@
 import React, {Component} from "react";
-
-import {Link} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
+import swal from "sweetalert";
+import UserService from "../Services/UserService";
 
 class SignIn extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             email: "",
             password: "",
         }
-
         this.handleChange = this.handleChange.bind(this)
-        this.handleClick = this.handleClick.bind(this)
+        this.onSubmit = this.onSubmit.bind(this)
+        this.getDetails = this.getDetails.bind(this)
     }
 
     handleChange(event) {
-        console.log("Handle change called")
         const {name, value} = event.target;
         this.setState({
             [name]: value
         })
-        console.log(this.state)
     }
 
-    handleClick(e) {
+    async onSubmit(e) {
         e.preventDefault();
+        console.log("Tyring to sign in")
 
         let user = {
             emailAddress: this.state.email,
             password: this.state.password
         }
-        console.log("HandleClick")
-        console.log(user);
+        console.log('User =>' + JSON.stringify(user));
+
+        UserService.loginUser(user).then(res => {
+            console.log("SignIn Component", res);
+            if(res!==undefined)
+            {
+                let token = res.data.token;
+                localStorage.setItem('token',JSON.stringify(res.data.token));
+                this.getDetails(token)
+            }
+        });
+    }
+
+    getDetails(t){
+        console.log("getting details.....");
+
+        UserService.getUserDetails(t).then(res=>{
+            if(res!==undefined)
+            {
+                // console.log("res =>", res)
+                localStorage.setItem('userData',JSON.stringify(res.data))
+
+                if(res.data.userType===1)
+                {
+                    this.props.history.push("/LibraryDashboard")
+                }
+            }
+
+        });
+
     }
 
     render() {
@@ -91,13 +118,10 @@ class SignIn extends Component {
                                        onChange={this.handleChange}
                                 />
                             </div>
-
-
                             <div>
                                 <p>New User? <Link to="/SignUp"> Sign Up </Link></p>
                             </div>
-
-                            <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.onSubmit}>Sign in
                             </button>
                         </form>
                     </div>
@@ -107,7 +131,7 @@ class SignIn extends Component {
     }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
 
 
 

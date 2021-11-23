@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-
 import {Link} from 'react-router-dom'
 import PasswordStr from "./PasswordStr";
+import UserService from "../Services/UserService";
+import swal from 'sweetalert';
 
 class SignUp extends Component {
     constructor(props) {
@@ -14,29 +15,62 @@ class SignUp extends Component {
             userType: "Student",
             phoneNumber: ""
         }
-
         this.handleChange = this.handleChange.bind(this)
-        this.handleClick = this.handleClick.bind(this)
+        this.saveUser = this.saveUser.bind(this)
+        this.onClick=this.onClick.bind(this)
+        this.reset=this.reset.bind(this)
+    }
+
+    reset(){
+        this.setState({
+            email:"",
+            password: "",
+            name: "",
+            userType: "Student",
+            phoneNumber: ""
+        })
     }
 
     handleChange(event) {
-        console.log("Handle change called")
         const {name, value} = event.target;
         this.setState({
             [name]: value
         })
-        console.log(this.state)
+
     }
 
-    handleClick(e) {
-        e.preventDefault();
+    onClick(event){
+        let popup = document.querySelector(".popup");
+        let button = document.querySelector("span");
 
-        let user = {
-            emailAddress: this.state.email,
-            password: this.state.password
+        button.onclick = function(){;
+
+            setInterval(function(){
+                popup.remove()
+            },5000)
         }
-        console.log("HandleClick")
-        console.log(user);
+    }
+
+    saveUser = (e) => {
+        e.preventDefault();
+        console.log("save user");
+        let type = this.state.userType==="Student"?2:1;
+        let user = {
+            userType: type,
+            emailAddress: this.state.email,
+            password: this.state.password,
+            name: this.state.name,
+            phoneNumber: this.state.phoneNumber
+        }
+
+        console.log('User =>' + JSON.stringify(user));
+        UserService.createUser(user).then(res => {
+            console.log(res)
+            if(res!==undefined && res.status===200)
+                swal("Registration Successful","Login to access your account", "success")
+            this.reset();
+
+        });
     }
 
     render() {
@@ -157,7 +191,7 @@ class SignUp extends Component {
                                 <p>Already have an account? <Link to="/SignIn"> Sign In </Link></p>
                             </div>
 
-                            <button className="btn btn-lg btn-primary btn-block" type="submit">Sign Up
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" onClick={this.saveUser}>Sign Up
                             </button>
                         </form>
                     </div>
