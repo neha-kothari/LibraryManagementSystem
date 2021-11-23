@@ -1,8 +1,6 @@
 body{
  height: 100%;
   font: -apple-system-body;
-  background: #150f1a;
-  background: #1b1a1c;
 }
 
 /**********************************/
@@ -303,4 +301,20 @@ ul li {
 }
 
 /**********************************/
+/*********Add Book Item **************/
+.add-book .button{
 
+}
+
+/*********************************/
+.addBookContainer{
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+
+.authorName{
+  grid-column: 1/2;
+}
+.removeAuth{
+  grid-column: 2/2;
+}
