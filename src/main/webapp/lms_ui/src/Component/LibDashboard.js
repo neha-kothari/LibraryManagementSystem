@@ -50,9 +50,11 @@ class LibDashboard extends Component{
                     <div className="right" >
                         <div className="libCardContainer">
                             <div className="addBookC">
-                                <Card
-                                    title ="Add Books"
-                                />
+                                <Link to="/RegisterBook">
+                                    <Card
+                                        title ="Add Books"
+                                    />
+                                </Link>
                             </div>
                             <div className="manBookC">
                                 <Card

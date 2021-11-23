@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 
 class RegisterBook extends Component{
     constructor(props) {
@@ -107,4 +107,4 @@ class RegisterBook extends Component{
     }
 }
 
-export default RegisterBook
+export default withRouter(RegisterBook)
