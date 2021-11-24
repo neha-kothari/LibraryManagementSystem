@@ -32,68 +32,11 @@ public class BookItem {
     private Date publicationDate;
 
     public BookItem(Book book, boolean isReferenceOnly, double price, char status, Date dateOfPurchase, Date publicationDate) {
-//        this.itemId = itemId;
         this.book = book;
         this.isReferenceOnly = isReferenceOnly;
         this.price = price;
         this.status = status;
         this.dateOfPurchase = dateOfPurchase;
-        this.publicationDate = publicationDate;
-    }
-
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public boolean isReferenceOnly() {
-        return isReferenceOnly;
-    }
-
-    public void setReferenceOnly(boolean referenceOnly) {
-        isReferenceOnly = referenceOnly;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public char getStatus() {
-        return status;
-    }
-
-    public void setStatus(char status) {
-        this.status = status;
-    }
-
-    public Date getDateOfPurchase() {
-        return dateOfPurchase;
-    }
-
-    public void setDateOfPurchase(Date dateOfPurchase) {
-        this.dateOfPurchase = dateOfPurchase;
-    }
-
-    public Date getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
 }

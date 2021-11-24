@@ -69,7 +69,7 @@ Request JSON :
 
 Response if successful : `{ "bookId": 3 }`
 
-Response if user unauthorized *400* : `{"data":"User not authorized"}`
+Response if user unauthorized *403* : `{"data":"User not authorized"}`
 
 ### Remove Book
 
@@ -93,7 +93,7 @@ Request JSON :
 
 Response if successful : `{ "ItemId": 2 }`
 
-Response if user unauthorized *400* : `{"data":"User not authorized"}`
+Response if user unauthorized *403* : `{"data":"User not authorized"}`
 
 ### Remove Book Item
 
