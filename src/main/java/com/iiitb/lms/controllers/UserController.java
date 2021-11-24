@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/lms/v1")
 public class UserController {
