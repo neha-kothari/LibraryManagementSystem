@@ -81,43 +81,41 @@ class RegisterBook extends Component{
                         </div>
                         <div className="register-book">
                             <label htmlFor="author">Publisher</label>
-                            <input type="text" id="publisher" name="publisher" className="form-control" required="true" value={this.state.publisher} onChange={this.handleChange}/>
+                            <input type="text" id="publisher" name="publisher" className="form-control " required="true" value={this.state.publisher} onChange={this.handleChange}/>
                         </div>
-                        <div className="register-book">
+                        <br/>
+                        <div className="register-book-set4">
                             <label htmlFor="title">ISBN#</label>
-                            <input type="text" id="isbn" name="isbn" className="form-control" required="true" value={this.state.isbn} onChange={this.handleChange}/>
-                        </div>
-                        <div className="register-book">
-                            <label htmlFor="title">Language</label>
-                            <input type="text" id="language" name="language" className="form-control" required="true" value={this.state.language} onChange={this.handleChange}/>
-                        </div>
-                        <div className="register-book">
-                            <label htmlFor="title">Number of Pages</label>
-                            <input type="number" id="pages" name="pages" className="form-control" required="true" value={this.state.pages} onChange={this.handleChange}/>
-                        </div>
-
-                        <div className="register-book">
-                            <label htmlFor="Number of Copies">Number of Copies</label>
-                            <input type="number" id="copies" name = "copies" className="form-control" required="true" value={this.state.copies} onChange={this.handleChange} />
-                        </div>
-                        <div className="register-book">
-                            <label htmlFor="Reference only">Is Reference Only</label>
-                            <input type="number" id="isReferenceOnly" name = "isReferenceOnly" className="form-control" min="0" max="1" required="true" value={this.state.isReferenceOnly} onChange={this.handleChange} />
-                        </div>
-
-                        <div className="register-book">
                             <label htmlFor="price">Price</label>
-                            <input type="number" id="price" name="price" className="form-control" required="true" value={this.state.price} onChange={this.handleChange}/>
+                            <input type="text" id="isbn" name="isbn" className="form-control addIsbn" required="true" value={this.state.isbn} onChange={this.handleChange}/>
+                            <input type="number" id="price" name="price" className="form-control addPrice" required="true" value={this.state.price} onChange={this.handleChange}/>
                         </div>
-                        <div className="register-book">
+                        <br/>
+                        <div className="register-book-set">
+                            <label htmlFor="title">Language</label>
+                            <label htmlFor="title">Number of Pages</label>
+                            <input type="text" id="language" name="language" className="form-control addIsbn" required="true" value={this.state.language} onChange={this.handleChange}/>
+                            <input type="number" id="pages" name="pages" className="form-control addPages" required="true" value={this.state.pages} onChange={this.handleChange}/>
+                        </div>
+                        <br/>
+                        <div className="register-book-set2">
+                            <label htmlFor="Number of Copies">Number of Copies</label>
+                            <label htmlFor="Reference only">Is Reference Only</label>
+                            <input type="number" id="copies" name = "copies" className="form-control addCopies" required="true" value={this.state.copies} onChange={this.handleChange} />
+                            <input type="number" id="isReferenceOnly" name = "isReferenceOnly" className="form-control addReference" min="0" max="1" required="true" value={this.state.isReferenceOnly} onChange={this.handleChange} />
+                        </div>
+
+                        <br/>
+
+                        <div className="register-book-set3">
                             <label htmlFor="purchaseDate">Date of Purchase</label>
-                            <input type="date" id="purchaseDate" name="purchaseDate" className="form-control" required="true" value={this.state.purchaseDate} onChange={this.handleChange}/>
-                        </div>
-                        <div className="register-book">
                             <label htmlFor="publicationYear">Year of Publication</label>
-                            <input type="number" id="publicationYear" name="publicationYear" className="form-control" required="true" min="1000" max="9999" value={this.state.publicationYear} onChange={this.handleChange}/>
+                            <input type="date" id="purchaseDate" name="purchaseDate" className="form-control addPurchase" required="true" value={this.state.purchaseDate} onChange={this.handleChange}/>
+                            <input type="number" id="publicationYear" name="publicationYear" className="form-control addPublication" required="true" min="1000" max="9999" value={this.state.publicationYear} onChange={this.handleChange}/>
                         </div>
+
                         <div className="register-book">
+                            <br/>
                             <label htmlFor="title">Authors</label>
                             {this.createUI()}
                             <input type='button' value='Add more authors' onClick={this.addClick.bind(this)}/>

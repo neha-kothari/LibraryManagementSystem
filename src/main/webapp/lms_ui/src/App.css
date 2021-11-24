@@ -301,20 +301,74 @@ ul li {
 }
 
 /**********************************/
-/*********Add Book Item **************/
-.add-book .button{
-
-}
+/*********Register Book Item **************/
 
 /*********************************/
 .addBookContainer{
   display: grid;
   grid-template-columns: 5fr 1fr;
+  column-gap: 10px;
 }
 
 .authorName{
   grid-column: 1/2;
 }
 .removeAuth{
+  grid-column: 2/2;
+}
+
+.register-book-set{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+.addIsbn{
+  grid-column: 1/2;
+}
+
+.addPages{
+  grid-column: 2/2;
+}
+
+.register-book-set2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+.addCopies{
+  grid-column: 1/2;
+}
+
+.addReference{
+  grid-column: 2/2;
+}
+
+.register-book-set3{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+.addPurchase{
+  grid-column: 1/2;
+}
+
+.addPublication{
+  grid-column: 2/2;
+}
+
+.register-book-set4{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+}
+
+.addIsbn{
+  grid-column: 1/2;
+}
+
+.addPrice{
   grid-column: 2/2;
 }

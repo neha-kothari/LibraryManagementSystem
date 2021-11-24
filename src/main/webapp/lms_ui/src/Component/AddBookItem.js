@@ -12,7 +12,7 @@ class AddBookItem extends Component{
             isReferenceOnly : 0,
             price: 0,
             purchaseDate:"",
-            publicationYear : ""
+            publicationYear : 0
 
         }
         this.handleChange = this.handleChange.bind(this)
@@ -66,8 +66,8 @@ class AddBookItem extends Component{
                         </div>
                         <div className="add-book">
                             <label htmlFor="publicationYear">Year of Publication</label>
-                            <YearPicker id= "publicationYear" name="publicationYear" className="form-control-year" required="true" value={this.state.publicationYear} onChange={this.handleChange}  />
-                        </div>
+                            <input type="number" id="publicationYear" name="publicationYear" className="form-control" required="true" min="1000" max="9999" value={this.state.publicationYear} onChange={this.handleChange}/>
+                         </div>
                         <div className="add-book">
                         <button type="submit"  className="btn btn-primary btn-block"> Add Book Items</button>
                         </div>
