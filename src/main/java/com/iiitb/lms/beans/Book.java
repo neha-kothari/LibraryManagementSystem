@@ -1,5 +1,5 @@
 package com.iiitb.lms.beans;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,8 +29,8 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     Set<Author> authors;
+
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-//    @JsonIgnoreProperties("book")
     private List<BookItem> bookItemList;
 
 

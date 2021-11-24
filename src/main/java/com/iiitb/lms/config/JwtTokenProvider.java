@@ -31,7 +31,7 @@ public class JwtTokenProvider implements Serializable {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    private long validityInMilliseconds = 1000 * 60 * 10; // 10 minute
+    private long validityInMilliseconds = 1000 * 60 * 30; // 30 minute
 
     public String createToken(String username) {
         Claims claims = Jwts.claims().setSubject(username);

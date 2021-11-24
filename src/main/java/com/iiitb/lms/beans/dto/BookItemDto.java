@@ -1,39 +1,18 @@
-package com.iiitb.lms.beans;
+package com.iiitb.lms.beans.dto;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import java.util.Date;
 
-@Data
-@NoArgsConstructor
-@Entity
-public class BookItem {
+public class BookItemDto {
+    private Integer bookId;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="book_item_id")
-    private int itemId;
-
-    @ManyToOne
-    @JoinColumn(name="bookId", referencedColumnName = "bookId")
-    private Book book;
-
-    @Column
     private boolean isReferenceOnly;
-    @Column
     private double price;
-    @Column
     private char status;
-    @Column
     private Date dateOfPurchase;
-    @Column
     private Date publicationDate;
 
-    public BookItem(Book book, boolean isReferenceOnly, double price, char status, Date dateOfPurchase, Date publicationDate) {
-//        this.itemId = itemId;
-        this.book = book;
+    public BookItemDto(Integer bookId, boolean isReferenceOnly, double price, char status, Date dateOfPurchase, Date publicationDate) {
+        this.bookId = bookId;
         this.isReferenceOnly = isReferenceOnly;
         this.price = price;
         this.status = status;
@@ -41,20 +20,12 @@ public class BookItem {
         this.publicationDate = publicationDate;
     }
 
-    public int getItemId() {
-        return itemId;
+    public Integer getBookId() {
+        return bookId;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
+    public void setBookId(Integer bookId) {
+        this.bookId = bookId;
     }
 
     public boolean isReferenceOnly() {

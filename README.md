@@ -50,3 +50,53 @@ Response JSON : `{
 "accountCreationDate": "2021-11-13T16:05:26.000+00:00",
 "lastLoginDateTime": "2021-11-13T16:05:26.000+00:00"
 }`
+
+## Books API
+
+### Add Book:
+
+POST : http://localhost:8080/lms/v1/books/addbook
+
+Request JSON :
+`{
+"bookTitle":"sdp1",
+"isbnNumber":"xyz789",
+"publisher":"peng",
+"language":"english",
+"noOfPages":420,
+"authorIds":[1]
+}`
+
+Response if successful : `{ "bookId": 3 }`
+
+Response if user unauthorized *400* : `{"data":"User not authorized"}`
+
+### Remove Book
+
+GET : http://localhost:8080/lms/v1/books/removebook/{book_id}
+
+Response JSON if successful : `{ "data": "Book deleted Successfully" }`
+
+### Add Book Item:
+
+POST : http://localhost:8080/lms/v1/books/addbookitem
+
+Request JSON :
+`{
+"bookId":1,
+"isReferenceOnly":false,
+"price":350,
+"status":"A",
+"dateOfPurchase":"2020-01-01",
+"publicationDate":"2015-05-05"
+}`
+
+Response if successful : `{ "ItemId": 2 }`
+
+Response if user unauthorized *400* : `{"data":"User not authorized"}`
+
+### Remove Book Item
+
+GET : http://localhost:8080/lms/v1/books/removebookitem/{book_item_id}
+
+Response JSON if successful : `{ "data": "Book Item deleted Successfully" }`
