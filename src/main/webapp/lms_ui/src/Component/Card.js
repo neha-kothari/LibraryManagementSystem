@@ -11,7 +11,7 @@ class Card extends Component{
         return (
             <div>
                 <div className="cardContainer">
-                    <div className="card">
+                    <div className="cardDash">
                         <div className="content">
                             <h2>{this.state.title}</h2>
                             <p></p>

@@ -238,7 +238,7 @@ ul li {
   align-items: center;
   flex-wrap: wrap;
 }
-.card {
+.cardDash {
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -250,7 +250,7 @@ ul li {
   box-shadow: 0 8px 0 #fff, inset 0 -9px 0 rgb(255 255 255 / 24%), 0 32px 0 rgb(0 0 0 / 15%);
   overflow: hidden;
 }
-.card::before {
+.cardDash::before {
   content: "";
   position: absolute;
   top: -140px;
@@ -267,34 +267,34 @@ ul li {
   pointer-events: none;
   filter: blur(5px);
 }
-.card:nth-child(1) {
+.cardDash:nth-child(1) {
   background: linear-gradient(to bottom, #842278, #5f58cb);
 }
-.card:nth-child(11) {
+.cardDash:nth-child(11) {
   background: linear-gradient(to bottom, #ffec61, #f321d7);
 }
-.card:nth-child(2) {
+.cardDash:nth-child(2) {
   background: linear-gradient(to bottom, #24ff72, #9a4eff);
 }
-.card:nth-child(2) {
+.cardDash:nth-child(2) {
   background: linear-gradient(to bottom,  #eb3449, #ee3f47, #f04946, #f25244, #f45b43);
 }
-.card .content {
+.cardDash .content {
   position: absolute;
   width: 100%;
   padding: 30px 30px 30px;
   text-align: center;
 }
-.card .content h2 {
+.cardDash .content h2 {
   font-size: 1.8em;
   color: #fff;
   margin-bottom: 15px;
 }
-.card .content p {
+.cardDash .content p {
   color: #fff;
   line-height: 1.5em;
 }
-.card:hover{
+.cardDash:hover{
   transform: scale(1.1);
   transition: 0.2s;
 
@@ -371,4 +371,18 @@ ul li {
 
 .addPrice{
   grid-column: 2/2;
+}
+/*******************************************/
+.bookItemContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr ;
+  alignment: center;
+  /*background-image: linear-gradient(to bottom,whitesmoke,whitesmoke);;*/
+}
+
+.bookItemInner:hover{
+  background-image: linear-gradient(to bottom,white, #d4e9e9);
+}
+.bookItemInner{
+  background-image: linear-gradient(to bottom,white,whitesmoke);
 }
