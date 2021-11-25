@@ -59,12 +59,18 @@ POST : http://localhost:8080/lms/v1/books/addbook
 
 Request JSON :
 `{
-"bookTitle":"sdp1",
-"isbnNumber":"xyz789",
-"publisher":"peng",
-"language":"english",
-"noOfPages":420,
-"authorIds":[1]
+    "bookTitle":"nsw",
+    "isbnNumber":"i213jjl",
+    "publisher":"peng",
+    "language":"english",
+    "noOfPages":200,
+    "authorIds":[2,3],
+    "noOfCopies":4,
+    "isReferenceOnly":false,
+    "price":350,
+    "status":"A",
+    "dateOfPurchase":"2018-01-01",
+    "publicationDate":"2017-05-05"
 }`
 
 Response if successful : `{ "bookId": 3 }`

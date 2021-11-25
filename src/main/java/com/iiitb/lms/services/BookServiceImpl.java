@@ -43,7 +43,14 @@ public class BookServiceImpl implements BookService{
         }
 
         Book book = new Book(bookDto.getBookTitle(), bookDto.getIsbnNumber(), bookDto.getPublisher(), bookDto.getLanguage(), bookDto.getNoOfPages(), authors);
-        return bookRepository.save(book);
+        book = bookRepository.save(book);
+
+        for(int i=0; i<bookDto.getNoOfCopies();i++){
+            BookItem bookItem = new BookItem(book,bookDto.isReferenceOnly(), bookDto.getPrice(), bookDto.getStatus(), bookDto.getDateOfPurchase(), bookDto.getPublicationDate());
+            bookItemRepository.save(bookItem);
+        }
+
+        return book;
     }
 
     @Override
