@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequestMapping("/lms/v1")
@@ -120,6 +122,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDetailsDTO);
         }
 
+    }
+
+    @GetMapping("/users/students")
+    @ResponseBody
+    public ResponseEntity<List<UserDetailsDTO>> getStudents() {
+
+        List<UserDetailsDTO> studentsList = librarianService.getStudents();
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(studentsList);
     }
 
 }

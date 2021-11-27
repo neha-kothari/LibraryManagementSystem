@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LibrarianServiceImpl implements LibrarianService{
@@ -62,5 +64,20 @@ public class LibrarianServiceImpl implements LibrarianService{
     @Override
     public void returnBook() {
 
+    }
+
+    @Override
+    public List<UserDetailsDTO> getStudents() {
+
+        List<User> students = userRepository.getStudents();
+        if (students == null || students.size() == 0) {
+            return new ArrayList<>();
+        }
+
+        List<UserDetailsDTO> studentsList = new ArrayList<>();
+        for (User student : students) {
+            studentsList.add(userTransformer.toUserDetailsDTO(student));
+        }
+        return studentsList;
     }
 }
