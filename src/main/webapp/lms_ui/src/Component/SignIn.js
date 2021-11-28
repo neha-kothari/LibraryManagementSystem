@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {withRouter, Link} from 'react-router-dom'
-import swal from "sweetalert";
 import UserService from "../Services/UserService";
 
 class SignIn extends Component {
@@ -30,7 +29,6 @@ class SignIn extends Component {
             emailAddress: this.state.email,
             password: this.state.password
         }
-        console.log('User =>' + JSON.stringify(user));
 
         UserService.loginUser(user).then(res => {
             console.log("SignIn Component", res);
@@ -49,17 +47,18 @@ class SignIn extends Component {
         UserService.getUserDetails(t).then(res=>{
             if(res!==undefined)
             {
-                // console.log("res =>", res)
                 localStorage.setItem('userData',JSON.stringify(res.data))
 
                 if(res.data.userType===1)
                 {
                     this.props.history.push("/LibraryDashboard")
                 }
+                else
+                {
+                    this.props.history.push("/StudentDashboard")
+                }
             }
-
         });
-
     }
 
     render() {
@@ -67,6 +66,7 @@ class SignIn extends Component {
         return (
             <div className="SignIn" >
                 <div className="text-justify">
+                    <meta charSet="UTF-8"/>
                     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/"/>
                     <h2 className="text-center">Library Management System</h2>
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"

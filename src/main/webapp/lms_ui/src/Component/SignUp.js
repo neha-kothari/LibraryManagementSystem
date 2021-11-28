@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {Link} from 'react-router-dom'
+import swal from 'sweetalert';
 import PasswordStr from "./PasswordStr";
 import UserService from "../Services/UserService";
-import swal from 'sweetalert';
+import {validateSignUpForm} from "./validate";
 
 class SignUp extends Component {
     constructor(props) {
@@ -17,7 +18,6 @@ class SignUp extends Component {
         }
         this.handleChange = this.handleChange.bind(this)
         this.saveUser = this.saveUser.bind(this)
-        this.onClick=this.onClick.bind(this)
         this.reset=this.reset.bind(this)
     }
 
@@ -36,20 +36,8 @@ class SignUp extends Component {
         this.setState({
             [name]: value
         })
-
     }
 
-    onClick(event){
-        let popup = document.querySelector(".popup");
-        let button = document.querySelector("span");
-
-        button.onclick = function(){;
-
-            setInterval(function(){
-                popup.remove()
-            },5000)
-        }
-    }
 
     saveUser = (e) => {
         e.preventDefault();
@@ -63,14 +51,30 @@ class SignUp extends Component {
             phoneNumber: this.state.phoneNumber
         }
 
-        console.log('User =>' + JSON.stringify(user));
-        UserService.createUser(user).then(res => {
-            console.log(res)
-            if(res!==undefined && res.status===200)
-                swal("Registration Successful","Login to access your account", "success")
-            this.reset();
+        let payload = validateSignUpForm(user);
+        if(payload.success) {
+            UserService.createUser(user).then(res => {
+                console.log(res)
+                if(res!==undefined && res.status===200)
+                    swal("Registration Successful","Login to access your account", "success")
+                this.reset();
+            });
+        }
+        else {
+            let errorMsg=""
+            if(payload.errors.emailAddress!==undefined)
+                errorMsg+=payload.errors.emailAddress+"\n"
+            if(payload.errors.password!==undefined)
+                errorMsg+=payload.errors.password+"\n"
+            if(payload.errors.name!==undefined)
+                errorMsg+=payload.errors.name+"\n"
+            if(payload.errors.phoneNumber!==undefined)
+                errorMsg+=payload.errors.phoneNumber+"\n"
+            swal("Incorrect Input",errorMsg,"error")
+        }
 
-        });
+
+
     }
 
     render() {

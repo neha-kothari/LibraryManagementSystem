@@ -21,7 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/lms/v1")
 public class UserController {
@@ -71,6 +71,7 @@ public class UserController {
         return new UserRegistrationDto();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/user/getdetails")
     @ResponseBody
     public User getUserDetails(Authentication auth) {
