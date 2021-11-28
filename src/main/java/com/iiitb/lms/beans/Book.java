@@ -1,8 +1,12 @@
 package com.iiitb.lms.beans;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Set;
 
-
+@Data
+@NoArgsConstructor
 @Entity
 public class Book {
     @Id
@@ -10,12 +14,13 @@ public class Book {
     private Integer bookId;
     @Column(nullable = false)
     private String bookTitle;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String isbnNumber;
     @Column(nullable = false)
     private String publisher;
-
+    @Column
     private String language;
+    @Column
     private int noOfPages;
     @ManyToMany
     @JoinTable(
@@ -24,68 +29,4 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     Set<Author> authors;
 
-
-    public Book() {
-    }
-
-    public Integer getBookId() {
-        return bookId;
-    }
-
-    public Book(String bookTitle, String isbnNumber, String publisher, String language, int noOfPages, Set<Author> authors) {
-        this.bookTitle = bookTitle;
-        this.isbnNumber = isbnNumber;
-        this.publisher = publisher;
-        this.language = language;
-        this.noOfPages = noOfPages;
-        this.authors = authors;
-    }
-
-    public String getBookTitle() {
-        return bookTitle;
-    }
-
-    public void setBookTitle(String bookTitle) {
-        this.bookTitle = bookTitle;
-    }
-
-    public String getIsbnNumber() {
-        return isbnNumber;
-    }
-
-    public void setIsbnNumber(String isbnNumber) {
-        this.isbnNumber = isbnNumber;
-    }
-
-    public String getPublisher() {
-        return publisher;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    public int getNoOfPages() {
-        return noOfPages;
-    }
-
-    public void setNoOfPages(int noOfPages) {
-        this.noOfPages = noOfPages;
-    }
-
-    public Set<Author> getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(Set<Author> authors) {
-        this.authors = authors;
-    }
 }
