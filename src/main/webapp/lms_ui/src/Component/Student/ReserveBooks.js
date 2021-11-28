@@ -1,8 +1,7 @@
 import React, {Component, useState} from "react";
 import {withRouter} from "react-router-dom";
-import Item from "./bookItemStud";
+import Item from "../Items/bookItemStud";
 import Fuse from "fuse.js";
-import LibNavbar from "./LibNavbar";
 import StudentNavbar from "./StudentNavbar";
 
 

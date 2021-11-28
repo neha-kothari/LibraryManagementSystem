@@ -1,7 +1,5 @@
 import React, {Component} from "react";
-import YearPicker from "react-year-picker";
-
-
+import {withRouter} from 'react-router-dom';
 
 class AddBookItem extends Component{
     constructor(props) {
@@ -80,4 +78,4 @@ class AddBookItem extends Component{
     }
 }
 
-export default AddBookItem
+export default withRouter(AddBookItem)

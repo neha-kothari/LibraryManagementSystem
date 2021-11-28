@@ -11,6 +11,7 @@ class bookItemStud extends React.Component{
         }
         this.reserveBook=this.reserveBook.bind(this)
     }
+
     reserveBook(){
         swal({
             title: "Reserve "+ this.props.name +" ?",

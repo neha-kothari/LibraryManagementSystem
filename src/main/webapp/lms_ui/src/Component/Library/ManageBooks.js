@@ -1,6 +1,6 @@
 import React, {Component, useState} from "react";
 import {withRouter} from "react-router-dom";
-import Item from "./bookItem";
+import Item from "../Items/bookItemLib";
 import Fuse from "fuse.js";
 import LibNavbar from "./LibNavbar";
 

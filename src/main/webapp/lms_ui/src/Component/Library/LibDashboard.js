@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import {Link, withRouter} from 'react-router-dom';
-import Card from "./Card";
+import Card from "../Items/Card";
 
 class LibDashboard extends Component{
 

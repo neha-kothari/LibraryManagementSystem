@@ -1,9 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import Card from "./Card";
 import swal from "sweetalert";
 
-class bookItem extends React.Component{
+class bookItemLib extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -27,7 +26,6 @@ class bookItem extends React.Component{
                     });
                 }
             });
-
     }
 
     render() {
@@ -51,4 +49,4 @@ class bookItem extends React.Component{
 }
 
 
-export default bookItem;
+export default bookItemLib;

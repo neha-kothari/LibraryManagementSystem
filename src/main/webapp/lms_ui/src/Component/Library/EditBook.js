@@ -1,13 +1,12 @@
-import React, {Component} from "react";
+import React,{Component} from "react";
+import {withRouter} from 'react-router-dom';
+import LibNavbar from "./LibNavbar";
 
-import {Link, withRouter} from 'react-router-dom'
-
-class RegisterBook extends Component{
+class EditBook extends Component{
     constructor(props) {
         super(props);
-
-        this.state = {
-            bookTitle: "",
+        this.state={
+            bookTitle: this.props.location.state.bookTitle,
             publisher: "",
             isbn: "",
             language: "",
@@ -22,6 +21,10 @@ class RegisterBook extends Component{
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeArray = this.handleChangeArray.bind(this)
     }
+    componentDidMount() {
+        console.log(this.props.location.state)
+    }
+
     handleChange(event) {
         console.log("Handle change called")
         const {name, value} = event.target;
@@ -55,13 +58,11 @@ class RegisterBook extends Component{
     }
 
     render() {
-        return(
+        return (
             <div>
+                <LibNavbar/>
 
                 <head>
-                    <meta charSet="UTF-8"/>
-                    <meta name="viewport" content="width=divice-width, initial-scale=1.0"/>
-                    <meta http-equive="X-UA-Compatible" content="ie-edge"/>
                     <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"/>
                     <link rel="stylesheet"
                           href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
@@ -72,7 +73,7 @@ class RegisterBook extends Component{
                 <body>
                 <div className="container mt-4">
                     <h1 className="display-4 text-center"><i className="fas fa-book-open text-primary"></i> <span
-                        className="text-secondary">Register</span> Books</h1>
+                        className="text-secondary">Edit</span> Books</h1>
 
                     <form id="register-book-form">
                         <div className="register-book">
@@ -122,16 +123,20 @@ class RegisterBook extends Component{
                             {/*<input type="submit" value="Submit" />*/}
                         </div>
                         <br/>
-                        <div className="register-book">
-                            <button type="submit"  className="btn btn-primary btn-block"> Add Book Items</button>
+                        <div className="register-book mb-3">
+                            <button type="submit"  className="btn btn-primary btn-block"> Save</button>
                         </div>
+                        <div className="register-book">
+                            <button type="submit"  className="btn btn-primary btn-block"> Reset</button>
+                        </div>
+                        <br/><br/>
                     </form>
 
                 </div>
                 </body>
             </div>
-        )
+        );
     }
 }
 
-export default withRouter(RegisterBook)
+export default withRouter(EditBook)
