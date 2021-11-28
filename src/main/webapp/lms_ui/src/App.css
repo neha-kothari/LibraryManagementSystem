@@ -386,3 +386,19 @@ ul li {
 .bookItemInner{
   background-image: linear-gradient(to bottom,white,whitesmoke);
 }
+
+/******************************************/
+
+.studentItemContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr ;
+  alignment: center;
+  /*background-image: linear-gradient(to bottom,whitesmoke,whitesmoke);;*/
+}
+
+.studentItemInner:hover{
+  background-image: linear-gradient(to bottom,white, #d4e9e9);
+}
+.studentItemInner{
+  background-image: linear-gradient(to bottom,white,whitesmoke);
+}

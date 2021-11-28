@@ -29,7 +29,6 @@ class LibDashboard extends Component{
     render() {
         return (
             <div>
-
                 <div className="parent">
                     <div className="left">
                         <ul>
@@ -57,7 +56,9 @@ class LibDashboard extends Component{
                                 </Link>
                             </div>
                             <div className="manStudC">
-                                <Card title ="Manage Students"/>
+                                <Link to="/ManageStudents">
+                                    <Card title ="Manage Students"/>
+                                </Link>
                             </div>
                             <div  className="approveC">
                                 <Card title ="Approve Reservations"/>

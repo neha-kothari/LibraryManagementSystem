@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-
 import {withRouter} from 'react-router-dom'
+import LibNavbar from "./LibNavbar";
 
 class RegisterBook extends Component{
     constructor(props) {
@@ -57,7 +57,7 @@ class RegisterBook extends Component{
     render() {
         return(
             <div>
-
+                <LibNavbar/>
                 <head>
                     <meta charSet="UTF-8"/>
                     <meta name="viewport" content="width=divice-width, initial-scale=1.0"/>

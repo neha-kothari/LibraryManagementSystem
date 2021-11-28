@@ -1,11 +1,11 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {withRouter} from "react-router-dom";
-import Item from "../Items/bookItemLib";
+import Item from "../Items/studentItem";
 import Fuse from "fuse.js";
 import LibNavbar from "./LibNavbar";
 
 
-class ManageBooks extends Component {
+class ManageStudents extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -44,6 +44,7 @@ class ManageBooks extends Component {
     };
 
     render() {
+
         return (
             <div>
                 <LibNavbar/>
@@ -57,7 +58,7 @@ class ManageBooks extends Component {
                 <div className="container mt-4">
                     <h1 className="display-4 text-center">
                         <i className="fas fa-book-open text-primary"/>
-                        <span className="text-secondary">Manage</span> Books
+                        <span className="text-secondary">Manage</span> Students
                     </h1>
                     <br/><br/>
                     <div className="search-container">
@@ -65,11 +66,11 @@ class ManageBooks extends Component {
                             className="form-control m-3 mr-5"
                             type="search"
                             onChange={(e) => this.searchItem(e.target.value)}
-                            placeholder="Search Book"
+                            placeholder="Search Student"
                         />
                     </div>
-                    <p style={{display:this.state.noResults}}>No Results found.... Displaying all books </p>
-                    <div className="bookItemContainer">
+                    <p style={{display:this.state.noResults}}>No Results found.... Displaying all students </p>
+                    <div className="studentItemContainer">
                         {this.state.searchData.map((item) => (
                             <Item {...item} key={item.name} />
                         ))}
@@ -81,4 +82,4 @@ class ManageBooks extends Component {
 }
 
 
-export default withRouter(ManageBooks)
+export default withRouter(ManageStudents)

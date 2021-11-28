@@ -37,6 +37,11 @@ class LibNavbar extends Component{
                                     <a className="nav-link" href="#">Manage Books <span className="sr-only">(current)</span></a>
                                 </Link>
                             </li>
+                            <li className="nav-item active">
+                                <Link to="/ManageStudents">
+                                    <a className="nav-link" href="#">Manage Students <span className="sr-only">(current)</span></a>
+                                </Link>
+                            </li>
 
                             <li className="nav-item">
                                 <a className="nav-link disabled" href="#">Disabled</a>

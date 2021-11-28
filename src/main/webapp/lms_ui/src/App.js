@@ -11,6 +11,7 @@ import EditBook from "./Component/Library/EditBook";
 import StudentDashboard from "./Component/Student/StudentDashboard";
 import ReserveBooks from "./Component/Student/ReserveBooks";
 import IssuedBooks from "./Component/Student/IssuedBooks";
+import ManageStudents from "./Component/Library/ManageStudents";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route exact path="/RegisterBook" component={RegisterBook}/>
             <Route exact path="/AddBookItem" component={AddBookItem}/>
             <Route exact path="/ManageBooks" component={ManageBooks}/>
+            <Route exact path="/ManageStudents" component={ManageStudents}/>
             <Route exact path="/EditBook" component={EditBook}/>
 
             <Route exact path="/StudentDashboard" component={StudentDashboard}/>
