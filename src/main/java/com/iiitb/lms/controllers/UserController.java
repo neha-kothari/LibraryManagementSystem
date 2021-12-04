@@ -80,14 +80,19 @@ public class UserController {
         return new UserRegistrationDto();
     }*/
     @CrossOrigin(origins = "*")
-
-    @GetMapping("/users/getdetails")
+    @GetMapping("/users/profile")
     @ResponseBody
-    public User getUserDetails(Authentication auth) {
+    public ResponseEntity<UserDetailsDTO> getUserDetails(Authentication auth) {
 
-        User user = userRepository.findByEmailAddress(auth.getName());
-        user.setPassword("");
-        return user;
+        UserDetailsDTO userDetailsDTO = userService.getUserDetails(auth.getName());
+        if (null != userDetailsDTO) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(userDetailsDTO);
+        }
+        userDetailsDTO = new UserDetailsDTO();
+        userDetailsDTO.setError("Invalid Authentication");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDetailsDTO);
     }
     @CrossOrigin(origins = "*")
 
