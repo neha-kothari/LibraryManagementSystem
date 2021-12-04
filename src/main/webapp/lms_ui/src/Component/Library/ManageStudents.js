@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import Item from "../Items/studentItem";
 import Fuse from "fuse.js";
@@ -11,35 +11,36 @@ class ManageStudents extends Component {
         super(props);
         this.state = {
             studentData:[],
-            data: [{name: "harry potter", tags: ["Jk Rowling", "Dumbledore"]}, {name: "abc murder", tags: ["Agatha Christie"]
-            },{name: "Perks of being a wallflower", tags: ["Someone"]}, {name: "A series of Unfortunate Events", tags: ["Lemony Snicket"]
-            },{name: "Random Random", tags: ["Jk Rowling", "Dumbledore"]}, {name: "QUX", tags: ["Agatha Christie"]
-            },{name: "Random chikichiki", tags: ["Jk Rowling", "Dumbledore"]}],
-            searchData:[],
+            allData:[],
+            searchData:[{userId: 0, emailAddress: "abc@def.com", userType: "Member", accountStatus: "Active", name: "Ankita"}],
             noResults:"none"
         }
         this.searchItem = this.searchItem.bind(this)
     }
     componentDidMount() {
-        this.setState({searchData: this.state.data})
-        UserService.getAllStudents(localStorage.getItem("token")).then(res => {
+
+        let token=localStorage.getItem("token")
+
+        UserService.getAllStudents(token).then(res => {
             console.log("Fetching all Students....", res);
             if(res!==undefined)
             {
                 this.setState({
-                    studentData:res
+                    allData:res.data,
+                    searchData:res.data
                 })
             }
+            console.log(this.state.allData)
         });
     }
 
     searchItem = (query) => {
         if(query===""){
-            this.setState({searchData: this.state.data})
+            this.setState({searchData: this.state.allData})
         }
         else{
-            const fuse = new Fuse(this.state.data, {
-                keys: ["name", "tags"]
+            const fuse = new Fuse(this.state.allData, {
+                keys: ["name", "emailAddress"]
             });
             const result = fuse.search(query);
             const finalResult = [];
@@ -49,7 +50,7 @@ class ManageStudents extends Component {
                 });
                 this.setState({searchData: finalResult, noResults: "none"})
             } else {
-                this.setState({searchData: this.state.data, noResults:"inline"})
+                this.setState({searchData: this.state.allData, noResults:"inline"})
             }
         }
     };
@@ -59,7 +60,6 @@ class ManageStudents extends Component {
         return (
             <div>
                 <LibNavbar/>
-
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
                 <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"/>
                 <link rel="stylesheet"
@@ -80,12 +80,13 @@ class ManageStudents extends Component {
                             placeholder="Search Student"
                         />
                     </div>
-                    <p style={{display:this.state.noResults}}>No Results found.... Displaying all students </p>
-                    <div className="studentItemContainer">
-                        {this.state.searchData.map((item) => (
-                            <Item {...item} key={item.name} />
-                        ))}
-                    </div>
+
+                        <p style={{display:this.state.noResults}}>No Results found.... Displaying all students </p>
+                        <div className="studentItemContainer">
+                            {this.state.searchData.map((item) => (
+                                <Item {...item} key={item.name} />
+                            ))}
+                        </div>
                 </div>
             </div>
         );

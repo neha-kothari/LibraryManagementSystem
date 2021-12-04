@@ -1,6 +1,5 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import Card from "./Card";
 import swal from "sweetalert";
 
 class bookItemStud extends React.Component{

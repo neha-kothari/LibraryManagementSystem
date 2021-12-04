@@ -43,7 +43,7 @@ class SignIn extends Component {
     }
 
     getDetails(t){
-        console.log("getting details.....");
+        console.log("Getting user details.....");
 
         UserService.getUserDetails(t).then(res=>{
             if(res!==undefined)

@@ -1,6 +1,8 @@
 /target/
 /src/main/resources/public/
 /src/main/resources/imgs/
+/src/main/resources/application.properties/
+
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
