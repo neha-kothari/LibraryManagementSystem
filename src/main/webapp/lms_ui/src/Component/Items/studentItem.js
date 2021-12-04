@@ -1,6 +1,5 @@
 import React from "react";
 import swal from "sweetalert";
-import UserService from "../../Services/UserService";
 import LibrarianService from "../../Services/LibrarianService";
 
 class studentItem extends React.Component{
@@ -19,7 +18,6 @@ class studentItem extends React.Component{
         this.setState({
             token:localStorage.getItem("token")
         })
-        console.log(this.state.token)
     }
 
     blockStudent(){
@@ -29,7 +27,7 @@ class studentItem extends React.Component{
             }).then((willBlock) => {
                 if (willBlock) {
 
-                    LibrarianService.blockStudent(this.state.token,this.state.userId).then(res => {
+                    LibrarianService.blockStudent(this.state.token,this.props.userId).then(res => {
                         swal("Blocked", {icon: "success",});
                         this.setState({accountStatus:"Blocked"})
                     });
@@ -41,8 +39,10 @@ class studentItem extends React.Component{
             swal({title: "Unblock "+ this.props.name +" ?", text: "You can block this user later", icon: "warning", buttons: true, dangerMode: true,
             }).then((willDelete) => {
                 if (willDelete) {
-                    swal("Unblocked", {icon: "success",});
-                    this.setState({accountStatus:"Active"})
+                    LibrarianService.unblockStudent(this.state.token,this.props.userId).then(res => {
+                        swal("Unblocked", {icon: "success",});
+                        this.setState({accountStatus:"Active"})
+                    });
                 }
             });
 
@@ -51,13 +51,13 @@ class studentItem extends React.Component{
     }
 
     render() {
-        console.log(this.props)
         return (
             <div>
                 <div className="card m-3 shadow p-3 bg-white rounded studentItemInner" style={{width: '18rem'}}>
                     <div className="card-body">
                         <h5 className="card-title">Name: {this.props.name}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">{this.props.emailAddress}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">{this.props.userId}</h6>
                         {/*<Link to={{*/}
                         {/*    pathname: "/EditBook",*/}
                         {/*    state: { bookTitle: this.props.name }}} >*/}

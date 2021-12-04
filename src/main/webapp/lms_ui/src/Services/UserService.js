@@ -54,7 +54,7 @@ class UserService{
     getUserDetails(token)
     {
         console.log("get user details:",token)
-        return axios.get("http://localhost:8085/lms/v1/users/getdetails",  {
+        return axios.get("http://localhost:8085/lms/v1/users/profile",  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token,

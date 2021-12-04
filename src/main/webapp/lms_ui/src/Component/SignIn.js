@@ -36,7 +36,7 @@ class SignIn extends Component {
             if(res!==undefined)
             {
                 let token = res.data.token;
-                localStorage.setItem('token',JSON.stringify(res.data.token));
+                localStorage.setItem('token',res.data.token);
                 this.getDetails(token)
             }
         });
@@ -44,13 +44,14 @@ class SignIn extends Component {
 
     getDetails(t){
         console.log("Getting user details.....");
+        console.log(t)
 
         UserService.getUserDetails(t).then(res=>{
             if(res!==undefined)
             {
                 localStorage.setItem('userData',JSON.stringify(res.data))
 
-                if(res.data.userType===1)
+                if(res.data.userType==="Librarian")
                 {
                     this.props.history.push("/LibraryDashboard")
                 }

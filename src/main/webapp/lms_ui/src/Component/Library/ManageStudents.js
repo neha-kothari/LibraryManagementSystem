@@ -12,7 +12,7 @@ class ManageStudents extends Component {
         this.state = {
             studentData:[],
             allData:[],
-            searchData:[{userId: 0, emailAddress: "abc@def.com", userType: "Member", accountStatus: "Active", name: "Ankita"}],
+            searchData:[],
             noResults:"none"
         }
         this.searchItem = this.searchItem.bind(this)
@@ -20,7 +20,6 @@ class ManageStudents extends Component {
     componentDidMount() {
 
         let token=localStorage.getItem("token")
-
         LibrarianService.getAllStudents(token).then(res => {
             console.log("Fetching all Students....", res);
             if(res!==undefined)
