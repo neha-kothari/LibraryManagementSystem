@@ -75,7 +75,35 @@ const validateLoginForm = payload => {
     };
 };
 
+
+const validateRegisterBook = book => {
+    const errors = {};
+    let message = "";
+    let isFormValid = true;
+
+    if (!book || typeof book.bookTitle !== "string" || book.bookTitle.trim().length === 0 || book.isbnNumber.trim().length === 0
+        || book.publisher.trim().length === 0|| book.language.trim().length === 0|| book.noOfPages === 0 || book.noOfCopies === 0
+        || book.dateOfPurchase === "" || book.publicationYear === "0" || book.authors.length===0) {
+        isFormValid = false;
+        errors.name = "Please fill all the details.";
+    }
+
+
+    if (!isFormValid) {
+        message = "Check the form for errors.";
+    }
+
+    return {
+        success: isFormValid,
+        message,
+        errors
+    };
+};
+
+
+
 module.exports = {
     validateLoginForm: validateLoginForm,
-    validateSignUpForm: validateSignUpForm
+    validateSignUpForm: validateSignUpForm,
+    validateRegisterBook:validateRegisterBook
 };
