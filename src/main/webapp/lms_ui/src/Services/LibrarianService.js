@@ -66,6 +66,32 @@ class LibrarianService{
             console.log(error.config);
         });
     }
+
+    deleteBook(bookId,token)
+    {
+        console.log("deleting book",bookId,token)
+        return axios.delete("http://localhost:"+port+"/lms/v1/books/"+bookId,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        }).catch(function (error) {
+            swal("Error","error","error")
+            console.log(error.config);
+        });
+    }
+
+    getAllBooks(token)
+    {
+        console.log("get student details:",token)
+        return axios.get("http://localhost:"+port+"/lms/v1/books",  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }
+            }
+        )
+    }
 }
 
 
