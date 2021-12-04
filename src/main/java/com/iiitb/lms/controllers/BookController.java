@@ -10,6 +10,7 @@ import com.iiitb.lms.config.JwtTokenProvider;
 
 import com.iiitb.lms.repositories.UserRepository;
 
+import com.iiitb.lms.services.BookService;
 import com.iiitb.lms.services.UserService;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -41,44 +42,44 @@ public class BookController {
     @Autowired
     private UserService userService;
 
-    /*@Autowired
-    private BookRepository bookRepository;
-
     @Autowired
     private BookService bookService;
 
-    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping
     public ResponseEntity<String> addBook(Authentication auth, @RequestBody BookDto bookDto) throws JSONException {
 
         User user = userService.getUserFromEmailId(auth.getName());
         JSONObject jsonObject = new JSONObject();
-        if(user != null && user.getUserType()!=1) {
+        if(user != null && user.getUserType() != 1) {
             jsonObject.put("data", "User not authorized");
             return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.UNAUTHORIZED);
 
-        }else{
-            Book book = bookService.save(bookDto);
-            jsonObject.put("bookId", book.getBookId());
-        }
-        return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
-    }*/
-
-    /*@DeleteMapping(value = "/{bookId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String> removeBook(Authentication auth, @PathVariable Integer bookId) {
-        User user = userRepository.findByEmailAddress(auth.getName());
-        JSONObject jsonObject = new JSONObject();
-        if(user.getUserType()!=1) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"User not authorized\"}");
-        }else{
-            if(bookService.delete(bookId)){
-                return ResponseEntity.status(HttpStatus.OK).body("{\"data\":\"Book deleted Successfully\"}");
-            }else{
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"Failed to delete\"}");
+        } else {
+            if (verifyAddRequest(bookDto)) {
+                bookService.addBook(bookDto);
+            } else {
+                jsonObject.put("error", "ISBN already exists!");
             }
+
         }
+        return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.CREATED);
     }
-*/
-   /* @PostMapping(value = "/addbookitem", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+//    @DeleteMapping(value = "/{bookId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity<String> removeBook(Authentication auth, @PathVariable Integer bookId) {
+//        User user = userRepository.findByEmailAddress(auth.getName());
+//        JSONObject jsonObject = new JSONObject();
+//        if(user.getUserType() != 1) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"User not authorized\"}");
+//        }else{
+//            if(bookService.delete(bookId)){
+//                return ResponseEntity.status(HttpStatus.OK).body("{\"data\":\"Book deleted Successfully\"}");
+//            }else{
+//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"Failed to delete\"}");
+//            }
+//        }
+//    }
+    /*@PostMapping(value = "/addbookitem", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> addBookItem(Authentication auth, @RequestBody BookItemDto bookItemDto) throws JSONException {
         User user = userRepository.findByEmailAddress(auth.getName());
         JSONObject jsonObject = new JSONObject();
@@ -96,4 +97,9 @@ public class BookController {
         return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
     }*/
 
+
+    public boolean verifyAddRequest(BookDto bookDto) {
+
+        return !bookService.isbnExists(bookDto.getIsbnNumber());
+    }
 }

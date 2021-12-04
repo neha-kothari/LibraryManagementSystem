@@ -22,7 +22,8 @@ public class BookDto {
     private double price;
     private char status;
     private Date dateOfPurchase;
-    private Date publicationDate;
-    private List<Integer> authorIds;
+    private int publicationYear;
+    private List<String> authors;
+    public String error;
 
 }

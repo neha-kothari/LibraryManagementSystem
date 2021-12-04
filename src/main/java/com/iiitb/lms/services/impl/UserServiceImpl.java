@@ -1,9 +1,10 @@
-package com.iiitb.lms.services;
+package com.iiitb.lms.services.impl;
 
 import com.iiitb.lms.beans.User;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
 import com.iiitb.lms.repositories.UserRepository;
+import com.iiitb.lms.services.UserService;
 import com.iiitb.lms.utils.transformers.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,7 +18,7 @@ import java.util.Collections;
 import java.util.Date;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 

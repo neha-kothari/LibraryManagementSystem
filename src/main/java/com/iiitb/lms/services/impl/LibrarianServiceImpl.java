@@ -1,8 +1,9 @@
-package com.iiitb.lms.services;
+package com.iiitb.lms.services.impl;
 
 import com.iiitb.lms.beans.User;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.repositories.UserRepository;
+import com.iiitb.lms.services.LibrarianService;
 import com.iiitb.lms.utils.LMSConstants;
 import com.iiitb.lms.utils.transformers.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LibrarianServiceImpl implements LibrarianService{
+public class LibrarianServiceImpl implements LibrarianService {
 
     @Autowired
     private UserRepository userRepository;

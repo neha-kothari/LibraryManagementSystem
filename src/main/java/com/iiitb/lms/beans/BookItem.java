@@ -19,15 +19,18 @@ public class BookItem {
     @JoinColumn(name="book_id", referencedColumnName = "bookId")
     private Book book;
 
-    @Column
-    private boolean isReferenceOnly;
+    @Column(columnDefinition = "BOOLEAN")
+    private Boolean isReferenceOnly;
     @Column
     private double price;
     @Column
     private char status;
     @Column
     private Date dateOfPurchase;
-    @Column
-    private Date publicationDate;
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

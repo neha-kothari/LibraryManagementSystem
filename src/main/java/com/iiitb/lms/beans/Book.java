@@ -19,6 +19,8 @@ public class Book {
     @Column(nullable = false)
     private String publisher;
     @Column
+    private int yearOfPublish;
+    @Column
     private String language;
     @Column
     private int noOfPages;
@@ -28,5 +30,10 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     Set<Author> authors;
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }
