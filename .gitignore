@@ -18,6 +18,9 @@
 *.iml
 *.ipr
 
+# dependencies
+/node_modules
+
 ### NetBeans ###
 /nbproject/private/
 /build/
