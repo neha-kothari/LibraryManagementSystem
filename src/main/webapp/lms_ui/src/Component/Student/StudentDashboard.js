@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import {Link, withRouter} from 'react-router-dom';
 import Card from "../Items/Card";
+import swal from "sweetalert";
 
 class StudentDashboard extends Component{
 
@@ -12,6 +13,29 @@ class StudentDashboard extends Component{
             userData:JSON.parse(localStorage.getItem('userData')),
         }
 
+        this.logOut=this.logOut.bind(this)
+    }
+
+    logOut(e){
+        console.log("logout called")
+        swal({
+            title: "Logout",
+            text: "Are you sure?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+                if (willDelete) {
+
+                    localStorage.removeItem("token")
+                    localStorage.removeItem("userData")
+
+                    swal("Log out successful", {
+                        icon: "success",
+                    });
+                    this.props.history.push("/SignIn")
+                }
+            });
     }
     componentDidMount() {
         if (this.state.userData === undefined) {
@@ -39,7 +63,7 @@ class StudentDashboard extends Component{
                             <li><h4>You have {this.state.fine} pending fine</h4></li>
                             <br/><br/><br/><br/><br/><br/><br/><br/>
                             {/*fix this*/}
-                            <button className="logoutBtn" >Logout</button>
+                            <button className="logoutBtn" onClick={this.logOut} >Logout</button>
                         </ul>
                     </div>
 

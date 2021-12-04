@@ -1,5 +1,6 @@
 import React,{Component} from "react"
 import {Link} from "react-router-dom";
+import swal from "sweetalert";
 
 
 class LibNavbar extends Component{
@@ -8,6 +9,14 @@ class LibNavbar extends Component{
         this.state={
 
         }
+
+        this.logOut=this.logOut.bind(this)
+    }
+    logOut(e){
+        console.log("logout called")
+        swal("Log out successful", {
+                        icon: "success",
+                    });
     }
 
     render() {
@@ -43,11 +52,14 @@ class LibNavbar extends Component{
                                 </Link>
                             </li>
 
-                            <li className="nav-item">
-                                <p className="nav-link disabled" >Disabled</p>
-                            </li>
+                            {/*<li className="nav-item">*/}
+                            {/*    <p className="nav-link disabled" >Disabled</p>*/}
+                            {/*</li>*/}
                         </ul>
                     </div>
+                    <Link to="/">
+                        <a className="nav-link float-right text-light" onClick={this.logOut} >LOGOUT <span className="sr-only">(current)</span></a>
+                    </Link>
                 </nav>
             </div>
         );

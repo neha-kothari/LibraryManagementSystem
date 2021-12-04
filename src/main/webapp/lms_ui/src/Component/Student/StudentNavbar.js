@@ -1,5 +1,6 @@
 import React,{Component} from "react"
 import {Link} from "react-router-dom";
+import swal from "sweetalert";
 
 
 class StudentNavbar extends Component{
@@ -8,6 +9,15 @@ class StudentNavbar extends Component{
         this.state={
 
         }
+        this.logOut=this.logOut.bind(this)
+
+    }
+
+    logOut(e){
+        console.log("logout called")
+        swal("Log out successful", {
+            icon: "success",
+        });
     }
 
     render() {
@@ -38,6 +48,9 @@ class StudentNavbar extends Component{
                             </li>
                         </ul>
                     </div>
+                    <Link to="/">
+                    <a className="nav-link float-right text-light" onClick={this.logOut} >LOGOUT <span className="sr-only">(current)</span></a>
+                    </Link>
                 </nav>
             </div>
         );

@@ -1,6 +1,7 @@
 import React,{Component} from "react";
 import {Link, withRouter} from 'react-router-dom';
 import Card from "../Items/Card";
+import swal from "sweetalert";
 
 class LibDashboard extends Component{
 
@@ -11,6 +12,8 @@ class LibDashboard extends Component{
             reservations:"x",
             userData:JSON.parse(localStorage.getItem('userData')),
         }
+
+        this.logOut=this.logOut.bind(this)
 
     }
     componentDidMount() {
@@ -24,6 +27,27 @@ class LibDashboard extends Component{
             console.log("AdminDashboard: setting UserId:" ,this.state.userData)
             localStorage.setItem('userId', JSON.stringify(this.state.userData));
         }
+    }
+    logOut(e){
+        console.log("logout called")
+        swal({
+            title: "Logout",
+            text: "Are you sure?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                localStorage.removeItem("token")
+                localStorage.removeItem("userData")
+
+                swal("Log out successful", {
+                    icon: "success",
+                });
+                this.props.history.push("/SignIn")
+            }
+        });
     }
 
     render() {
@@ -39,7 +63,7 @@ class LibDashboard extends Component{
                             <li><h4>You have {this.state.reservations} pending reservations to approve</h4></li>
                             <br/><br/><br/><br/><br/><br/><br/><br/>
                             {/*fix this*/}
-                            <button className="logoutBtn" >Logout</button>
+                            <button className="logoutBtn" onClick={this.logOut} >Logout</button>
                         </ul>
                     </div>
 
