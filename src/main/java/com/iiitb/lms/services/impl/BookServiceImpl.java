@@ -2,6 +2,7 @@ package com.iiitb.lms.services.impl;
 
 import com.iiitb.lms.beans.Book;
 import com.iiitb.lms.beans.dto.BookDto;
+import com.iiitb.lms.beans.dto.DashBoardBookDTO;
 import com.iiitb.lms.repositories.BookRepository;
 import com.iiitb.lms.services.BookItemService;
 import com.iiitb.lms.services.BookService;
@@ -9,6 +10,7 @@ import com.iiitb.lms.utils.transformers.BookTransformer;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -48,6 +50,12 @@ public class BookServiceImpl implements BookService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<DashBoardBookDTO> getAllBooks() {
+        List<Book> books = bookRepository.findByDelFlagFalse();
+        return bookTransformer.getBooksList(books);
     }
 
 }

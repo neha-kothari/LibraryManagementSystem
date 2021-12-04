@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query(value = "SELECT * FROM book b WHERE b.isbn_number =:isbnNumber", nativeQuery = true)
     Book findByIsbnNumber(@Param("isbnNumber") String isbnNumber);
     Book findByBookId(Integer bookId);
+    List<Book> findByDelFlagFalse();
 }
