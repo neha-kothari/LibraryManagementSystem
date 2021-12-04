@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import Item from "../Items/studentItem";
 import Fuse from "fuse.js";
 import LibNavbar from "./LibNavbar";
-import UserService from "../../Services/UserService";
+import LibrarianService from "../../Services/LibrarianService";
 
 
 class ManageStudents extends Component {
@@ -21,7 +21,7 @@ class ManageStudents extends Component {
 
         let token=localStorage.getItem("token")
 
-        UserService.getAllStudents(token).then(res => {
+        LibrarianService.getAllStudents(token).then(res => {
             console.log("Fetching all Students....", res);
             if(res!==undefined)
             {

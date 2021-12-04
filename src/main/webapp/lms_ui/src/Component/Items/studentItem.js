@@ -1,6 +1,7 @@
 import React from "react";
 import swal from "sweetalert";
 import UserService from "../../Services/UserService";
+import LibrarianService from "../../Services/LibrarianService";
 
 class studentItem extends React.Component{
     constructor(props) {
@@ -28,7 +29,7 @@ class studentItem extends React.Component{
             }).then((willBlock) => {
                 if (willBlock) {
 
-                    UserService.blockStudent(this.state.token,this.state.userId).then(res => {
+                    LibrarianService.blockStudent(this.state.token,this.state.userId).then(res => {
                         swal("Blocked", {icon: "success",});
                         this.setState({accountStatus:"Blocked"})
                     });
