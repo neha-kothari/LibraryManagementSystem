@@ -13,10 +13,11 @@ public class BookItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="book_item_id")
     private int itemId;
 
     @ManyToOne
-    @JoinColumn(name="book_id", referencedColumnName = "bookId")
+    @JoinColumn(name="bookId", referencedColumnName = "bookId")
     private Book book;
 
     @Column
@@ -30,4 +31,12 @@ public class BookItem {
     @Column
     private Date publicationDate;
 
+    public BookItem(Book book, boolean isReferenceOnly, double price, char status, Date dateOfPurchase, Date publicationDate) {
+        this.book = book;
+        this.isReferenceOnly = isReferenceOnly;
+        this.price = price;
+        this.status = status;
+        this.dateOfPurchase = dateOfPurchase;
+        this.publicationDate = publicationDate;
+    }
 }

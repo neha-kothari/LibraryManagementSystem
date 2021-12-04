@@ -38,10 +38,9 @@ public class UserRegistrationController {
     public ResponseEntity registerUserAccount(@RequestBody UserRegistrationDto registrationDto) {
         try {
             userService.save(registrationDto);
-            return ResponseEntity.status(HttpStatus.OK).body("{'data':'Registered Successfully'}");
+            return ResponseEntity.status(HttpStatus.OK).body("{\"data\":\"Registered Successfully\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'data':'Email already in use'}");
-//			return "redirect:/registration?success";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"Email already in use\"}");
         }
     }
 
