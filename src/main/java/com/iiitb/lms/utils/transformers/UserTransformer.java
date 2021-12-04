@@ -10,6 +10,7 @@ public class UserTransformer {
     public UserDetailsDTO toUserDetailsDTO(User user) {
 
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+        userDetailsDTO.setUserId(user.getUserId());
         userDetailsDTO.setUserType(getUserType(user.getUserType()));
         userDetailsDTO.setAccountStatus(getMemberAccountStatus(user.getAccountStatus()));
         userDetailsDTO.setName(user.getName());
