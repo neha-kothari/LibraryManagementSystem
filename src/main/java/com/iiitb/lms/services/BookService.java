@@ -7,4 +7,5 @@ public interface BookService {
 
     void addBook(BookDto bookDto);
     boolean isbnExists(String isbnNumber);
+    boolean deleteBook(Integer bookId);
 }

@@ -11,4 +11,5 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
 
     @Query(value = "SELECT * FROM book b WHERE b.isbn_number =:isbnNumber", nativeQuery = true)
     Book findByIsbnNumber(@Param("isbnNumber") String isbnNumber);
+    Book findByBookId(Integer bookId);
 }

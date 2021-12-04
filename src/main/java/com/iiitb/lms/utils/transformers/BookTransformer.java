@@ -31,6 +31,7 @@ public class BookTransformer {
         book.setLanguage(request.getLanguage());
         book.setNoOfPages(request.getNoOfPages());
         book.setYearOfPublish(request.getPublicationYear());
+        book.setDelFlag(false);
         Set<Author> authors = new HashSet<>();
         for (String authorName : request.getAuthors()) {
 

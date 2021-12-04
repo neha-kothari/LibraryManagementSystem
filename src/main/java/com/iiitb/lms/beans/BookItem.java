@@ -27,6 +27,8 @@ public class BookItem {
     private char status;
     @Column
     private Date dateOfPurchase;
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean delFlag;
 
     @Override
     public int hashCode() {

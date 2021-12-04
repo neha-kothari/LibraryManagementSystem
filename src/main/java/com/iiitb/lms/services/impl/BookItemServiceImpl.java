@@ -23,7 +23,7 @@ public class BookItemServiceImpl implements BookItemService {
         bookItem.setBook(book);
         bookItem.setDateOfPurchase(request.getDateOfPurchase());
         bookItem.setIsReferenceOnly(request.isReferenceOnly());
-
+        bookItem.setDelFlag(false);
         bookItem.setPrice(request.getPrice());
         bookItem.setStatus(LMSConstants.BOOK_STATUS_AVAILABLE);
         bookItemRepository.save(bookItem);

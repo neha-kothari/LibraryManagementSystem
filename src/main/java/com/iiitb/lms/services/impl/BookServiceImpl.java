@@ -39,4 +39,15 @@ public class BookServiceImpl implements BookService {
         return book != null;
     }
 
+    @Override
+    public boolean deleteBook(Integer bookId) {
+        Book book = bookRepository.findByBookId(bookId);
+        if (book != null && !book.isDelFlag()) {
+            book.setDelFlag(true);
+            bookRepository.save(book);
+            return true;
+        }
+        return false;
+    }
+
 }

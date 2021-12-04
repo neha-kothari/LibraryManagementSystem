@@ -24,6 +24,8 @@ public class Book {
     private String language;
     @Column
     private int noOfPages;
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean delFlag;
     @ManyToMany
     @JoinTable(
             name = "book_author",
@@ -35,5 +37,7 @@ public class Book {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
 
 }

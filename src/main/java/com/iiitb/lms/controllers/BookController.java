@@ -66,20 +66,20 @@ public class BookController {
         return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.CREATED);
     }
 
-//    @DeleteMapping(value = "/{bookId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public ResponseEntity<String> removeBook(Authentication auth, @PathVariable Integer bookId) {
-//        User user = userRepository.findByEmailAddress(auth.getName());
-//        JSONObject jsonObject = new JSONObject();
-//        if(user.getUserType() != 1) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"User not authorized\"}");
-//        }else{
-//            if(bookService.delete(bookId)){
-//                return ResponseEntity.status(HttpStatus.OK).body("{\"data\":\"Book deleted Successfully\"}");
-//            }else{
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"Failed to delete\"}");
-//            }
-//        }
-//    }
+    @DeleteMapping(value = "/{bookId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> removeBook(Authentication auth, @PathVariable Integer bookId) {
+        User user = userService.getUserFromEmailId(auth.getName());
+        JSONObject jsonObject = new JSONObject();
+        if(user.getUserType() != 1) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"User not authorized\"}");
+        }else{
+            if(bookService.deleteBook(bookId)){
+                return ResponseEntity.status(HttpStatus.OK).body("{\"data\":\"Book deleted Successfully\"}");
+            }else{
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"data\":\"Failed to delete\"}");
+            }
+        }
+    }
     /*@PostMapping(value = "/addbookitem", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> addBookItem(Authentication auth, @RequestBody BookItemDto bookItemDto) throws JSONException {
         User user = userRepository.findByEmailAddress(auth.getName());
