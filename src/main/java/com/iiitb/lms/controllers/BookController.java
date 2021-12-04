@@ -69,6 +69,7 @@ public class BookController {
         return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping
     public ResponseEntity<List<DashBoardBookDTO>> getAllBooks() {
 
@@ -84,6 +85,7 @@ public class BookController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping(value = "/{bookId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> removeBook(Authentication auth, @PathVariable Integer bookId) {
         User user = userService.getUserFromEmailId(auth.getName());
