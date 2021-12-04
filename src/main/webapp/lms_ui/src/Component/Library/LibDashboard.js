@@ -17,15 +17,32 @@ class LibDashboard extends Component{
 
     }
     componentDidMount() {
-        if (this.state.userData === undefined) {
+
+        if (this.state.userData === null) {
             console.log("Library:getting UserData")
+            let f=localStorage.getItem('userData')
+            if( f === null){
+                this.props.history.push({
+                    pathname: '/Error',
+                    message: 'Backend server is down'
+                });
+            }
+            else {
+                this.setState({
+                    userName:this.state.userData.name
+                })
+            }
             this.setState({
-                userData: JSON.parse(localStorage.getItem('userId')),
-            },()=>console.log("AdminDashboard userId:",this.state.userData))
+                userData: JSON.parse(localStorage.getItem('userData')),
+
+            },()=>console.log("StudentDashboard userId:",this.state.userData))
 
         } else {
-            console.log("AdminDashboard: setting UserId:" ,this.state.userData)
-            localStorage.setItem('userId', JSON.stringify(this.state.userData));
+            console.log("LibraryDashboard: setting UserData:" ,this.state.userData)
+            localStorage.setItem('userData', JSON.stringify(this.state.userData));
+            this.setState({
+                userName:this.state.userData.name
+            })
         }
     }
     logOut(e){
@@ -57,7 +74,7 @@ class LibDashboard extends Component{
                     <div className="left">
                         <ul>
                             <li><h3>welcome</h3></li>
-                            <li><h3>{this.state.userData.name} </h3></li>
+                            <li><h3>{this.state.userName} </h3></li>
                             <li>Library Management System</li>
                             <br/><br/><br/><br/>
                             <li><h4>You have {this.state.reservations} pending reservations to approve</h4></li>

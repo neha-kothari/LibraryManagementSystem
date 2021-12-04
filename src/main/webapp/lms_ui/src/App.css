@@ -402,3 +402,60 @@ ul li {
 .studentItemInner{
   background-image: linear-gradient(to bottom,white,whitesmoke);
 }
+/******************************************/
+
+
+.ErrorPage{
+  position: relative;
+  background: #D4DFE6 ;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #274c5e;
+}
+
+.Container {
+  text-align: center;
+  position: relative;
+}
+
+.MainTitle {
+  display: block;
+  font-size: 2rem;
+  font-weight: lighter;
+  text-align: center;
+}
+
+.MainDescription {
+  max-width: 50%;
+  font-size: 1.2rem;
+  font-weight: lighter;
+}
+
+.MainGraphic {
+  position: relative;
+}
+
+.Cog {
+  width: 10rem;
+  height: 10rem;
+  animation: CogAnimation 5s infinite;
+}
+
+.Hummingbird{
+  position: absolute;
+  width: 3rem;
+  height: 3rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+@keyframes CogAnimation {
+  0%   {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
+
+

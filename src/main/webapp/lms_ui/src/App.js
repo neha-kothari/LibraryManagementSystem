@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route,Switch} from 'react-router-dom'
 import './App.css';
 import SignIn from "./Component/SignIn";
 import SignUp from "./Component/SignUp";
+import Error from "./Component/Error"
 import LibDashboard from "./Component/Library/LibDashboard";
 import RegisterBook from "./Component/Library/RegisterBook";
 import AddBookItem from "./Component/Library/AddBookItem";
@@ -21,6 +22,7 @@ class App extends Component {
             <Route exact path="/" component={SignIn}/>
             <Route exact path="/SignIn" component={SignIn}/>
             <Route exact path="/SignUp" component={SignUp}/>
+            <Route exact path="/Error" component={Error}/>
 
             <Route exact path="/LibraryDashboard" component={LibDashboard}/>
             <Route exact path="/RegisterBook" component={RegisterBook}/>

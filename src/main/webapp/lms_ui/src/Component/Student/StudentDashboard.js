@@ -16,6 +16,7 @@ class StudentDashboard extends Component{
         this.logOut=this.logOut.bind(this)
     }
 
+
     logOut(e){
         console.log("logout called")
         swal({
@@ -25,28 +26,45 @@ class StudentDashboard extends Component{
             buttons: true,
             dangerMode: true,
         }).then((willDelete) => {
-                if (willDelete) {
+            if (willDelete) {
 
-                    localStorage.removeItem("token")
-                    localStorage.removeItem("userData")
+                localStorage.removeItem("token")
+                localStorage.removeItem("userData")
 
-                    swal("Log out successful", {
-                        icon: "success",
-                    });
-                    this.props.history.push("/SignIn")
-                }
-            });
+                swal("Log out successful", {
+                    icon: "success",
+                });
+                this.props.history.push("/SignIn")
+            }
+        });
     }
     componentDidMount() {
-        if (this.state.userData === undefined) {
+        if (this.state.userData === null) {
+            console.log("undefined")
+            let f=localStorage.getItem('userData')
+            if( f === null){
+                this.props.history.push({
+                    pathname: '/Error',
+                    message: 'Backend server is down'
+                });
+            }
+            else {
+                this.setState({
+                    userName:this.state.userData.name
+                })
+            }
             console.log("Student:getting UserData")
             this.setState({
-                userData: JSON.parse(localStorage.getItem('userId')),
+                userData: JSON.parse(localStorage.getItem('userData')),
+
             },()=>console.log("StudentDashboard userId:",this.state.userData))
 
         } else {
-            console.log("StudentDashboard: setting UserId:" ,this.state.userData)
-            localStorage.setItem('userId', JSON.stringify(this.state.userData));
+            console.log("StudentDashboard: setting UserData:" ,this.state.userData)
+            localStorage.setItem('userData', JSON.stringify(this.state.userData));
+            this.setState({
+                userName:this.state.userData.name
+            })
         }
     }
 
@@ -57,7 +75,7 @@ class StudentDashboard extends Component{
                     <div className="left">
                         <ul>
                             <li><h3>welcome</h3></li>
-                            <li><h3>{this.state.userData.name} </h3></li>
+                            <li><h3>{this.state.userName} </h3></li>
                             <li>Library Management System</li>
                             <br/><br/><br/><br/>
                             <li><h4>You have {this.state.fine} pending fine</h4></li>
