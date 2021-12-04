@@ -37,6 +37,35 @@ class LibrarianService{
             }
         })
     }
+
+    addBook(book,token)
+    {
+        console.log("Adding Book", book);
+        return axios.post("http://localhost:"+port+"/lms/v1/books",book,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response);
+                if(error.response.status===400)
+                    swal("Error", "ISBN is already used", "error");
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
+                swal("Error", "error");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+                swal("Error", "error");
+            }
+            console.log(error.config);
+        });
+    }
 }
 
 

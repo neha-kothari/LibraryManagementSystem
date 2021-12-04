@@ -1,11 +1,13 @@
 import React, {Component} from "react";
 import {withRouter} from 'react-router-dom'
 import LibNavbar from "./LibNavbar";
+import LibrarianService from "../../Services/LibrarianService";
+import swal from "sweetalert";
+import {validateRegisterBook} from "../validate";
 
 class RegisterBook extends Component{
     constructor(props) {
         super(props);
-
         this.state = {
             bookTitle: "",
             publisher: "",
@@ -21,14 +23,13 @@ class RegisterBook extends Component{
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleChangeArray = this.handleChangeArray.bind(this)
+        this.addBook = this.addBook.bind(this)
     }
     handleChange(event) {
-        console.log("Handle change called")
         const {name, value} = event.target;
         this.setState({
             [name]: value
         })
-        console.log(this.state)
     }
 
     handleChangeArray(i, event) {
@@ -52,6 +53,43 @@ class RegisterBook extends Component{
         let authors = [...this.state.authors];
         authors.splice(i,1);
         this.setState({ authors });
+    }
+
+    addBook(e){
+        e.preventDefault()
+        console.log("....")
+        let book={
+            "bookTitle":this.state.bookTitle,
+            "isbnNumber":this.state.isbn,
+            "publisher":this.state.publisher,
+            "language":this.state.language,
+            "noOfPages":this.state.pages,
+            "noOfCopies":this.state.copies,
+            "isReferenceOnly":this.state.isReferenceOnly,
+            "price":this.state.price,
+            "dateOfPurchase":this.state.purchaseDate,
+            "publicationYear":this.state.publicationYear,
+            "authors":this.state.authors
+        }
+
+        let payload = validateRegisterBook(book);
+        if(payload.success) {
+            let token=localStorage.getItem("token")
+            LibrarianService.addBook(book,token).then(res => {
+                console.log(res)
+                if(res!==undefined )
+                {
+                    swal("Registration Successful","New Book Added", "success")
+                }
+            });
+        }
+        else {
+            let errorMsg=""
+            if(payload.errors.name!==undefined)
+                errorMsg+=payload.errors.name+"\n"
+            swal("Incorrect Input",errorMsg,"error")
+        }
+
     }
 
     render() {
@@ -98,11 +136,16 @@ class RegisterBook extends Component{
                             <input type="number" id="pages" name="pages" className="form-control addPages" required="true" value={this.state.pages} onChange={this.handleChange}/>
                         </div>
                         <br/>
+
                         <div className="register-book-set2">
                             <label htmlFor="Number of Copies">Number of Copies</label>
                             <label htmlFor="Reference only">Is Reference Only</label>
                             <input type="number" id="copies" name = "copies" className="form-control addCopies" required="true" value={this.state.copies} onChange={this.handleChange} />
-                            <input type="number" id="isReferenceOnly" name = "isReferenceOnly" className="form-control addReference" min="0" max="1" required="true" value={this.state.isReferenceOnly} onChange={this.handleChange} />
+                            <select className="form-control" id="exampleFormControlSelect1" name="isReferenceOnly" id="isReferenceOnly" onClick={this.handleChange}>
+                                <option value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                            {/*<input type="number" id="isReferenceOnly" name = "isReferenceOnly" className="form-control addReference" min="0" max="1" required="true" value={this.state.isReferenceOnly} onChange={this.handleChange} />*/}
                         </div>
 
                         <br/>
@@ -123,7 +166,7 @@ class RegisterBook extends Component{
                         </div>
                         <br/>
                         <div className="register-book">
-                            <button type="submit"  className="btn btn-primary btn-block"> Add Book Items</button>
+                            <button type="submit"  className="btn btn-primary btn-block" onClick={this.addBook}> Add Book Items</button>
                         </div>
                     </form>
 
