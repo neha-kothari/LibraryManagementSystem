@@ -10,6 +10,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmailAddress(String email);
     User findByUserId(int user_id);
 
-    @Query(value = "SELECT * FROM User u WHERE user_type = 2", nativeQuery = true)
+    @Query(value = "SELECT * FROM user u WHERE user_type = 2", nativeQuery = true)
     List<User> getStudents();
 }

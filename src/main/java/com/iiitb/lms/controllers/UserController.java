@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/lms/v1")
 public class UserController {
@@ -78,6 +79,7 @@ public class UserController {
     public UserRegistrationDto userRegistrationDto() {
         return new UserRegistrationDto();
     }*/
+    @CrossOrigin(origins = "*")
 
     @GetMapping("/users/getdetails")
     @ResponseBody
@@ -87,6 +89,7 @@ public class UserController {
         user.setPassword("");
         return user;
     }
+    @CrossOrigin(origins = "*")
 
     @PostMapping("/users/{user_id}/block")
     @ResponseBody
@@ -105,7 +108,7 @@ public class UserController {
         }
 
     }
-
+    @CrossOrigin(origins = "*")
     @PostMapping("/users/{user_id}/unblock")
     @ResponseBody
     public ResponseEntity<UserDetailsDTO> unblockMember(Authentication auth, @PathVariable int user_id) {
@@ -123,7 +126,7 @@ public class UserController {
         }
 
     }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/users/students")
     @ResponseBody
     public ResponseEntity<List<UserDetailsDTO>> getStudents() {

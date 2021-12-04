@@ -3,12 +3,14 @@ import {withRouter} from "react-router-dom";
 import Item from "../Items/studentItem";
 import Fuse from "fuse.js";
 import LibNavbar from "./LibNavbar";
+import UserService from "../../Services/UserService";
 
 
 class ManageStudents extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            studentData:[],
             data: [{name: "harry potter", tags: ["Jk Rowling", "Dumbledore"]}, {name: "abc murder", tags: ["Agatha Christie"]
             },{name: "Perks of being a wallflower", tags: ["Someone"]}, {name: "A series of Unfortunate Events", tags: ["Lemony Snicket"]
             },{name: "Random Random", tags: ["Jk Rowling", "Dumbledore"]}, {name: "QUX", tags: ["Agatha Christie"]
@@ -20,6 +22,15 @@ class ManageStudents extends Component {
     }
     componentDidMount() {
         this.setState({searchData: this.state.data})
+        UserService.getAllStudents(localStorage.getItem("token")).then(res => {
+            console.log("Fetching all Students....", res);
+            if(res!==undefined)
+            {
+                this.setState({
+                    studentData:res
+                })
+            }
+        });
     }
 
     searchItem = (query) => {

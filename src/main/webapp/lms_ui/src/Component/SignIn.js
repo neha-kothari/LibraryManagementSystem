@@ -29,6 +29,7 @@ class SignIn extends Component {
             emailAddress: this.state.email,
             password: this.state.password
         }
+        console.log(user)
 
         UserService.loginUser(user).then(res => {
             console.log("SignIn Component", res);

@@ -18,4 +18,7 @@ public class UserDetailsDTO {
     private Date accountCreationDate;
     private Date lastLoginDateTime;
     private String error;
+
+    public void setError(String message) {
+    }
 }

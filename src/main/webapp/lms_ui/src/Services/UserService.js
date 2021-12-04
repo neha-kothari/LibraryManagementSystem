@@ -53,13 +53,29 @@ class UserService{
 
     getUserDetails(token)
     {
-        return axios.get("http://localhost:8085/lms/v1/user/getdetails",  {
+        return axios.get("http://localhost:8085/lms/v1/users/getdetails",  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token,
                 }
             }
         )
+    }
+
+    getAllStudents(token)
+    {
+        return axios.get("http://localhost:8085/lms/v1/users/students",  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }
+            }
+        )
+    }
+
+    blockStudent(token,userId)
+    {
+
     }
 }
 export default new UserService()   //exporting the object of this class
