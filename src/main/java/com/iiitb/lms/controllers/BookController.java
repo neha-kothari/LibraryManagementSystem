@@ -59,6 +59,7 @@ public class BookController {
                 bookService.addBook(bookDto);
             } else {
                 jsonObject.put("error", "ISBN already exists!");
+                return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.BAD_REQUEST);
             }
 
         }

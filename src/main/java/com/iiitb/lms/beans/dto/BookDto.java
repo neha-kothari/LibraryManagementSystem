@@ -1,5 +1,6 @@
 package com.iiitb.lms.beans.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ public class BookDto {
     private String language;
     private int noOfPages;
     private int noOfCopies;
+    @JsonProperty
     private boolean isReferenceOnly;
     private double price;
     private char status;
