@@ -3,8 +3,8 @@ package com.iiitb.lms.services.impl;
 import com.iiitb.lms.beans.Book;
 import com.iiitb.lms.beans.BookItem;
 import com.iiitb.lms.beans.BookReservation;
-import com.iiitb.lms.beans.User;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
+import com.iiitb.lms.repositories.BookItemRepository;
 import com.iiitb.lms.repositories.BookRepository;
 import com.iiitb.lms.repositories.BookReservationRepository;
 import com.iiitb.lms.repositories.UserRepository;
@@ -29,6 +29,9 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private BookItemRepository itemRepository;
+
     @Resource
     private BookReservationTransformer bookReservationTransformer;
 
@@ -39,8 +42,8 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
 
         input = (BookReservationRequestDTO) inputDetails;
 
-        if (!validateUserTypeAndStatus(input.getMemberId())) {
-            throw new Exception("Member cannot reserve book.");
+        if (!validateUserRequest(input.getMemberId())) {
+            throw new Exception("Member has 5 book reservations already.");
         }
 
         int bookItemAvailable = validateBookAvailability(input.getBookId());
@@ -48,7 +51,7 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
             throw new Exception("Selected book is not available for reservation.");
         }
 
-        input.setBookId(bookItemAvailable);
+        input.setBookItemId(bookItemAvailable);
     }
 
     private int validateBookAvailability(int bookId) throws Exception {
@@ -74,10 +77,10 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
         return -1;
     }
 
-    private boolean validateUserTypeAndStatus(int memberId) {
+    private boolean validateUserRequest(int memberId) {
 
-        User user = userRepository.findByUserId(memberId);
-        if (user.getUserType() != LMSConstants.USER_TYPE_MEMBER || user.getAccountStatus() != LMSConstants.ACCOUNT_STATUS_ACTIVE) {
+        int count  = bookReservationRepo.countCurrentBookReservations(memberId);
+        if (count == 5) {
             return false;
         }
         return true;
@@ -85,6 +88,10 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
 
     @Override
     BookReservationRequestDTO processRequest(Object inputDetails) {
+
+        BookItem bookItem = itemRepository.findByItemId(input.getBookItemId());
+        bookItem.setStatus(LMSConstants.BOOK_STATUS_RESERVED);
+        itemRepository.save(bookItem);
 
         input = (BookReservationRequestDTO) inputDetails;
         Date currentDate =  new Date();

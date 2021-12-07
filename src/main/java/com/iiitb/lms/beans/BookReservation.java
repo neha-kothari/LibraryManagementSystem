@@ -31,4 +31,7 @@ public class BookReservation {
     @JoinColumn(name="bookItem_id")
     private BookItem bookItem;
 
+    @Column(columnDefinition = "BOOLEAN")
+    private boolean delFlag;
+
 }
