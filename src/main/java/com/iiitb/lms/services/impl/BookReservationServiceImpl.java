@@ -104,8 +104,19 @@ public class BookReservationServiceImpl extends AbstractBookItemService {
         return bookReservationTransformer.toDTO(bookReservation);
     }
 
-    public void deleteRequest(User user, int reservationID) {
+    public void deleteRequest(User user, int reservationID) throws Exception {
 
-        //BookReservation reservation = bookReservationRepo.findById(reservationID);
+        BookReservation reservation = bookReservationRepo.findByReservationId(reservationID);
+        if (reservation != null && reservation.getMember().getUserId() != user.getUserId()) {
+            throw new Exception("User cannot delete this reservation!");
+        }
+
+        BookItem bookItem = reservation.getBookItem();
+        bookItem.setStatus(LMSConstants.BOOK_STATUS_AVAILABLE);
+        itemRepository.save(bookItem);
+
+        reservation.setDelFlag(true);
+        bookReservationRepo.save(reservation);
+
     }
 }

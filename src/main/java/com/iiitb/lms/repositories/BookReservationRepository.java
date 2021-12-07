@@ -11,4 +11,6 @@ public interface BookReservationRepository extends JpaRepository<BookReservation
 
     @Query(value = "SELECT count(*) FROM book_reservation r WHERE r.user_id =:userId AND reservation_status = 'R' AND del_flag = false", nativeQuery = true)
     Integer countCurrentBookReservations(@Param("userId") Integer userId);
+
+    BookReservation findByReservationId(Integer reservationId);
 }
