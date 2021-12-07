@@ -1,5 +1,6 @@
 package com.iiitb.lms.controllers;
 
+import com.iiitb.lms.beans.Member;
 import com.iiitb.lms.beans.User;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
@@ -138,6 +139,23 @@ public class UserController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentsList);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/users/{user_id}/calculatefine")
+    @ResponseBody
+    public ResponseEntity<String> calculateUserFine(@PathVariable int user_id) {
+
+        Member member = userService.getMemberFromUserId(user_id);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            float fine = userService.calculateUserFine(member);
+            jsonObject.put("fine", fine);
+            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 }

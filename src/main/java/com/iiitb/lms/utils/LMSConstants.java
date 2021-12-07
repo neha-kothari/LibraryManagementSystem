@@ -8,6 +8,9 @@ public class LMSConstants {
     public static final char BOOK_STATUS_AVAILABLE = 'A';
     public static final char BOOK_STATUS_ISSUED = 'I';
     public static final char BOOK_STATUS_LOST = 'L';
+    public static final char BOOK_LENDING_STATUS_ISSUED = 'I';
+    public static final char BOOK_LENDING_STATUS_RETURNED = 'R';
+    public static final float FINE_PER_DAY = 20;
 
 
 }
