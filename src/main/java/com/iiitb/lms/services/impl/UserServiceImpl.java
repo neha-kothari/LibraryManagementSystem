@@ -1,10 +1,14 @@
 package com.iiitb.lms.services.impl;
 
+import com.iiitb.lms.beans.BookReservation;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
+import com.iiitb.lms.repositories.BookReservationRepository;
 import com.iiitb.lms.repositories.UserRepository;
 import com.iiitb.lms.services.UserService;
+import com.iiitb.lms.utils.transformers.BookReservationTransformer;
 import com.iiitb.lms.utils.transformers.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,8 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,6 +33,12 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserTransformer userTransformer;
+
+    @Resource
+    private BookReservationRepository reservationRepo;
+    @Resource
+    private BookReservationTransformer resTransformer;
+
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
@@ -71,6 +83,17 @@ public class UserServiceImpl implements UserService {
             return null;
         }
         return userTransformer.toUserDetailsDTO(user);
+    }
+
+    @Override
+    public List<BookReservationRequestDTO> getReservations(int user_id) {
+
+        List<BookReservation> reservations = reservationRepo.getCurrentReservations(user_id);
+        List<BookReservationRequestDTO> requests = new ArrayList<>();
+        for (BookReservation reservation : reservations) {
+            requests.add(resTransformer.toDTO(reservation));
+        }
+        return requests;
     }
 
 }

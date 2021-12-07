@@ -1,9 +1,12 @@
 package com.iiitb.lms.services;
 
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.List;
 
 
 public interface UserService extends UserDetailsService {
@@ -14,4 +17,5 @@ public interface UserService extends UserDetailsService {
     UserDetailsDTO getUserDetails(String email);
 
 
+    List<BookReservationRequestDTO> getReservations(int user_id);
 }

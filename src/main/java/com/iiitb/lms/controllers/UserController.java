@@ -143,4 +143,16 @@ public class UserController {
                 .body(studentsList);
     }
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/users/{user_id}/reservations")
+    @ResponseBody
+    public ResponseEntity<List<BookReservationRequestDTO>> getUserReservations(@PathVariable int user_id) {
+
+        List<BookReservationRequestDTO> reservations = userService.getReservations(user_id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(reservations);
+    }
+
 }
