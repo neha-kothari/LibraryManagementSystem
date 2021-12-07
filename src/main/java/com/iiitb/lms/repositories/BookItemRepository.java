@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface BookItemRepository extends JpaRepository<BookItem, Integer> {
 
+    BookItem findByItemId(Integer bookItemId);
+
     @Query(value = "SELECT count(*) FROM book_item b WHERE b.book_id =:bookId AND status = 'A'", nativeQuery = true)
     Integer findBookItemByIsReferenceOnlyFalse(@Param("bookId") Integer bookId);
 

@@ -34,12 +34,6 @@ public class BookController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private JwtTokenProvider tokenProvider;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private UserService userService;
 
     @Autowired

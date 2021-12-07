@@ -34,7 +34,7 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     Set<Author> authors;
 
-    @OneToMany
+    @OneToMany(mappedBy = "book")
     private List<BookItem> bookCopies;
 
     @Override
