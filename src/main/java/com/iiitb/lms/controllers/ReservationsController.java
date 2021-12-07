@@ -54,7 +54,7 @@ public class ReservationsController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resReq);
         }
 
-        return ResponseEntity.ok()
+        return ResponseEntity.created(null)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(resReq);
     }
