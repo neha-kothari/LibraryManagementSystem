@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/lms/v1")
+@RequestMapping("/lms/v1/reservations")
 public class ReservationsController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class ReservationsController {
 
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/reservations/{bookId}")
+    @PostMapping("/{bookId}")
     @ResponseBody
     public ResponseEntity<BookReservationRequestDTO> reserveBook(Authentication auth, @PathVariable int bookId) {
 
@@ -61,7 +61,7 @@ public class ReservationsController {
 
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/reservations/{reservationID}")
+    @DeleteMapping("/{reservationID}")
     @ResponseBody
     public ResponseEntity<String> deleteReservation(Authentication auth, @PathVariable int reservationID) {
 

@@ -1,5 +1,6 @@
 package com.iiitb.lms.beans;
 
+import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
