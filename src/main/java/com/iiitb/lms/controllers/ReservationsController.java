@@ -36,7 +36,7 @@ public class ReservationsController {
 
         User user = userService.getUserFromEmailId(auth.getName());
         BookReservationRequestDTO resReq = new BookReservationRequestDTO();
-        if(user == null || user.getUserType() != 2 || user.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
+        if (user == null || user.getUserType() != 2 || user.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
             resReq.setError("User is not allowed to reserve books");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resReq);
 
@@ -57,5 +57,28 @@ public class ReservationsController {
         return ResponseEntity.created(null)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(resReq);
+    }
+
+
+    @CrossOrigin(origins = "*")
+    @DeleteMapping("/reservations/{reservationID}")
+    @ResponseBody
+    public ResponseEntity<String> deleteReservation(Authentication auth, @PathVariable int reservationID) {
+
+        User user = userService.getUserFromEmailId(auth.getName());
+
+        if (user == null || user.getUserType() != 2 || user.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not allowed to delete reservations");
+
+        }
+
+        try {
+            bookReservationService.deleteRequest(user, reservationID);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body("Successfully deleted reservation.");
     }
 }

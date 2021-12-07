@@ -3,11 +3,11 @@ package com.iiitb.lms.services.impl;
 import com.iiitb.lms.beans.Book;
 import com.iiitb.lms.beans.BookItem;
 import com.iiitb.lms.beans.BookReservation;
+import com.iiitb.lms.beans.User;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.repositories.BookItemRepository;
 import com.iiitb.lms.repositories.BookRepository;
 import com.iiitb.lms.repositories.BookReservationRepository;
-import com.iiitb.lms.repositories.UserRepository;
 import com.iiitb.lms.utils.LMSConstants;
 import com.iiitb.lms.utils.transformers.BookReservationTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Service
-public class BookReservationServiceImpl extends AbstractBookItemService{
-
-    @Autowired
-    private UserRepository userRepository;
+public class BookReservationServiceImpl extends AbstractBookItemService {
 
     @Autowired
     private BookReservationRepository bookReservationRepo;
@@ -80,7 +77,7 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
     private boolean validateUserRequest(int memberId) {
 
         int count  = bookReservationRepo.countCurrentBookReservations(memberId);
-        if (count == 5) {
+        if (count == LMSConstants.MAX_NO_OF_RESERVATIONS) {
             return false;
         }
         return true;
@@ -105,5 +102,10 @@ public class BookReservationServiceImpl extends AbstractBookItemService{
         bookReservationTransformer.toEntity(bookReservation, input);
         bookReservationRepo.save(bookReservation);
         return bookReservationTransformer.toDTO(bookReservation);
+    }
+
+    public void deleteRequest(User user, int reservationID) {
+
+        //BookReservation reservation = bookReservationRepo.findById(reservationID);
     }
 }
