@@ -36,6 +36,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public BookDetailsDTO updateBookDetails(BookDto bookDto) {
+        Book book = bookRepository.findByBookId(bookDto.getBookId());
+
+        if(book==null)
+            return null;
+        bookTransformer.toEntity(book, bookDto);
+        book = bookRepository.save(book);
+        return bookTransformer.toBookDetails(book);
+    }
+
+    @Override
     public boolean isbnExists(String isbnNumber) {
 
         Book book = bookRepository.findByIsbnNumber(isbnNumber);

@@ -10,6 +10,7 @@ import java.util.List;
 public interface BookService {
 
     void addBook(BookDto bookDto);
+    BookDetailsDTO updateBookDetails(BookDto bookDto);
     boolean isbnExists(String isbnNumber);
     boolean deleteBook(Integer bookId);
     List<BookDetailsDTO> getAllBooks();

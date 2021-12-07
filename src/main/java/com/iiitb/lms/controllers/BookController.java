@@ -66,6 +66,24 @@ public class BookController {
         return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.CREATED);
     }
 
+    @PutMapping
+    public ResponseEntity<BookDetailsDTO> updateBook(Authentication auth, @RequestBody BookDto bookDto) {
+
+        User user = userService.getUserFromEmailId(auth.getName());
+        if(user != null && user.getUserType() != 1) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+
+        } else {
+            BookDetailsDTO bookDetails = bookService.updateBookDetails(bookDto);
+            if(bookDetails==null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(bookDetails);
+        }
+    }
+
     @CrossOrigin(origins = "*")
     @GetMapping
     public ResponseEntity<List<BookDetailsDTO>> getAllBooks() {
