@@ -25,6 +25,16 @@ public class BookItemController {
     @Autowired
     private UserService userService;
 
+  /*  @PostMapping(value = "/{bookItemId}/issue", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<IssueBookDTO> issueBookItem(Authentication auth, @PathVariable bookItemId) {
+
+    }
+
+    @PutMapping(value = "/{bookItemId}/return", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<IssueBookDTO> issueBookItem(Authentication auth, @PathVariable bookItemId) {
+
+    }
+*/
 
 
    /* @DeleteMapping(value = "/{bookItemId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

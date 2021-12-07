@@ -3,6 +3,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -32,6 +33,9 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     Set<Author> authors;
+
+    @OneToMany
+    private List<BookItem> bookCopies;
 
     @Override
     public int hashCode() {

@@ -1,6 +1,7 @@
 package com.iiitb.lms.services.impl;
 
 import com.iiitb.lms.beans.Book;
+import com.iiitb.lms.beans.dto.BookDetailsDTO;
 import com.iiitb.lms.beans.dto.BookDto;
 import com.iiitb.lms.beans.dto.DashBoardBookDTO;
 import com.iiitb.lms.repositories.BookRepository;
@@ -53,9 +54,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<DashBoardBookDTO> getAllBooks() {
+    public List<BookDetailsDTO> getAllBooks() {
         List<Book> books = bookRepository.findByDelFlagFalse();
         return bookTransformer.getBooksList(books);
+    }
+
+    @Override
+    public BookDetailsDTO getBookDetails(Integer bookId) {
+
+        Book book = bookRepository.findByBookId(bookId);
+        if (null != book) {
+            return bookTransformer.toBookDetails(book);
+        }
+        return null;
     }
 
 }

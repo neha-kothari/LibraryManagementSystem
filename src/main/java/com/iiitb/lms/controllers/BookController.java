@@ -1,12 +1,9 @@
 package com.iiitb.lms.controllers;
 
-import com.iiitb.lms.beans.Book;
-import com.iiitb.lms.beans.BookItem;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookDetailsDTO;
 import com.iiitb.lms.beans.dto.BookDto;
 
-import com.iiitb.lms.beans.dto.DashBoardBookDTO;
-import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.config.JwtTokenProvider;
 
 import com.iiitb.lms.repositories.UserRepository;
@@ -71,14 +68,30 @@ public class BookController {
 
     @CrossOrigin(origins = "*")
     @GetMapping
-    public ResponseEntity<List<DashBoardBookDTO>> getAllBooks() {
+    public ResponseEntity<List<BookDetailsDTO>> getAllBooks() {
 
         try {
-            List<DashBoardBookDTO> books = bookService.getAllBooks();
+            List<BookDetailsDTO> books = bookService.getAllBooks();
 
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(books);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping(value = "/{bookId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<BookDetailsDTO> getBookDetails(@PathVariable Integer bookId) {
+
+        try {
+            BookDetailsDTO bookDetails = bookService.getBookDetails(bookId);
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(bookDetails);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
