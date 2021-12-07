@@ -30,7 +30,7 @@ public class ReservationsController {
 
 
     @CrossOrigin(origins = "*")
-    @PostMapping("/reservation/{bookId}")
+    @PostMapping("/reservations/{bookId}")
     @ResponseBody
     public ResponseEntity<BookReservationRequestDTO> reserveBook(Authentication auth, @PathVariable int bookId) {
 
