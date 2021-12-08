@@ -16,7 +16,7 @@ class RegisterBook extends Component{
             pages: 0,
             authors: [""],
             copies: 0,
-            isReferenceOnly : 0,
+            isReferenceOnly : true,
             price: 0,
             purchaseDate:"",
             publicationYear : 0

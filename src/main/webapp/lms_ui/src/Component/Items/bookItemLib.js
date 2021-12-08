@@ -12,9 +12,9 @@ class bookItemLib extends React.Component{
         this.deleteBook=this.deleteBook.bind(this)
     }
     deleteBook(){
-        console.log("delete", this.props.name);
+        console.log("delete", this.props.bookTitle);
         swal({
-            title: "Delete "+ this.props.name +" ?",
+            title: "Delete "+ this.props.bookTitle +" ?",
             text: "Once deleted, you will not be able to recover this record",
             icon: "warning",
             buttons: true,
@@ -40,7 +40,7 @@ class bookItemLib extends React.Component{
                         <h5 className="card-title">{this.props.bookTitle}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">by {this.props.authors.join(", ")}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Publisher: {this.props.publisher}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">ISBN: {this.props.isbnNumber} {this.props.bookId}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">ISBN: {this.props.isbnNumber} </h6>
 
                         <Link to={{
                             pathname: "/EditBook",

@@ -2,12 +2,14 @@ package com.iiitb.lms.controllers;
 
 import com.iiitb.lms.beans.Member;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
 import com.iiitb.lms.config.JwtTokenProvider;
 import com.iiitb.lms.repositories.UserRepository;
 import com.iiitb.lms.services.LibrarianService;
 import com.iiitb.lms.services.UserService;
+import com.iiitb.lms.services.impl.BookReservationServiceImpl;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,7 @@ public class UserController {
 
     @Autowired
     private LibrarianService librarianService;
+
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -139,6 +142,18 @@ public class UserController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(studentsList);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/users/{user_id}/reservations")
+    @ResponseBody
+    public ResponseEntity<List<BookReservationRequestDTO>> getUserReservations(@PathVariable int user_id) {
+
+        List<BookReservationRequestDTO> reservations = userService.getReservations(user_id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(reservations);
     }
 
     @CrossOrigin(origins = "*")
