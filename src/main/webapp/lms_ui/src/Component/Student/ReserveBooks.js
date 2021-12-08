@@ -3,32 +3,43 @@ import {withRouter} from "react-router-dom";
 import Item from "../Items/bookItemStud";
 import Fuse from "fuse.js";
 import StudentNavbar from "./StudentNavbar";
+import LibrarianService from "../../Services/LibrarianService";
 
 
 class ReserveBooks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [{name: "harry potter", tags: ["Jk Rowling", "Dumbledore"]}, {name: "abc murder", tags: ["Agatha Christie"]
-            },{name: "Perks of being a wallflower", tags: ["Someone"]}, {name: "A series of Unfortunate Events", tags: ["Lemony Snicket"]
-            },{name: "Random Random", tags: ["Jk Rowling", "Dumbledore"]}, {name: "QUX", tags: ["Agatha Christie"]
-            },{name: "Random chikichiki", tags: ["Jk Rowling", "Dumbledore"]}],
+            bookData: [],
+            allData:[],
             searchData:[],
             noResults:"none"
         }
         this.searchItem = this.searchItem.bind(this)
     }
     componentDidMount() {
-        this.setState({searchData: this.state.data})
+
+        let token=localStorage.getItem("token")
+        LibrarianService.getAllBooks(token).then(res => {
+            console.log("Fetching all books....", res);
+            if(res!==undefined)
+            {
+                this.setState({
+                    allData:res.data,
+                    searchData:res.data
+                })
+            }
+            console.log(this.state.allData)
+        });
     }
 
     searchItem = (query) => {
         if(query===""){
-            this.setState({searchData: this.state.data})
+            this.setState({searchData: this.state.allData})
         }
         else{
-            const fuse = new Fuse(this.state.data, {
-                keys: ["name", "tags"]
+            const fuse = new Fuse(this.state.allData, {
+                keys: ["bookTitle", "authors","isbnNumber"]
             });
             const result = fuse.search(query);
             const finalResult = [];
@@ -38,13 +49,12 @@ class ReserveBooks extends Component {
                 });
                 this.setState({searchData: finalResult, noResults: "none"})
             } else {
-                this.setState({searchData: this.state.data, noResults:"inline"})
+                this.setState({searchData: this.state.allData, noResults:"inline"})
             }
         }
     };
 
     render() {
-
         return (
             <div>
                 <StudentNavbar/>
