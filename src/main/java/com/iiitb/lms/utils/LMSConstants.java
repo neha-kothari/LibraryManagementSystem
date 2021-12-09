@@ -30,6 +30,4 @@ public class LMSConstants {
     public static final String FINE_TRANSACTION_MODE_UPI = "UPI";
     public static final String FINE_TRANSACTION_MODE_DEBIT = "Debit Card";
 
-
-
 }

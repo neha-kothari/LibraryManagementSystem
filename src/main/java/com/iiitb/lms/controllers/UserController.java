@@ -10,6 +10,7 @@ import com.iiitb.lms.repositories.UserRepository;
 import com.iiitb.lms.services.LibrarianService;
 import com.iiitb.lms.services.UserService;
 import com.iiitb.lms.services.impl.BookReservationServiceImpl;
+import com.iiitb.lms.utils.LMSConstants;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -84,7 +83,6 @@ public class UserController {
     @GetMapping("/users/profile")
     @ResponseBody
     public ResponseEntity<UserDetailsDTO> getUserDetails(Authentication auth) {
-
         UserDetailsDTO userDetailsDTO = userService.getUserDetails(auth.getName());
         if (null != userDetailsDTO) {
             return ResponseEntity.ok()
@@ -102,6 +100,10 @@ public class UserController {
     public ResponseEntity<UserDetailsDTO> blockMember(Authentication auth, @PathVariable int user_id) {
 
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+        if(!isRequestFromLibrarian(auth.getName())){
+            userDetailsDTO.setError("User not authorized");
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(userDetailsDTO);
+        }
         try {
             userDetailsDTO = librarianService.blockMember(user_id);
             return ResponseEntity.ok()
@@ -114,12 +116,17 @@ public class UserController {
         }
 
     }
+
     @CrossOrigin(origins = "*")
     @PostMapping("/users/{user_id}/unblock")
     @ResponseBody
     public ResponseEntity<UserDetailsDTO> unblockMember(Authentication auth, @PathVariable int user_id) {
 
         UserDetailsDTO userDetailsDTO = new UserDetailsDTO();
+        if(!isRequestFromLibrarian(auth.getName())){
+            userDetailsDTO.setError("User not authorized");
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(userDetailsDTO);
+        }
         try {
             userDetailsDTO = librarianService.unblockMember(user_id);
             return ResponseEntity.ok()
@@ -135,8 +142,10 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/users/students")
     @ResponseBody
-    public ResponseEntity<List<UserDetailsDTO>> getStudents() {
-
+    public ResponseEntity<List<UserDetailsDTO>> getStudents(Authentication auth) {
+        if(!isRequestFromLibrarian(auth.getName())){
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(null);
+        }
         List<UserDetailsDTO> studentsList = librarianService.getStudents();
 
         return ResponseEntity.ok()
@@ -147,8 +156,10 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/users/{user_id}/reservations")
     @ResponseBody
-    public ResponseEntity<List<BookReservationRequestDTO>> getUserReservations(@PathVariable int user_id) {
-
+    public ResponseEntity<List<BookReservationRequestDTO>> getUserReservations(Authentication auth, @PathVariable int user_id) {
+        if(!isRequestFromSameUser(auth.getName(), user_id) && !isRequestFromLibrarian(auth.getName())){
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(null);
+        }
         List<BookReservationRequestDTO> reservations = userService.getReservations(user_id);
 
         return ResponseEntity.ok()
@@ -159,8 +170,10 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/users/{user_id}/calculatefine")
     @ResponseBody
-    public ResponseEntity<String> calculateUserFine(@PathVariable int user_id) {
-
+    public ResponseEntity<String> calculateUserFine(Authentication auth, @PathVariable int user_id) {
+        if(!isRequestFromSameUser(auth.getName(), user_id) && !isRequestFromLibrarian(auth.getName())){
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(null);
+        }
         Member member = userService.getMemberFromUserId(user_id);
         JSONObject jsonObject = new JSONObject();
         try {
@@ -171,6 +184,17 @@ public class UserController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+
+    private boolean isRequestFromLibrarian(String emailId) {
+        User user = userService.getUserFromEmailId(emailId);
+        return user.getUserType() == LMSConstants.USER_TYPE_LIBRARIAN;
+    }
+
+    private boolean isRequestFromSameUser(String emailId, int userId) {
+        User user = userService.getUserFromEmailId(emailId);
+        return user.getUserId() == userId;
     }
 
 }

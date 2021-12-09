@@ -120,8 +120,11 @@ public class UserServiceImpl implements UserService {
         float fine=0;
         for (BookLending bookLending:
              member.getBookLendings()) {
-            if(bookLending.getStatus()==LMSConstants.BOOK_LEND_STATUS_RETURNED){
+            if(bookLending.getStatus()==LMSConstants.BOOK_LEND_STATUS_RETURNED || bookLending.getStatus()==LMSConstants.BOOK_LEND_STATUS_FINE_PAID){
                 continue;
+            }
+            if(bookLending.getStatus()==LMSConstants.BOOK_LEND_STATUS_LOST){
+                fine += bookLending.getBookItem().getPrice();
             }
             Calendar today = Calendar.getInstance();
             long diff = today.getTime().getTime() - bookLending.getDueDate().getTime();
