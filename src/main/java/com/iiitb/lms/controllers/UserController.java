@@ -2,6 +2,7 @@ package com.iiitb.lms.controllers;
 
 import com.iiitb.lms.beans.Member;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
@@ -165,6 +166,20 @@ public class UserController {
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(reservations);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/users/{user_id}/bookissues")
+    @ResponseBody
+    public ResponseEntity<List<BookIssueDetailsDTO>> getUserIssues(Authentication auth, @PathVariable int user_id) {
+        if(!isRequestFromSameUser(auth.getName(), user_id) && !isRequestFromLibrarian(auth.getName())){
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(null);
+        }
+        List<BookIssueDetailsDTO> bookIssues = userService.getIssuedBooks(user_id);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(bookIssues);
     }
 
     @CrossOrigin(origins = "*")

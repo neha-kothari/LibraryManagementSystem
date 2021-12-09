@@ -4,14 +4,17 @@ import com.iiitb.lms.beans.BookLending;
 import com.iiitb.lms.beans.Member;
 import com.iiitb.lms.beans.BookReservation;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
+import com.iiitb.lms.repositories.BookLendingRepository;
 import com.iiitb.lms.repositories.MemberRepository;
 import com.iiitb.lms.repositories.BookReservationRepository;
 import com.iiitb.lms.repositories.UserRepository;
 import com.iiitb.lms.services.UserService;
 import com.iiitb.lms.utils.LMSConstants;
+import com.iiitb.lms.utils.transformers.BookLendingTransformer;
 import com.iiitb.lms.utils.transformers.BookReservationTransformer;
 import com.iiitb.lms.utils.transformers.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +48,11 @@ public class UserServiceImpl implements UserService {
     private BookReservationRepository reservationRepo;
     @Resource
     private BookReservationTransformer resTransformer;
+
+    @Resource
+    private BookLendingRepository bookLendingRepository;
+    @Resource
+    private BookLendingTransformer bookLendingTransformer;
 
 
     @Autowired
@@ -113,6 +121,16 @@ public class UserServiceImpl implements UserService {
             requests.add(resTransformer.toDTO(reservation));
         }
         return requests;
+    }
+
+    @Override
+    public List<BookIssueDetailsDTO> getIssuedBooks(int user_id){
+        List<BookLending> bookLendings = bookLendingRepository.findAllByMember(memberRepository.findByUserId(user_id));
+        List<BookIssueDetailsDTO> issuedBooks = new ArrayList<>();
+        for (BookLending bookLending : bookLendings) {
+            issuedBooks.add(bookLendingTransformer.toDTO(bookLending));
+        }
+        return issuedBooks;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.iiitb.lms.services;
 
 import com.iiitb.lms.beans.Member;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.beans.dto.UserDetailsDTO;
 import com.iiitb.lms.beans.dto.UserRegistrationDto;
@@ -22,4 +23,5 @@ public interface UserService extends UserDetailsService {
 
 
     List<BookReservationRequestDTO> getReservations(int user_id);
+    List<BookIssueDetailsDTO> getIssuedBooks(int user_id);
 }
