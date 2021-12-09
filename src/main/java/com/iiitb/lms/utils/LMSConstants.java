@@ -14,6 +14,7 @@ public class LMSConstants {
     public static final int ISSUE_DAYS = 7;
     public static final String RESERVATION_STATUS_RESERVED = "Reserved";
     public static final String RESERVATION_STATUS_DENIED = "Denied";
+    public static final char BOOK_RESERVATION_STATUS_APPROVED = 'A';
     public static final char BOOK_RESERVATION_STATUS_DELETED = 'D';
     public static final String RESERVATION_STATUS_APPROVED = "Approved";
     public static final int MAX_NO_OF_RESERVATIONS = 20;
