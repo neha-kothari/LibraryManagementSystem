@@ -15,6 +15,8 @@ public class FineTransaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int fineId;
     @Column
+    private float fineAmount;
+    @Column
     private char status;
     @Column
     private String paymentMode;

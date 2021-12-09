@@ -12,4 +12,6 @@ public interface BookLendingRepository extends JpaRepository<BookLending, Intege
 
     @Query(value = "SELECT count(*) FROM book_lending l WHERE l.member_id =:userId AND status = 'B'", nativeQuery = true)
     Integer countCurrentIssuedBooks(@Param("userId") Integer userId);
+
+    BookLending findBookLendingByOrderId(int orderId);
 }

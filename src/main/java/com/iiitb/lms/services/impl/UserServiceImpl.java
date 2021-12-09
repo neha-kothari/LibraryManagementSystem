@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -121,7 +120,7 @@ public class UserServiceImpl implements UserService {
         float fine=0;
         for (BookLending bookLending:
              member.getBookLendings()) {
-            if(bookLending.getStatus()==LMSConstants.BOOK_LENDING_STATUS_RETURNED){
+            if(bookLending.getStatus()==LMSConstants.BOOK_LEND_STATUS_RETURNED){
                 continue;
             }
             Calendar today = Calendar.getInstance();

@@ -21,9 +21,15 @@ public class LMSConstants {
     public static final char BOOK_LEND_STATUS_BORROWED = 'B';
     public static final char BOOK_LEND_STATUS_RETURNED = 'R';
     public static final char BOOK_LEND_STATUS_LOST = 'L';
-    public static final char BOOK_LENDING_STATUS_ISSUED = 'I';
-    public static final char BOOK_LENDING_STATUS_RETURNED = 'R';
+    public static final char BOOK_LEND_STATUS_FINE_PAID = 'F';
     public static final float FINE_PER_DAY = 20;
+    public static final char FINE_TRANSACTION_STATUS_COMPLETE = 'C';
+    public static final char FINE_TRANSACTION_STATUS_PROCESSING = 'P';
+    public static final char FINE_TRANSACTION_STATUS_FAILED = 'F';
+    public static final String FINE_TRANSACTION_MODE_CASH = "Cash";
+    public static final String FINE_TRANSACTION_MODE_UPI = "UPI";
+    public static final String FINE_TRANSACTION_MODE_DEBIT = "Debit Card";
+
 
 
 }
