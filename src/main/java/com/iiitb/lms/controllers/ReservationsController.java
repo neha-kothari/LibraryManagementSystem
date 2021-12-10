@@ -88,20 +88,19 @@ public class ReservationsController {
     }
 
     @CrossOrigin(origins = "*")
-    @DeleteMapping("/approve/{reservationID}")
+    @PostMapping("/approve/{reservationID}")
     @ResponseBody
     public ResponseEntity<BookIssueDetailsDTO> approveReservation(Authentication auth, @PathVariable int reservationID) {
 
         User librarian = userService.getUserFromEmailId(auth.getName());
 
-        if (librarian == null || librarian.getUserType() != 2 || librarian.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
+        if (librarian == null || librarian.getUserType() != LMSConstants.USER_TYPE_LIBRARIAN || librarian.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 
         }
         BookIssueDetailsDTO resReq = new BookIssueDetailsDTO();
         try {
             resReq = bookReservationService.approveRequest(librarian, reservationID);
-            resReq.setIssuedByUserId(librarian.getUserId());
             resReq = (BookIssueDetailsDTO) bookLendingService.execute(resReq);
 
         } catch (Exception e) {

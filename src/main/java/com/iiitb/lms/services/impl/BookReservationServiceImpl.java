@@ -121,18 +121,23 @@ public class BookReservationServiceImpl extends AbstractBookItemService {
 
     }
 
-    public BookIssueDetailsDTO approveRequest(User user, int reservationID) throws Exception {
+    public BookIssueDetailsDTO approveRequest(User librarian, int reservationID) throws Exception {
 
         BookReservation reservation = bookReservationRepo.findByReservationId(reservationID);
-        if (reservation != null && reservation.getMember().getUserId() != user.getUserId()) {
-            throw new Exception("User cannot approve this reservation!");
+        if (reservation == null || reservation.getReservationStatus()!=LMSConstants.BOOK_RESERVATION_STATUS_RESERVED) {
+            throw new Exception("Reservation not valid");
         }
         reservation.setReservationStatus(LMSConstants.BOOK_RESERVATION_STATUS_APPROVED);
         bookReservationRepo.save(reservation);
 
+        BookItem bookItem = itemRepository.findByItemId(reservation.getBookItem().getItemId());
+        bookItem.setStatus(LMSConstants.BOOK_STATUS_AVAILABLE);
+        itemRepository.save(bookItem);
+
         BookIssueDetailsDTO issueRequest = new BookIssueDetailsDTO();
         issueRequest.setBookItemId(reservation.getBookItem().getItemId());
-        issueRequest.setMemberId(user.getUserId());
+        issueRequest.setMemberId(reservation.getMember().getUserId());
+        issueRequest.setIssuedByUserId(librarian.getUserId());
         return issueRequest;
     }
 }
