@@ -66,14 +66,22 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
         BookLending issuedBookOrder = issuedBooksRepository.findBookLendingByOrderId(request.getOrderId());
         request.setBookItemId(issuedBookOrder.getBookItem().getItemId());
 
-        float fine = calculateFine(issuedBookOrder);
+        float fine = 0;
         if(request.getStatus().equals(String.valueOf(LMSConstants.BOOK_LEND_STATUS_LOST))){
-            fine += issuedBookOrder.getBookItem().getPrice();
-            markBookLost(issuedBookOrder);
+            if(issuedBookOrder.getStatus()==LMSConstants.BOOK_LEND_STATUS_FINE_PAID){
+                request.setFine(0);
+                request.setError("Fine already paid for losing the book");
+                return request;
+            }
+            if(issuedBookOrder.getStatus()!=LMSConstants.BOOK_LEND_STATUS_LOST){
+                markBookLost(issuedBookOrder);
+            }
+            fine = calculateFine(issuedBookOrder);
             request.setFine(fine);
             request.setError("Member needs to pay the fine for losing the book");
             return request;
         }
+        fine = calculateFine(issuedBookOrder);
         if(fine>0){
             request.setFine(fine);
             request.setError("Member needs to pay outstanding fine for this book first");
@@ -87,8 +95,12 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
 
     float calculateFine(BookLending issuedBookOrder){
         FineTransaction fineTransaction = issuedBookOrder.getFine();
+        float fine = 0;
         if(fineTransaction!=null && fineTransaction.getStatus()==LMSConstants.FINE_TRANSACTION_STATUS_COMPLETE){
             return 0;
+        }
+        if(issuedBookOrder.getStatus()==LMSConstants.BOOK_LEND_STATUS_LOST){
+            fine += issuedBookOrder.getBookItem().getPrice();
         }
         Calendar today = Calendar.getInstance();
         long diff = today.getTime().getTime() - issuedBookOrder.getDueDate().getTime();
@@ -96,7 +108,7 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
             return 0;
         }
         long noOfDaysPastDue = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-        float fine = LMSConstants.FINE_PER_DAY * noOfDaysPastDue;
+        fine += LMSConstants.FINE_PER_DAY * noOfDaysPastDue;
         return fine;
     }
 
@@ -104,18 +116,18 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
         issuedBookOrder.setReturnDate(new Date());
         issuedBookOrder.setStatus(LMSConstants.BOOK_LEND_STATUS_RETURNED);
         issuedBooksRepository.save(issuedBookOrder);
-
-        BookItem bookItem = bookItemRepository.findByItemId(request.getBookItemId());
-        bookItem.setStatus(LMSConstants.BOOK_STATUS_AVAILABLE);
-        bookItemRepository.save(bookItem);
+        updateBookItemStatus(issuedBookOrder.getBookItem().getItemId(), LMSConstants.BOOK_STATUS_AVAILABLE);
     }
 
     protected void markBookLost(BookLending issuedBookOrder) {
         issuedBookOrder.setStatus(LMSConstants.BOOK_LEND_STATUS_LOST);
         issuedBooksRepository.save(issuedBookOrder);
+        updateBookItemStatus(issuedBookOrder.getBookItem().getItemId(), LMSConstants.BOOK_STATUS_LOST);
+    }
 
-        BookItem bookItem = bookItemRepository.findByItemId(request.getBookItemId());
-        bookItem.setStatus(LMSConstants.BOOK_STATUS_LOST);
+    protected void updateBookItemStatus(int bookItemId, char status){
+        BookItem bookItem = bookItemRepository.findByItemId(bookItemId);
+        bookItem.setStatus(status);
         bookItemRepository.save(bookItem);
     }
 

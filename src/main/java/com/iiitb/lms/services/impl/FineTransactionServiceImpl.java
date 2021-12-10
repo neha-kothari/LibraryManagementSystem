@@ -73,7 +73,7 @@ public class FineTransactionServiceImpl extends BookReturnServiceImpl {
         fineTransaction.setStatus(LMSConstants.FINE_TRANSACTION_STATUS_COMPLETE);
         fineTransaction.setFineAmount(fine);
 
-        fineTransactionRepository.save(fineTransaction);
+        fineTransaction = fineTransactionRepository.save(fineTransaction);
 
         issuedBookOrder.setFine(fineTransaction);
         issuedBooksRepository.save(issuedBookOrder);

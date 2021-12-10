@@ -69,23 +69,15 @@ public class BookReturnController {
     @CrossOrigin(origins = "*")
     @PostMapping("/collectfine")
     @ResponseBody
-    public ResponseEntity<FineTransactionDTO> collectFine(Authentication auth, @RequestParam("memberId") int memberId,
-                                                          @RequestParam("orderId") int orderId, @RequestParam("amount") float fineAmount, @RequestParam("mode") String paymentMode) {
+    public ResponseEntity<FineTransactionDTO> collectFine(Authentication auth, @RequestBody FineTransactionDTO fineTransaction) {
 
         User librarian = userService.getUserFromEmailId(auth.getName());
 
-        FineTransactionDTO fineTransaction = new FineTransactionDTO();
-
-        if (librarian == null || librarian.getUserType() != 1 || librarian.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
+        if (librarian == null || librarian.getUserType() != LMSConstants.USER_TYPE_LIBRARIAN || librarian.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
             fineTransaction.setError("User is not allowed to perform this action.");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(fineTransaction);
 
         }
-        fineTransaction.setOrderId(orderId);
-        fineTransaction.setMemberId(memberId);
-        fineTransaction.setFineAmount(fineAmount);
-        fineTransaction.setPaymentMode(paymentMode);
-
 
         try {
             fineTransaction = (FineTransactionDTO) fineTransactionService.execute(fineTransaction);
