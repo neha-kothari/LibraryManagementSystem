@@ -37,6 +37,7 @@ class bookItemStud extends React.Component{
         });
     }
 
+
     render() {
         return (
             <div>
@@ -49,7 +50,7 @@ class bookItemStud extends React.Component{
                         <h6 className="card-subtitle mb-2 " style={{color: this.props.availableCopies === 0 ? "#cf1232" : "green"}}>Available Copies: {this.props.availableCopies} </h6>
                         <Link to={{
                             pathname: "/Fake",
-                            state: { bookTitle: this.props.name }}} >
+                            state: { bookTitle: this.props.bookTitle }}} >
                             <a href="#" className="card-link">View Details</a>
                         </Link>
                         <a href="#" className="card-link m-3" style={{display: this.props.availableCopies === 0 ? "none" : true}}  onClick={() => this.reserveBook()} >Reserve</a>
