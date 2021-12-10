@@ -51,6 +51,8 @@ public class BookReturnController {
         returnRequest.setMemberId(memberId);
         if(lost==1) {
             returnRequest.setStatus(String.valueOf(LMSConstants.BOOK_LEND_STATUS_LOST));
+        }else{
+            returnRequest.setStatus(String.valueOf(LMSConstants.BOOK_LEND_STATUS_RETURNED));
         }
 
         try {

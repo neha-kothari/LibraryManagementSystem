@@ -84,6 +84,7 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
         fine = calculateFine(issuedBookOrder);
         if(fine>0){
             request.setFine(fine);
+            request.setStatus(String.valueOf(LMSConstants.BOOK_LEND_STATUS_BORROWED));
             request.setError("Member needs to pay outstanding fine for this book first");
             return request;
         }
@@ -105,7 +106,7 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
         Calendar today = Calendar.getInstance();
         long diff = today.getTime().getTime() - issuedBookOrder.getDueDate().getTime();
         if(diff<=0){
-            return 0;
+            return fine;
         }
         long noOfDaysPastDue = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         fine += LMSConstants.FINE_PER_DAY * noOfDaysPastDue;

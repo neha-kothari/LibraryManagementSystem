@@ -49,8 +49,14 @@ public class FineTransactionServiceImpl extends BookReturnServiceImpl {
         BookLending issuedBookOrder = issuedBooksRepository.findBookLendingByOrderId(request.getOrderId());
         request.setBookItemId(issuedBookOrder.getBookItem().getItemId());
 
-        if(request.getFineAmount()<=0){
+        float fine = super.calculateFine(issuedBookOrder);
+
+        if(fine<=0){
             request.setError("Member has no outstanding fine");
+            return request;
+        }else if(request.getFineAmount()!=fine){
+            request.setFineAmount(fine);
+            request.setError("Fine Amount is invalid. Required Fine amount is :" + fine);
             return request;
         }
         FineTransaction fineTransaction = createFineTransaction(issuedBookOrder, request.getFineAmount(), request.getPaymentMode());
