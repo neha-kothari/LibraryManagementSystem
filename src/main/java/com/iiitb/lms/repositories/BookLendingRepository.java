@@ -18,4 +18,7 @@ public interface BookLendingRepository extends JpaRepository<BookLending, Intege
     BookLending findBookLendingByOrderId(int orderId);
 
     List<BookLending> findAllByMember(User user);
+
+    @Query(value = "SELECT * FROM book_lending l WHERE l.member_id =:userId AND status in ('B','L')", nativeQuery = true)
+    List<BookLending> findCurrentIssuedBooks(@Param("userId") Integer userId);
 }

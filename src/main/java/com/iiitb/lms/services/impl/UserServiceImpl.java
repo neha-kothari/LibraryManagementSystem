@@ -124,8 +124,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BookIssueDetailsDTO> getIssuedBooks(int user_id){
-        List<BookLending> bookLendings = bookLendingRepository.findAllByMember(memberRepository.findByUserId(user_id));
+    public List<BookIssueDetailsDTO> getIssuedBooks(int user_id, int active){
+        List<BookLending> bookLendings;
+        if(active==1){
+            bookLendings = bookLendingRepository.findCurrentIssuedBooks(user_id);
+        }
+        else {
+            bookLendings = bookLendingRepository.findAllByMember(memberRepository.findByUserId(user_id));
+        }
         List<BookIssueDetailsDTO> issuedBooks = new ArrayList<>();
         for (BookLending bookLending : bookLendings) {
             issuedBooks.add(bookLendingTransformer.toDTO(bookLending));

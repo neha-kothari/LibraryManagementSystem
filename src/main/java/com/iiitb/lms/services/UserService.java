@@ -23,5 +23,5 @@ public interface UserService extends UserDetailsService {
 
 
     List<BookReservationRequestDTO> getReservations(int user_id);
-    List<BookIssueDetailsDTO> getIssuedBooks(int user_id);
+    List<BookIssueDetailsDTO> getIssuedBooks(int user_id, int active);
 }

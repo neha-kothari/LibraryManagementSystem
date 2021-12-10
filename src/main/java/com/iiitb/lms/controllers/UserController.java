@@ -169,13 +169,13 @@ public class UserController {
     }
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/users/{user_id}/bookissues")
+    @GetMapping("/users/{user_id}/bookissues/{active}")
     @ResponseBody
-    public ResponseEntity<List<BookIssueDetailsDTO>> getUserIssues(Authentication auth, @PathVariable int user_id) {
+    public ResponseEntity<List<BookIssueDetailsDTO>> getUserLendings(Authentication auth, @PathVariable int user_id, @PathVariable int active) {
         if(!isRequestFromSameUser(auth.getName(), user_id) && !isRequestFromLibrarian(auth.getName())){
             return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(null);
         }
-        List<BookIssueDetailsDTO> bookIssues = userService.getIssuedBooks(user_id);
+        List<BookIssueDetailsDTO> bookIssues = userService.getIssuedBooks(user_id, active);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
