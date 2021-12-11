@@ -29,7 +29,8 @@ class StudentService{
         });
     }
 
-    deleteReservation(reservationId,token){
+    deleteReservation(reservationId,token)
+    {
         console.log("Deleting Reservation",reservationId)
         axios.delete("http://localhost:"+port+"/lms/v1/reservations/"+reservationId,{headers: {
                 'Content-Type': 'application/json',
@@ -72,6 +73,17 @@ class StudentService{
     {
         console.log("getting book of Id "+bookId)
         return axios.get("http://localhost:"+port+"/lms/v1/books/"+bookId,  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }
+            }
+        )
+    }
+
+    calculateFine(studentId,token)
+    {
+        return axios.get("http://localhost:"+port+"/lms/v1/users/"+studentId+"/calculatefine",  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token,

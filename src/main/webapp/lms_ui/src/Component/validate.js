@@ -87,6 +87,58 @@ const validateRegisterBook = book => {
         isFormValid = false;
         errors.name = "Please fill all the details.";
     }
+    if(!book || book.authors.length===0)
+    {
+        errors.name+=" There must be at least one Author"
+    }
+    else {
+        for(let i=0;i<book.authors.length;i++)
+        {
+            if(book.authors[i]==="")
+            {
+                isFormValid=false
+                errors.name+="Author field cannot be empty"
+            }
+        }
+    }
+
+
+    if (!isFormValid) {
+        message = "Check the form for errors.";
+    }
+
+    return {
+        success: isFormValid,
+        message,
+        errors
+    };
+};
+
+const validateEditBook = book => {
+    const errors = {};
+    let message = "";
+    let isFormValid = true;
+
+    if (!book || typeof book.bookTitle !== "string" || book.bookTitle.trim().length === 0 || book.isbnNumber.trim().length === 0
+        || book.publisher.trim().length === 0|| book.language.trim().length === 0|| book.noOfPages === 0 || book.publicationYear === "0" || book.authors.length===0) {
+        isFormValid = false;
+        errors.name = "Please fill all the details.";
+    }
+    if(!book || book.authors.length===0)
+    {
+        errors.name+=" There must be at least one Author"
+    }
+    else {
+        for(let i=0;i<book.authors.length;i++)
+        {
+            if(book.authors[i]==="")
+            {
+                isFormValid=false
+                errors.name = "Author field cannot be empty"
+            }
+        }
+    }
+
 
 
     if (!isFormValid) {
@@ -102,8 +154,10 @@ const validateRegisterBook = book => {
 
 
 
+
 module.exports = {
     validateLoginForm: validateLoginForm,
     validateSignUpForm: validateSignUpForm,
-    validateRegisterBook:validateRegisterBook
+    validateRegisterBook:validateRegisterBook,
+    validateEditBook:validateEditBook
 };

@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {Link, withRouter} from 'react-router-dom';
 import Card from "../Items/Card";
 import swal from "sweetalert";
+import StudentService from "../../Services/StudentService";
 
 class StudentDashboard extends Component{
 
@@ -14,8 +15,22 @@ class StudentDashboard extends Component{
         }
 
         this.logOut=this.logOut.bind(this)
+        this.calculateFine=this.calculateFine.bind(this)
     }
-
+    calculateFine()
+    {
+        let token=localStorage.getItem("token")
+        let studentId=this.state.userData.userId
+        StudentService.calculateFine(studentId,token).then((res)=>{
+            if(res!==undefined)
+            {
+                console.log(res.data)
+                // this.setState({
+                //     fine:res.data
+                // })
+            }
+        })
+    }
 
     logOut(e){
         console.log("logout called")
@@ -39,6 +54,8 @@ class StudentDashboard extends Component{
         });
     }
     componentDidMount() {
+        this.calculateFine()
+
         if (this.state.userData === null) {
             console.log("undefined")
             let f=localStorage.getItem('userData')

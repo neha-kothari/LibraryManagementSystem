@@ -92,6 +92,16 @@ class LibrarianService{
             }
         )
     }
+
+    editBook(book,token)
+    {
+        return axios.put("http://localhost:"+port+"/lms/v1/books",book,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        })
+    }
 }
 
 
