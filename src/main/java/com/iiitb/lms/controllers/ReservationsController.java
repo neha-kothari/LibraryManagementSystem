@@ -1,6 +1,7 @@
 package com.iiitb.lms.controllers;
 
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.services.UserService;
 import com.iiitb.lms.services.impl.BookReservationServiceImpl;
