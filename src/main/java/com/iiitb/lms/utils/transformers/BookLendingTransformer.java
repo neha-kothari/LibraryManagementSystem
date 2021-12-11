@@ -2,6 +2,7 @@ package com.iiitb.lms.utils.transformers;
 
 import com.iiitb.lms.beans.BookLending;
 import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
+import com.iiitb.lms.beans.dto.BookReturnDetailsDTO;
 import com.iiitb.lms.repositories.BookItemRepository;
 import com.iiitb.lms.repositories.UserRepository;
 import org.springframework.stereotype.Component;
@@ -34,23 +35,37 @@ public class BookLendingTransformer {
         bookIssueDetailsDTO.setIssuedByUserId(issueBook.getIssuedBy().getUserId());
         bookIssueDetailsDTO.setMemberId(issueBook.getMember().getUserId());
         bookIssueDetailsDTO.setOrderId(issueBook.getOrderId());
-        setIssueStatus(issueBook.getStatus(), bookIssueDetailsDTO);
+        bookIssueDetailsDTO.setStatus(getIssueStatusString(issueBook.getStatus()));
         bookIssueDetailsDTO.setIssueDate(issueBook.getIssueDate());
         bookIssueDetailsDTO.setDueDate(issueBook.getDueDate());
         return bookIssueDetailsDTO;
     }
 
-    public void setIssueStatus(char status, BookIssueDetailsDTO bookIssueDetailsDTO) {
+    public BookReturnDetailsDTO toBookReturnDetailsDTO(BookLending returnBook) {
+
+        BookReturnDetailsDTO bookReturnDetailsDTO = new BookReturnDetailsDTO();
+        bookReturnDetailsDTO.setBookId(returnBook.getBookItem().getBook().getBookId());
+        bookReturnDetailsDTO.setBookItemId(returnBook.getBookItem().getItemId());
+        bookReturnDetailsDTO.setIssuedByUserId(returnBook.getIssuedBy().getUserId());
+        bookReturnDetailsDTO.setMemberId(returnBook.getMember().getUserId());
+        bookReturnDetailsDTO.setOrderId(returnBook.getOrderId());
+        bookReturnDetailsDTO.setStatus(getIssueStatusString(returnBook.getStatus()));
+        bookReturnDetailsDTO.setIssueDate(returnBook.getIssueDate());
+        bookReturnDetailsDTO.setDueDate(returnBook.getDueDate());
+        return bookReturnDetailsDTO;
+    }
+
+    public String getIssueStatusString(char status) {
         switch (status) {
             case 'B':
-                bookIssueDetailsDTO.setStatus("Borrowed");
-                break;
+                return "Borrowed";
             case 'R':
-                bookIssueDetailsDTO.setStatus("Returned");
-                break;
+                return "Returned";
             case 'L':
-                bookIssueDetailsDTO.setStatus("Lost");
-                break;
+                return "Lost";
         }
+        return null;
     }
+
+
 }

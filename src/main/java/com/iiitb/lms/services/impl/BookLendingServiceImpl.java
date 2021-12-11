@@ -1,13 +1,11 @@
 package com.iiitb.lms.services.impl;
 
-import com.iiitb.lms.beans.BookItem;
-import com.iiitb.lms.beans.BookLending;
-import com.iiitb.lms.beans.BookReservation;
-import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.*;
 import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.repositories.BookItemRepository;
 import com.iiitb.lms.repositories.BookLendingRepository;
+import com.iiitb.lms.repositories.MemberRepository;
 import com.iiitb.lms.repositories.UserRepository;
 import com.iiitb.lms.utils.LMSConstants;
 import com.iiitb.lms.utils.transformers.BookLendingTransformer;
@@ -16,12 +14,16 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class BookLendingServiceImpl extends AbstractBookItemService {
 
     @Resource
     public UserRepository userRepository;
+
+    @Resource
+    public MemberRepository memberRepository;
 
     @Resource
     public BookItemRepository bookItemRepository;
@@ -83,6 +85,13 @@ public class BookLendingServiceImpl extends AbstractBookItemService {
         bookLendingTransformer.toEntity(issueBook, request);
         issueBook.setStatus(LMSConstants.BOOK_LEND_STATUS_BORROWED);
         issuedBooksRepository.save(issueBook);
+
+        //Add entry to table : member_book_lendings
+        Member member = memberRepository.findByUserId(request.getMemberId());
+        List<BookLending> bookLendingList = member.getBookLendings();
+        bookLendingList.add(issueBook);
+        member.setBookLendings(bookLendingList);
+        memberRepository.save(member);
 
         return bookLendingTransformer.toDTO(issueBook);
     }

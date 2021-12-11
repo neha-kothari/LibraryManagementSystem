@@ -40,6 +40,7 @@ public class UserRegistrationController {
             userService.save(registrationDto);
             return ResponseEntity.status(HttpStatus.OK).body("{'data':'Registered Successfully'}");
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{'data':'Email already in use'}");
 //			return "redirect:/registration?success";
         }

@@ -4,6 +4,7 @@ import com.iiitb.lms.beans.Book;
 import com.iiitb.lms.beans.BookItem;
 import com.iiitb.lms.beans.BookReservation;
 import com.iiitb.lms.beans.User;
+import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReservationRequestDTO;
 import com.iiitb.lms.repositories.BookItemRepository;
 import com.iiitb.lms.repositories.BookRepository;
@@ -118,5 +119,25 @@ public class BookReservationServiceImpl extends AbstractBookItemService {
         reservation.setDelFlag(true);
         bookReservationRepo.save(reservation);
 
+    }
+
+    public BookIssueDetailsDTO approveRequest(User librarian, int reservationID) throws Exception {
+
+        BookReservation reservation = bookReservationRepo.findByReservationId(reservationID);
+        if (reservation == null || reservation.getReservationStatus()!=LMSConstants.BOOK_RESERVATION_STATUS_RESERVED) {
+            throw new Exception("Reservation not valid");
+        }
+        reservation.setReservationStatus(LMSConstants.BOOK_RESERVATION_STATUS_APPROVED);
+        bookReservationRepo.save(reservation);
+
+        BookItem bookItem = itemRepository.findByItemId(reservation.getBookItem().getItemId());
+        bookItem.setStatus(LMSConstants.BOOK_STATUS_AVAILABLE);
+        itemRepository.save(bookItem);
+
+        BookIssueDetailsDTO issueRequest = new BookIssueDetailsDTO();
+        issueRequest.setBookItemId(reservation.getBookItem().getItemId());
+        issueRequest.setMemberId(reservation.getMember().getUserId());
+        issueRequest.setIssuedByUserId(librarian.getUserId());
+        return issueRequest;
     }
 }

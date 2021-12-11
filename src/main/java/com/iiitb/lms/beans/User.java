@@ -5,6 +5,7 @@ import java.util.Date;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = "emailAddress"))
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
     @Id
@@ -37,6 +38,18 @@ public class User {
         this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(User user) {
+        this.userId = user.userId;
+        this.emailAddress = user.emailAddress;
+        this.userType = user.userType;
+        this.accountStatus = user.accountStatus;
+        this.password = user.password;
+        this.name = user.name;
+        this.phoneNumber = user.phoneNumber;
+        this.accountCreationDate = user.accountCreationDate;
+        this.lastLoginDateTime = user.lastLoginDateTime;
     }
 
     public int getUserId() {
