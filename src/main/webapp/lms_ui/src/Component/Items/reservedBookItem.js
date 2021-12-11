@@ -19,6 +19,7 @@ class reservedBookItem extends React.Component{
             publisher: ""
         }
         this.cancelReservation=this.cancelReservation.bind(this)
+        this.bookDetailsPopUp=this.bookDetailsPopUp.bind(this)
     }
 
     componentDidMount() {
@@ -41,6 +42,12 @@ class reservedBookItem extends React.Component{
             }
         });
     }
+    bookDetailsPopUp(){
+        swal(this.state.bookTitle,"Author: "+this.state.authors.join(", ")+"\nPublisher:  " +this.state.publisher+
+            "\n ISBN:  " +this.state.isbnNumber + "\n Available Copies:  "+this.state.availableCopies+"\n Language:  "+this.state.language+
+            "\n Pages:  " + this.state.noOfPages +"\nPublication Year:  " +this.state.publicationYear +"\nPublisher:  " +this.state.publisher )
+    }
+
 
     cancelReservation() {
         swal({
@@ -68,6 +75,7 @@ class reservedBookItem extends React.Component{
                         <h6 className="card-subtitle mb-2 text-muted">Publisher: {this.props.bookId}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">ISBN: {this.state.isbnNumber} </h6>
                         <h6 className="card-subtitle mb-2 text-muted">Language: {this.state.language} </h6>
+                        <a href="#" className="card-link "  onClick={() => this.bookDetailsPopUp()} >Details</a>
                         <a href="#" className="card-link "  onClick={() => this.cancelReservation()} >Cancel Reservation</a>
                     </div>
                 </div>
