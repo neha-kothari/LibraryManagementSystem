@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
-import Item from "../Items/bookItemLib";
+import Item from "../Items/manageBookItem";
 import Fuse from "fuse.js";
 import LibNavbar from "./LibNavbar";
 import LibrarianService from "../../Services/LibrarianService";
@@ -82,7 +82,7 @@ class ManageBooks extends Component {
                     <p style={{display:this.state.noResults}}>No Results found.... Displaying all books </p>
                     <div className="bookItemContainer">
                         {this.state.searchData.map((item) => (
-                            <Item {...item} key={item.name} />
+                            <Item {...item} key={item.bookId} />
                         ))}
                     </div>
                 </div>

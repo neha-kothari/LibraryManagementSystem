@@ -22,6 +22,8 @@ class reservedBookItem extends React.Component{
         this.bookDetailsPopUp=this.bookDetailsPopUp.bind(this)
     }
 
+
+
     componentDidMount() {
         let token = localStorage.getItem("token")
         let bookList;

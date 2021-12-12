@@ -80,12 +80,12 @@ class ManageStudents extends Component {
                         />
                     </div>
 
-                        <p style={{display:this.state.noResults}}>No Results found.... Displaying all students </p>
-                        <div className="studentItemContainer">
-                            {this.state.searchData.map((item) => (
-                                <Item {...item} key={item.name} />
-                            ))}
-                        </div>
+                    <p style={{display:this.state.noResults}}>No Results found.... Displaying all students </p>
+                    <div className="studentItemContainer">
+                        {this.state.searchData.map((item) => (
+                            <Item {...item} key={item.name} />
+                        ))}
+                    </div>
                 </div>
             </div>
         );

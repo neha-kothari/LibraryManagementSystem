@@ -13,6 +13,7 @@ import StudentDashboard from "./Component/Student/StudentDashboard";
 import ReserveBooks from "./Component/Student/ReserveBooks";
 import IssuedBooks from "./Component/Student/IssuedBooks";
 import ManageStudents from "./Component/Library/ManageStudents";
+import StudentProfile from "./Component/Library/StudentProfile";
 
 class App extends Component {
   render() {
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact path="/ManageBooks" component={ManageBooks}/>
             <Route exact path="/ManageStudents" component={ManageStudents}/>
             <Route exact path="/EditBook" component={EditBook}/>
+            <Route exact path="/StudentProfile" component={StudentProfile}/>
 
             <Route exact path="/StudentDashboard" component={StudentDashboard}/>
             <Route exact path="/ReserveBooks" component={ReserveBooks}/>

@@ -97,15 +97,11 @@ class RegisterBook extends Component{
             <div>
                 <LibNavbar/>
                 <head>
-                    <meta charSet="UTF-8"/>
-                    <meta name="viewport" content="width=divice-width, initial-scale=1.0"/>
-                    <meta http-equive="X-UA-Compatible" content="ie-edge"/>
                     <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"/>
                     <link rel="stylesheet"
                           href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
                           integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
                           crossOrigin="anonymous"/>
-                    <title>Add Books</title>
                 </head>
                 <body>
                 <div className="container mt-4">

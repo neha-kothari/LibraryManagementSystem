@@ -4,6 +4,18 @@ import swal from "sweetalert";
 const port = 8085; //change this according to own system
 
 class LibrarianService{
+
+    getStudentDetails(studentId,token)
+    {
+        console.log("getting student details --> ",token)
+        return axios.get("http://localhost:"+port+"/lms/v1/users/"+studentId+"/getdetails",{},{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        })
+
+    }
     getAllStudents(token)
     {
         console.log("get student details:",token)
@@ -18,7 +30,6 @@ class LibrarianService{
 
     blockStudent(token,userId)
     {
-        console.log(token,userId)
         return axios.post("http://localhost:"+port+"/lms/v1/users/"+userId+"/block",{},{
             headers: {
                 'Content-Type': 'application/json',
@@ -102,6 +113,36 @@ class LibrarianService{
             }
         })
     }
+
+    approveReservation(reservationId, token)
+    {
+        console.log("reserving book :"+reservationId +" with token", token)
+        return axios.post("http://localhost:" + port + "/lms/v1/reservations/approve/" + reservationId, {}, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response);
+                if(error.response.status===400)
+                    swal("Error", "ISBN is already used", "error");
+                console.log(error.response.headers);
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
+                swal("Error", "error");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
+                swal("Error", "error");
+            }
+            console.log(error.config);
+        })
+    }
+
 }
 
 

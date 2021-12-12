@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import swal from "sweetalert";
 import LibrarianService from "../../Services/LibrarianService";
 
-class bookItemLib extends React.Component{
+class manageBookItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -42,7 +42,6 @@ class bookItemLib extends React.Component{
                         <h6 className="card-subtitle mb-2 text-muted">by {this.props.authors.join(", ")}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Publisher: {this.props.publisher}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">ISBN: {this.props.isbnNumber} </h6>
-
                         <Link to={{
                             pathname: "/EditBook",
                             state: { bookDetails: bookDetails }}} >
@@ -57,4 +56,4 @@ class bookItemLib extends React.Component{
 }
 
 
-export default bookItemLib;
+export default manageBookItem;

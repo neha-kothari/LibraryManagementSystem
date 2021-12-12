@@ -43,9 +43,6 @@ class StudentNavbar extends Component{
                                     <p className="nav-link" >Issued Books <span className="sr-only">(current)</span></p>
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <p className="nav-link disabled" >Disabled</p>
-                            </li>
                         </ul>
                     </div>
                     <Link to="/">

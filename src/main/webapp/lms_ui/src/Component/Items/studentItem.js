@@ -1,6 +1,7 @@
 import React from "react";
 import swal from "sweetalert";
 import LibrarianService from "../../Services/LibrarianService";
+import {Link} from "react-router-dom";
 
 class studentItem extends React.Component{
     constructor(props) {
@@ -51,18 +52,29 @@ class studentItem extends React.Component{
     }
 
     render() {
+        let membershipDateTime=this.props.accountCreationDate
+        let membershipDate=new Date(membershipDateTime)
+        membershipDate=membershipDate.getDate()+"/"+membershipDate.getMonth()+"/"+membershipDate.getFullYear()
+
+        let lastLoginDateTime=this.props.lastLoginDateTime
+        let lastLoginDate=new Date(lastLoginDateTime)
+        lastLoginDate=lastLoginDate.getDate()+"/"+lastLoginDate.getMonth()+"/"+lastLoginDate.getFullYear()
+
         return (
             <div>
                 <div className="card m-3 shadow p-3 bg-white rounded studentItemInner" style={{width: '18rem'}}>
                     <div className="card-body">
                         <h5 className="card-title">Name: {this.props.name}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{this.props.emailAddress}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">{this.props.userId}</h6>
-                        {/*<Link to={{*/}
-                        {/*    pathname: "/EditBook",*/}
-                        {/*    state: { bookTitle: this.props.name }}} >*/}
-                        {/*    <a href="#" className="card-link">Edit</a>*/}
-                        {/*</Link>*/}
+                        <h6 className="card-subtitle mb-2 text-muted">Email Address: {this.props.emailAddress}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">UserId: {this.props.userId}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">Phone Number: {this.props.phoneNumber}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">Member Since: {membershipDate}</h6>
+                        <h6 className="card-subtitle mb-2 text-muted">Last Login: {lastLoginDate}</h6>
+                        <Link to={{
+                            pathname: "/StudentProfile",
+                            state: { userId: this.props.userId }}} >
+                            <a href="#" className="card-link mr-3">Details</a>
+                        </Link>
                         <a href="#" className="card-link "  onClick={() => this.blockStudent()} >{(this.state.accountStatus==="Active")?"Block":"Unblock"}</a>
 
                     </div>

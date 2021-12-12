@@ -50,7 +50,6 @@ class UserService{
             console.log(error.config);
         });
     }
-
     getUserDetails(token)
     {
         console.log("get user details:",token)
@@ -61,6 +60,19 @@ class UserService{
                 }
             }
         )
+    }
+    getIssueHistory(userId,token)
+    {
+        //1-->active
+        console.log("get issue details:",token)
+        return axios.get("http://localhost:8085/lms/v1/users/"+userId+"/bookissues/1",  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }
+            }
+        )
+
     }
 
 
