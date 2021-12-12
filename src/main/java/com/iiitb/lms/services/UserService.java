@@ -17,6 +17,7 @@ public interface UserService extends UserDetailsService {
     User getUserFromUserId(int id);
     User getUserFromEmailId(String username);
     UserDetailsDTO getUserDetails(String email);
+    UserDetailsDTO getUserDetailsFromUserId(int user_id);
     float calculateUserFine(Member member);
     Member getMemberFromUserId(int id);
 

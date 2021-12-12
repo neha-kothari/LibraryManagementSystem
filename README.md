@@ -32,8 +32,8 @@ Response JSON if Successful returns **Authorization** token: `{
 }`
 
 ## User APIs
-### Get User Details :
-GET : http://localhost:8080/lms/v1/user/getdetails
+### Get User Profile :
+GET : http://localhost:8080/lms/v1/user/profile
 
 Request : Add **Authorization** Token in Request Header
 `"Authorization"="eyJhb...neAZY"`
@@ -58,6 +58,14 @@ Response JSON : `{ "reservationId": 3, "reservationStatus": "Reserved",
 "memberId": 6, "bookItemId": 3, "bookId": 1, "error": null }`
 
 ## Common APIs
+### Get User Details :
+GET : http://localhost:8080/lms/v1/users/{user_id}/getdetails
+
+Response JSON : `{
+"userId": 1, "emailAddress": "abc@def.com", "userType": 1, "accountStatus": "A", "password": "",
+"name": "Abc Def", "phoneNumber": "9000012345",
+"accountCreationDate": "2021-11-13T16:05:26.000+00:00", "lastLoginDateTime": "2021-11-13T16:05:26.000+00:00"}`
+
 ### Calculate outstanding fine
 GET : http://localhost:8080/lms/v1/users/{user_id}/calculatefine
 

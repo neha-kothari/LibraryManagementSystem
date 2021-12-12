@@ -83,7 +83,7 @@ public class UserController {
     @CrossOrigin(origins = "*")
     @GetMapping("/users/profile")
     @ResponseBody
-    public ResponseEntity<UserDetailsDTO> getUserDetails(Authentication auth) {
+    public ResponseEntity<UserDetailsDTO> getProfile(Authentication auth) {
         UserDetailsDTO userDetailsDTO = userService.getUserDetails(auth.getName());
         if (null != userDetailsDTO) {
             return ResponseEntity.ok()
@@ -94,8 +94,26 @@ public class UserController {
         userDetailsDTO.setError("Invalid Authentication");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDetailsDTO);
     }
-    @CrossOrigin(origins = "*")
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/users/{user_id}/getdetails")
+    @ResponseBody
+    public ResponseEntity<UserDetailsDTO> getUserDetails(Authentication auth, @PathVariable int user_id) {
+        if(!isRequestFromSameUser(auth.getName(), user_id) && !isRequestFromLibrarian(auth.getName())){
+            return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(null);
+        }
+        UserDetailsDTO userDetailsDTO = userService.getUserDetailsFromUserId(user_id);
+        if (null != userDetailsDTO) {
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(userDetailsDTO);
+        }
+        userDetailsDTO = new UserDetailsDTO();
+        userDetailsDTO.setError("Invalid Authentication");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userDetailsDTO);
+    }
+
+    @CrossOrigin(origins = "*")
     @PostMapping("/users/{user_id}/block")
     @ResponseBody
     public ResponseEntity<UserDetailsDTO> blockMember(Authentication auth, @PathVariable int user_id) {

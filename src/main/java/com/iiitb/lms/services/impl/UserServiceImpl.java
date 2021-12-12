@@ -113,6 +113,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDetailsDTO getUserDetailsFromUserId(int user_id) {
+
+        User user = userRepository.findByUserId(user_id);
+        if (user == null) {
+            return null;
+        }
+        return userTransformer.toUserDetailsDTO(user);
+    }
+
+    @Override
     public List<BookReservationRequestDTO> getReservations(int user_id) {
 
         List<BookReservation> reservations = reservationRepo.getCurrentReservations(user_id);
