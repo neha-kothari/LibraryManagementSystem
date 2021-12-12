@@ -7,8 +7,7 @@ class LibrarianService{
 
     getStudentDetails(studentId,token)
     {
-        console.log("getting student details --> ",token)
-        return axios.get("http://localhost:"+port+"/lms/v1/users/"+studentId+"/getdetails",{},{
+        return axios.get("http://localhost:"+port+"/lms/v1/users/"+studentId+"/getdetails",{
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': token,
@@ -16,9 +15,9 @@ class LibrarianService{
         })
 
     }
+
     getAllStudents(token)
     {
-        console.log("get student details:",token)
         return axios.get("http://localhost:8085/lms/v1/users/students",  {
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +39,6 @@ class LibrarianService{
 
     unblockStudent(token,userId)
     {
-        console.log(token,userId)
         return axios.post("http://localhost:"+port+"/lms/v1/users/"+userId+"/unblock",{},{
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +49,6 @@ class LibrarianService{
 
     addBook(book,token)
     {
-        console.log("Adding Book", book);
         return axios.post("http://localhost:"+port+"/lms/v1/books",book,{
             headers: {
                 'Content-Type': 'application/json',
@@ -80,7 +77,6 @@ class LibrarianService{
 
     deleteBook(bookId,token)
     {
-        console.log("deleting book",bookId,token)
         return axios.delete("http://localhost:"+port+"/lms/v1/books/"+bookId,{
             headers: {
                 'Content-Type': 'application/json',
@@ -94,7 +90,6 @@ class LibrarianService{
 
     getAllBooks(token)
     {
-        console.log("get student details:",token)
         return axios.get("http://localhost:"+port+"/lms/v1/books",  {
                 headers: {
                     'Content-Type': 'application/json',
@@ -114,9 +109,19 @@ class LibrarianService{
         })
     }
 
+    returnBook(returnBook,token)
+    {
+        // http://localhost:8080/lms/v1/return?memberId=6&orderId=1&lost=0
+        return axios.post("http://localhost:"+port+"/lms/v1/return",returnBook,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        })
+    }
+
     approveReservation(reservationId, token)
     {
-        console.log("reserving book :"+reservationId +" with token", token)
         return axios.post("http://localhost:" + port + "/lms/v1/reservations/approve/" + reservationId, {}, {
             headers: {
                 'Content-Type': 'application/json',
@@ -124,7 +129,7 @@ class LibrarianService{
             }
         }).catch(function (error) {
             if (error.response) {
-                console.log(error.response);
+                console.log("ERRROORRRRRRR---->",error.response);
                 if(error.response.status===400)
                     swal("Error", "ISBN is already used", "error");
                 console.log(error.response.headers);

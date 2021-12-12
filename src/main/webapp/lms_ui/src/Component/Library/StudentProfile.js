@@ -24,6 +24,7 @@ class StudentProfile extends Component{
         this.approveReservation=this.approveReservation.bind(this)
         this.loadAllData=this.loadAllData.bind(this)
         this.convertDate=this.convertDate.bind(this)
+        this.returnBook=this.returnBook.bind(this)
     }
 
     convertDate(dateTime)
@@ -37,6 +38,7 @@ class StudentProfile extends Component{
         LibrarianService.getStudentDetails(this.state.userId, this.state.token).then(res=>{
             if(res!==undefined)
             {
+                console.log(res.data)
                 this.setState({
                     studentData:res.data
                 })
@@ -69,6 +71,20 @@ class StudentProfile extends Component{
             else
             {
                 swal("Something went wrong...","","error")
+            }
+        })
+    }
+
+    returnBook(orderId, memberId, isLost)
+    {
+        let returnBookObj ={
+            orderId:orderId,
+            memberId:memberId,
+            lost:isLost
+        }
+        LibrarianService.returnBook(returnBookObj, this.state.token).then(res =>{
+            if(res!==undefined){
+                swal("success maybe")
             }
         })
     }
@@ -107,15 +123,13 @@ class StudentProfile extends Component{
     componentDidMount() {
         let token=localStorage.getItem("token")
         if(this.props.location.state===undefined) {
-            console.log("did you justRefresh? ", localStorage.getItem("userId"))
             this.setState({
-                userId:localStorage.getItem("userId")
+                userId:localStorage.getItem("userId"),
+                token:token
             },()=>this.loadAllData())
         }
         else {
-            console.log("first time on page", this.props.location.state.userId)
             localStorage.setItem("userId",this.props.location.state.userId)
-            console.log("now from local:",localStorage.getItem("userId"))
             this.setState({
                 userId:localStorage.getItem("userId"),
                 token:token
@@ -149,27 +163,22 @@ class StudentProfile extends Component{
                                 <tr>
                                     <td>Email</td>
                                     <td>:</td>
-                                    <td>imdezcode@gmail.com</td>
+                                    <td>{this.state.studentData.emailAddress}</td>
                                 </tr>
                                 <tr>
-                                    <td>Address</td>
+                                    <td>Phone Number</td>
                                     <td>:</td>
-                                    <td>Bali, Indonesia</td>
+                                    <td>{this.state.studentData.phoneNumber}</td>
                                 </tr>
                                 <tr>
-                                    <td>Hobbies</td>
+                                    <td>Member Since</td>
                                     <td>:</td>
-                                    <td>Diving, Reading Book</td>
+                                    <td>{this.convertDate(this.state.studentData.accountCreationDate)}</td>
                                 </tr>
                                 <tr>
-                                    <td>Job</td>
+                                    <td>Last Log In</td>
                                     <td>:</td>
-                                    <td>Web Developer</td>
-                                </tr>
-                                <tr>
-                                    <td>Skill</td>
-                                    <td>:</td>
-                                    <td>PHP, HTML, CSS, Java</td>
+                                    <td>{this.convertDate(this.state.studentData.lastLoginDateTime)}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -214,10 +223,12 @@ class StudentProfile extends Component{
                                     <tr>
                                         <td>Due Date:</td>
                                         <td>{this.convertDate(book.dueDate)}</td>
+                                        <td><a href="#" onClick={()=>this.returnBook(book.orderId, book.memberId,0)}>Return Book</a></td>
                                     </tr>
                                     <tr>
                                         <td>Issue Date:</td>
                                         <td>{this.convertDate(book.issueDate)}</td>
+                                        <td><a href="#" onClick={()=>this.returnBook(book.orderId, book.memberId,1)}>Return Lost Book</a></td>
                                     </tr>
                                     </tbody>
                                 </table>

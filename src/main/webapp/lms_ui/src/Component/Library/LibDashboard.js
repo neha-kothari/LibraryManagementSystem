@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import {Link, withRouter} from 'react-router-dom';
 import Card from "../Items/Card";
 import swal from "sweetalert";
+import LibNavbar from "./LibNavbar";
 
 class LibDashboard extends Component{
 
@@ -9,7 +10,6 @@ class LibDashboard extends Component{
         super(props);
         this.state={
             userName:"user",
-            reservations:"x",
             userData:JSON.parse(localStorage.getItem('userData')),
         }
 
@@ -70,6 +70,9 @@ class LibDashboard extends Component{
     render() {
         return (
             <div>
+                {/*<LibNavbar/>*/}
+                {/*<link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"/>*/}
+
                 <div className="parent">
                     <div className="left">
                         <ul>
@@ -77,7 +80,6 @@ class LibDashboard extends Component{
                             <li><h3>{this.state.userName} </h3></li>
                             <li>Library Management System</li>
                             <br/><br/><br/><br/>
-                            <li><h4>You have {this.state.reservations} pending reservations to approve</h4></li>
                             <br/><br/><br/><br/><br/><br/><br/><br/>
                             {/*fix this*/}
                             <button className="logoutBtn" onClick={this.logOut} >Logout</button>

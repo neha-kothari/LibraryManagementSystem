@@ -25,9 +25,9 @@ class StudentDashboard extends Component{
             if(res!==undefined)
             {
                 console.log(res.data)
-                // this.setState({
-                //     fine:res.data
-                // })
+                this.setState({
+                    fine:res.data.fine
+                })
             }
         })
     }
@@ -95,7 +95,7 @@ class StudentDashboard extends Component{
                             <li><h3>{this.state.userName} </h3></li>
                             <li>Library Management System</li>
                             <br/><br/><br/><br/>
-                            <li><h4>You have {this.state.fine} pending fine</h4></li>
+                            <li><h4>You have Rs.{this.state.fine} pending fine</h4></li>
                             <br/><br/><br/><br/><br/><br/><br/><br/>
                             {/*fix this*/}
                             <button className="logoutBtn" onClick={this.logOut} >Logout</button>

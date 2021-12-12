@@ -87,7 +87,8 @@ class IssuedBooks extends Component{
                     </h1>
                     <div  style={{"display":this.state.isIssueEmpty?"block":"none"}}>
                         <br/><br/>
-                        <h4 className="display-8 text-center">No Reservations Found...</h4>
+                        <h4 className="display-8 text-center border shadow p-3 mb-5 bg-white rounded">
+                            No Issued Books Found..</h4>
                         <br/><br/><br/>
                     </div>
                     <div className="bookItemContainer">
@@ -104,7 +105,8 @@ class IssuedBooks extends Component{
                     </h1>
                     <div  style={{"display":this.state.isResEmpty?"block":"none"}}>
                         <br/><br/>
-                        <h4 className="display-8 text-center">No Reservations Found...</h4>
+                        <h4 className="display-8 text-center border shadow p-3 mb-5 bg-white rounded">
+                            No Reservations Found..</h4>
                         <br/><br/><br/>
                     </div>
                     <div className="bookItemContainer">

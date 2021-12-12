@@ -15,7 +15,7 @@ class StudentService{
         }).catch(function (error) {
             if (error.response) {
                 console.log(error.response);
-                if(error.response.status===400)
+                if(error.response.status===401)
                     swal("Error", error.response.data.error, "error");
                 console.log(error.response.headers);
             } else if (error.request) {

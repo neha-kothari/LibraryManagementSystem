@@ -79,7 +79,7 @@ class RegisterBook extends Component{
                 console.log(res)
                 if(res!==undefined )
                 {
-                    swal("Registration Successful","New Book Added", "success")
+                    swal("Successful","New Book Added", "success")
                 }
             });
         }
@@ -162,8 +162,9 @@ class RegisterBook extends Component{
                         </div>
                         <br/>
                         <div className="register-book">
-                            <button type="submit"  className="btn btn-primary btn-block" onClick={this.addBook}> Add Book Items</button>
+                            <button type="submit"  className="btn btn-primary btn-block" onClick={this.addBook}> Add Book</button>
                         </div>
+                        <br/>
                     </form>
 
                 </div>
