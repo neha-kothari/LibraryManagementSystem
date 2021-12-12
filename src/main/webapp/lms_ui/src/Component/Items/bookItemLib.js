@@ -33,6 +33,7 @@ class bookItemLib extends React.Component{
     }
 
     render() {
+        let bookDetails=this.props
         return (
             <div>
                 <div className="card m-3 shadow p-3 bg-white rounded bookItemInner" style={{width: '18rem'}}>
@@ -44,7 +45,7 @@ class bookItemLib extends React.Component{
 
                         <Link to={{
                             pathname: "/EditBook",
-                            state: { bookTitle: this.props.name }}} >
+                            state: { bookDetails: bookDetails }}} >
                             <a href="#" className="card-link">Edit</a>
                         </Link>
                         <a href="#" className="card-link m-3"  onClick={() => this.deleteBook()} >Delete</a>

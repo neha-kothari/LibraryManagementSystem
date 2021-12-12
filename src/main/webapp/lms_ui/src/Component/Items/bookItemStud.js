@@ -1,5 +1,4 @@
 import React from "react";
-import {Link} from "react-router-dom";
 import swal from "sweetalert";
 import StudentService from "../../Services/StudentService"
 
@@ -10,6 +9,7 @@ class bookItemStud extends React.Component{
 
         }
         this.reserveBook=this.reserveBook.bind(this)
+        this.bookDetailsPopUp=this.bookDetailsPopUp.bind(this)
     }
 
     reserveBook() {
@@ -37,6 +37,13 @@ class bookItemStud extends React.Component{
         });
     }
 
+    bookDetailsPopUp(){
+        swal(this.props.bookTitle,"Author: "+this.props.authors.join(", ")+"\nPublisher:  " +this.props.publisher+
+        "\n ISBN:  " +this.props.isbnNumber + "\n Available Copies:  "+this.props.availableCopies+"\n Language:  "+this.props.language+
+        "\n Pages:  " + this.props.noOfPages +"\nPublication Year:  " +this.props.publicationYear +"\nPublisher:  " +this.props.publisher )
+    }
+
+
     render() {
         return (
             <div>
@@ -47,11 +54,7 @@ class bookItemStud extends React.Component{
                         <h6 className="card-subtitle mb-2 text-muted">Publisher: {this.props.publisher}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">ISBN: {this.props.isbnNumber} </h6>
                         <h6 className="card-subtitle mb-2 " style={{color: this.props.availableCopies === 0 ? "#cf1232" : "green"}}>Available Copies: {this.props.availableCopies} </h6>
-                        <Link to={{
-                            pathname: "/Fake",
-                            state: { bookTitle: this.props.name }}} >
-                            <a href="#" className="card-link">View Details</a>
-                        </Link>
+                        <a href="#" className="card-link" onClick={() => this.bookDetailsPopUp()}>View Details</a>
                         <a href="#" className="card-link m-3" style={{display: this.props.availableCopies === 0 ? "none" : true}}  onClick={() => this.reserveBook()} >Reserve</a>
                     </div>
                 </div>
