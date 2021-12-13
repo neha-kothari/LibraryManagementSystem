@@ -18,6 +18,7 @@ class StudentProfile extends Component{
             token:""
         }
 
+        this.computeColor=this.computeColor.bind(this)
         this.getReservations=this.getReservations.bind(this)
         this.viewBook=this.viewBook.bind(this)
         this.getIssues=this.getIssues.bind(this)
@@ -25,6 +26,7 @@ class StudentProfile extends Component{
         this.loadAllData=this.loadAllData.bind(this)
         this.convertDate=this.convertDate.bind(this)
         this.returnBook=this.returnBook.bind(this)
+        this.viewFine=this.viewFine.bind(this)
     }
 
     convertDate(dateTime)
@@ -33,29 +35,30 @@ class StudentProfile extends Component{
         date=date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
         return date
     }
-    getStudentDetails()
-    {
-        LibrarianService.getStudentDetails(this.state.userId, this.state.token).then(res=>{
-            if(res!==undefined)
-            {
-                console.log(res.data)
-                this.setState({
-                    studentData:res.data
-                })
-            }
-        })
-    }
     approveReservation(reservationId)
     {
-        LibrarianService.approveReservation(reservationId, this.state.token).then(res => {
-            if(res===undefined)
-            {
-                swal("Something went wrong", " Try again later","error")
+        swal({
+            title: "Approve reservation??",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willApprove) => {
+            if (willApprove) {
+                LibrarianService.approveReservation(reservationId, this.state.token).then(res => {
+                    if(res===undefined)
+                    {
+                        swal("Something went wrong", " Try again later","error")
+                    }
+                    else{
+                        swal("Reservation approved","","success").then(window.location.reload())
+                    }
+                })
+
             }
-            else{
-                swal("Reservation approved","","success")
-            }
-        })
+        });
+
+
 
     }
     viewBook(bookId)
@@ -74,19 +77,40 @@ class StudentProfile extends Component{
             }
         })
     }
-
     returnBook(orderId, memberId, isLost)
     {
-        let returnBookObj ={
-            orderId:orderId,
-            memberId:memberId,
-            lost:isLost
+        let text="Do you want to return this book?"
+        let textResponse="The book has been successfully returned"
+        let textHeading="Returned"
+
+        if(isLost===1)
+        {
+            text="Do you want to log a lost book?"
+            textResponse="The book has been marked as lost"
+            textHeading="Updated"
         }
-        LibrarianService.returnBook(returnBookObj, this.state.token).then(res =>{
-            if(res!==undefined){
-                swal("success maybe")
+        swal({
+            title: "Confirm?",
+            text: text,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willReturn) => {
+            if (willReturn) {
+                let returnBookObj ={
+                    orderId:orderId,
+                    memberId:memberId,
+                    lost:isLost
+                }
+                LibrarianService.returnBook(returnBookObj, this.state.token).then(res =>{
+                    if(res!==undefined){
+                        swal(textHeading,textResponse,"success")
+                        console.log(res)
+                       // window.location.reload()
+                    }
+                })
             }
-        })
+        });
     }
 
     getReservations(){
@@ -100,9 +124,8 @@ class StudentProfile extends Component{
             }
         });
     }
-
     getIssues(){
-        UserService.getIssueHistory(this.state.userId,this.state.token).then(res => {
+        UserService.getIssueHistory(this.state.userId,this.state.token,1).then(res => {
             console.log("Fetching all issued books....", res);
             if(res!==undefined)
             {
@@ -111,6 +134,21 @@ class StudentProfile extends Component{
                 })
             }
         });
+    }
+    getStudentDetails() {
+        LibrarianService.getStudentDetails(this.state.userId, this.state.token).then(res=>{
+            if(res!==undefined)
+            {
+                console.log(res.data)
+                this.setState({
+                    studentData:res.data
+                })
+            }
+        })
+    }
+
+    viewFine(){
+        
     }
 
     loadAllData(){
@@ -136,8 +174,19 @@ class StudentProfile extends Component{
             },()=>this.loadAllData())
         }
     }
+    computeColor(dateVal)
+    {
+        let color="green"
+        const today = new Date()
+        const due = new Date(dateVal)
+        if (today.getTime() > due.getTime()) {
+            color="red"
+        }
+        return color
+    }
 
     render() {
+
         return (
             <div>
                 <LibNavbar/>
@@ -146,10 +195,13 @@ class StudentProfile extends Component{
                       href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
                       integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
                       crossOrigin="anonymous"/>
+
                 <div className="studentProfile">
                     <h1 className="display-8 text-center">
                         <span className="text-secondary">Student</span> Profile
                     </h1>
+
+                    {/******************Details******************/}
                     <h2>Details</h2>
                     <div className="card">
                         <div className="card-body">
@@ -185,10 +237,12 @@ class StudentProfile extends Component{
                         </div>
                     </div>
 
+                    {/******************Reservations*****=*************/}
+
                     <h2>Reservations</h2>
                     <div className="card2" style={{"display":this.state.reservationData.length===0?"block":"none"}}>No pending reservations</div>
                     {this.state.reservationData.map((book) => (
-                    <div className="card2">
+                        <div className="card2">
                             <div className="card-body">
                                 <table>
                                     <tbody>
@@ -205,9 +259,10 @@ class StudentProfile extends Component{
                                     </tbody>
                                 </table>
                             </div>
-                    </div>
+                        </div>
                     ))}
 
+                    {/******************IssuedBooks*****=*************/}
                     <h2>Issued Books</h2>
                     <div className="card2" style={{"display":this.state.issueData.length===0?"block":"none"}}>User has not issued any books</div>
                     {this.state.issueData.map((book) => (
@@ -222,13 +277,32 @@ class StudentProfile extends Component{
                                     </tr>
                                     <tr>
                                         <td>Due Date:</td>
-                                        <td>{this.convertDate(book.dueDate)}</td>
-                                        <td><a href="#" onClick={()=>this.returnBook(book.orderId, book.memberId,0)}>Return Book</a></td>
+                                        <td style={{"color":this.computeColor(book.dueDate)}}>{this.convertDate(book.dueDate)}</td>
+                                        <td><a href="#" onClick={()=>this.viewFine(book.orderId)}>View Fine</a></td>
+
                                     </tr>
                                     <tr>
                                         <td>Issue Date:</td>
                                         <td>{this.convertDate(book.issueDate)}</td>
-                                        <td><a href="#" onClick={()=>this.returnBook(book.orderId, book.memberId,1)}>Return Lost Book</a></td>
+                                        <td>
+                                            <a href="#"
+                                               onClick={()=>this.returnBook(book.orderId, book.memberId,0)}
+                                               style={{"display":book.status==="Lost"?"none":"block"}}>
+                                                Return Book
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Status:</td>
+                                        <td>{book.status}</td>
+                                        <td>
+                                            <a href="#"
+                                               onClick={()=>this.returnBook(book.orderId, book.memberId,1)}
+                                               style={{"display":book.status==="Lost"?"none":"block"}}>
+                                                Return Lost Book
+                                            </a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>

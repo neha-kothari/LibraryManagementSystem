@@ -1,73 +1,111 @@
-import React,{Component} from "react";
+import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import StudentNavbar from "./StudentNavbar";
 import StudentService from "../../Services/StudentService";
 import ReserveItem from "../Items/reservedBookItem"
 import IssueItem from "../Items/issuedBookItem"
 import UserService from "../../Services/UserService";
+import swal from "sweetalert";
 
-class IssuedBooks extends Component{
+class IssuedBooks extends Component {
     constructor() {
         super();
-        this.state={
-            reservationData:[],
-            issueData:[],
-            userId:"",
-            token:"",
-            isResEmpty:true,
-            isIssueEmpty:true
+        this.state = {
+            reservationData: [],
+            issueData: [],
+            oldIssueData: [],
+            userId: "",
+            token: "",
+            isResEmpty: true,
+            isIssueEmpty: true
         }
-        this.loadData=this.loadData.bind(this)
-        this.getIssues=this.getIssues.bind(this)
-        this.getReservations=this.getReservations.bind(this)
+        this.loadData = this.loadData.bind(this)
+        this.getIssues = this.getIssues.bind(this)
+        this.getReservations = this.getReservations.bind(this)
+        this.getOldIssues = this.getOldIssues.bind(this)
+        this.convertDate = this.convertDate.bind(this)
+        this.viewBook = this.viewBook.bind(this)
+
     }
 
-    getReservations(){
-        StudentService.getAllReservations(this.state.userId,this.state.token).then(res => {
+    viewBook(bookId) {
+        StudentService.getBookDetails(bookId, this.state.token).then(res => {
+            if (res !== undefined) {
+                console.log(res)
+                swal(res.data.bookTitle, "Author: " + res.data.authors.join(", ") + "\nPublisher:  " + res.data.publisher +
+                    "\n ISBN:  " + res.data.isbnNumber + "\n Available Copies:  " + res.data.availableCopies + "\n Language:  " + res.data.language +
+                    "\n Pages:  " + res.data.noOfPages + "\nPublication Year:  " + res.data.publicationYear)
+            } else {
+                swal("Something went wrong...", "", "error")
+            }
+        })
+    }
+
+    getReservations() {
+        StudentService.getAllReservations(this.state.userId, this.state.token).then(res => {
             console.log("Fetching all reserved books....", res);
-            if(res!==undefined)
-            {
+            if (res !== undefined) {
                 this.setState({
-                    reservationData:res.data,
+                    reservationData: res.data,
                 })
             }
-            if(res.data.length!==0)
-            {
-                this.setState({isResEmpty:false})
+            if (res.data.length !== 0) {
+                this.setState({isResEmpty: false})
             }
         });
-    }
-    getIssues(){
-        UserService.getIssueHistory(this.state.userId,this.state.token).then(res => {
-            console.log("Fetching all issued books....", res);
-            if(res!==undefined)
-            {
-                this.setState({
-                    issueData:res.data,
-                })
-            }
-            if(res.data.length!==0)
-            {
-                this.setState({isIssueEmpty:false})
-            }
-        });
-        
     }
 
-    loadData()
-    {
+    getOldIssues() {
+        UserService.getIssueHistory(this.state.userId, this.state.token, 0).then(res => {
+            console.log("Fetching all issued books....", res);
+            if (res !== undefined) {
+                this.setState({
+                    oldIssueData: res.data,
+                })
+            }
+            // if(res.data.length!==0)
+            // {
+            //     this.setState({isIssueEmpty:false})
+            // }
+        });
+
+    }
+
+    getIssues() {
+        UserService.getIssueHistory(this.state.userId, this.state.token, 1).then(res => {
+            console.log("Fetching all issued books....", res);
+            if (res !== undefined) {
+                this.setState({
+                    issueData: res.data,
+                })
+            }
+            if (res.data.length !== 0) {
+                this.setState({isIssueEmpty: false})
+            }
+        });
+    }
+
+    loadData() {
         this.getReservations()
         this.getIssues()
+        this.getOldIssues()
     }
+
+    convertDate(dateTime) {
+        let date = new Date(dateTime)
+        date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+        return date
+    }
+
     componentDidMount() {
-        let token=localStorage.getItem("token")
-        let userData=localStorage.getItem("userData")
-        let userId=JSON.parse(userData).userId
+        let token = localStorage.getItem("token")
+        let userData = localStorage.getItem("userData")
+        let userId = JSON.parse(userData).userId
 
         this.setState({
-            token:token,
-            userId:userId
-        },()=>this.loadData())
+            token: token,
+            userId: userId
+        }, () => this.loadData())
     }
 
     render() {
@@ -75,44 +113,93 @@ class IssuedBooks extends Component{
         return (
             <div>
                 <StudentNavbar/>
-                <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
                 <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"/>
-                <link rel="stylesheet"
-                      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-                      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"/>
+
+                {/*--------------Issued Books----------------*/}
                 <div className="container mt-4">
+
+                    {/*Heading*/}
                     <h1 className="display-8 text-center">
                         <i className="fas fa-book-open text-primary"/>
                         <span className="text-secondary">Issued</span> Books
                     </h1>
-                    <div  style={{"display":this.state.isIssueEmpty?"block":"none"}}>
+
+                    {/*Empty List*/}
+                    <div style={{"display": this.state.isIssueEmpty ? "block" : "none"}}>
                         <br/><br/>
                         <h4 className="display-8 text-center border shadow p-3 mb-5 bg-white rounded">
                             No Issued Books Found..</h4>
                         <br/><br/><br/>
                     </div>
+
+                    {/*Actual List*/}
                     <div className="bookItemContainer">
                         {this.state.issueData.map((item) => (
-                            <IssueItem {...item} key={item.bookId} />
+                            <IssueItem {...item} key={item.orderId}/>
                         ))}
                     </div>
                 </div>
 
+                {/*--------------Reserved Books----------------*/}
                 <div className="container mt-4">
+
+                    {/*Heading*/}
                     <h1 className="display-8 text-center">
                         <i className="fas fa-book-open text-primary"/>
                         <span className="text-secondary">Reserved</span> Books
                     </h1>
-                    <div  style={{"display":this.state.isResEmpty?"block":"none"}}>
+
+                    {/*Empty List*/}
+                    <div style={{"display": this.state.isResEmpty ? "block" : "none"}}>
                         <br/><br/>
                         <h4 className="display-8 text-center border shadow p-3 mb-5 bg-white rounded">
                             No Reservations Found..</h4>
                         <br/><br/><br/>
                     </div>
-                    <div className="bookItemContainer">
 
+                    {/*Actual List*/}
+                    <div className="bookItemContainer">
                         {this.state.reservationData.map((item) => (
-                            <ReserveItem {...item} key={item.bookId} />
+                            <ReserveItem {...item} key={item.bookId}/>
+                        ))}
+                    </div>
+                </div>
+
+                {/*--------------Previous Issues----------------*/}
+                <div className="container mt-4">
+
+                    {/*Heading*/}
+                    <h1 className="display-8 text-center">
+                        <i className="fas fa-book-open text-primary"/>
+                        <span className="text-secondary">Previous</span> Issues
+                    </h1>
+
+                    {/*Empty List*/}
+                    <div style={{"display": this.state.issueData.length === 0 ? "block" : "none"}}>
+                        <br/><br/>
+                        <h4 className="display-8 text-center border shadow p-3 mb-5 bg-white rounded">
+                            No Previous Books Found..</h4>
+                        <br/><br/><br/>
+                    </div>
+
+                    {/*Actual List*/}
+                    <div className="issuedBooks container mt-4">
+                        {this.state.oldIssueData.map((book) => (
+                            <div className="card  border shadow p-3 mb-5 bg-white rounded" key={book.orderId}>
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td>Issue ID:</td>
+                                        <td>{book.orderId}</td>
+                                        <td><a href="#" onClick={() => this.viewBook(book.bookId)}>View Book</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Issue Date:</td>
+                                        <td>{this.convertDate(book.issueDate)}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         ))}
                     </div>
                 </div>

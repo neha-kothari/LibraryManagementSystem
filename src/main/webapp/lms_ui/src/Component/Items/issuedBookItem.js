@@ -16,7 +16,8 @@ class issuedBookItem extends React.Component{
             language: "",
             noOfPages: 0,
             publicationYear: 0,
-            publisher: ""
+            publisher: "",
+            status:this.props.status
         }
         this.getBookDetails=this.getBookDetails.bind(this)
         this.convertDate=this.convertDate.bind(this)
@@ -37,7 +38,7 @@ class issuedBookItem extends React.Component{
                     language: bookList.language,
                     noOfPages: bookList.noOfPages,
                     publicationYear: bookList.publicationYear,
-                    publisher: bookList.publisher
+                    publisher: bookList.publisher,
                 })
             }
         });
@@ -63,19 +64,18 @@ class issuedBookItem extends React.Component{
         if (today.getTime() > due.getTime()) {
             color="red"
         }
-        console.log(today.getTime(), due.getTime())
-
 
         return (
             <div>
                 <div className="card m-3 shadow p-3 bg-white rounded bookItemInner" style={{width: '18rem'}}>
                     <div className="card-body">
-                        <h5 className="card-title">{this.state.bookTitle}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted"><b>by </b>{this.state.authors.join(", ")}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted"><b>Publisher:</b> {this.state.publisher}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted"><b>ISBN:</b> {this.state.isbnNumber} </h6>
-                        <h6 className="card-subtitle mb-2 text-muted"><b>Language:</b> {this.state.language} </h6>
-                        <h6 className="card-subtitle mb-2 text-muted" ><b>Issue Date:</b> {this.convertDate(this.state.issueDate)} </h6>
+                        <h4 className="card-title"><b>{this.state.bookTitle}</b></h4>
+                        <h6 className="card-subtitle mb-2 "><b>by </b>{this.state.authors.join(", ")}</h6>
+                        <h6 className="card-subtitle mb-2 "><b>Publisher:</b> {this.state.publisher}</h6>
+                        <h6 className="card-subtitle mb-2 "><b>ISBN:</b> {this.state.isbnNumber} </h6>
+                        <h6 className="card-subtitle mb-2 "><b>Language:</b> {this.state.language} </h6>
+                        <h6 className="card-subtitle mb-2 "><b>Status:</b> {this.state.status} </h6>
+                        <h6 className="card-subtitle mb-2 " ><b>Issue Date:</b> {this.convertDate(this.state.issueDate)} </h6>
                         <h6 className="card-subtitle mb-2" style={{color:color}}><b>Due Date:</b> {this.convertDate(this.state.dueDate)} </h6>
 
                     </div>

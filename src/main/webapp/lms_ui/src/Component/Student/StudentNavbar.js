@@ -40,7 +40,7 @@ class StudentNavbar extends Component{
                             </li>
                             <li className="nav-item active">
                                 <Link to="/IssuedBooks">
-                                    <p className="nav-link" >Issued Books <span className="sr-only">(current)</span></p>
+                                    <p className="nav-link" >My Books <span className="sr-only">(current)</span></p>
                                 </Link>
                             </li>
                         </ul>

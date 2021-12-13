@@ -61,11 +61,11 @@ class UserService{
             }
         )
     }
-    getIssueHistory(userId,token)
+    getIssueHistory(userId,token,isActive)
     {
         //1-->active
         console.log("get issue details:",token)
-        return axios.get("http://localhost:8085/lms/v1/users/"+userId+"/bookissues/1",  {
+        return axios.get("http://localhost:8085/lms/v1/users/"+userId+"/bookissues/"+isActive,  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token,

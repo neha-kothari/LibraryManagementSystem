@@ -112,7 +112,7 @@ class LibrarianService{
     returnBook(returnBook,token)
     {
         // http://localhost:8080/lms/v1/return?memberId=6&orderId=1&lost=0
-        return axios.post("http://localhost:"+port+"/lms/v1/return",returnBook,{
+        return axios.post(" http://localhost:"+port+"/lms/v1/return?memberId="+returnBook.memberId+"&orderId="+returnBook.orderId+"&lost="+returnBook.lost,{},{
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': token,
@@ -147,6 +147,8 @@ class LibrarianService{
             console.log(error.config);
         })
     }
+
+
 
 }
 

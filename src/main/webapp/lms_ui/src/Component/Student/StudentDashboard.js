@@ -111,7 +111,7 @@ class StudentDashboard extends Component{
                             </div>
                             <div className="issueBookC">
                                 <Link to="/IssuedBooks">
-                                    <Card title ="View Issued Books"/>
+                                    <Card title ="My Books"/>
                                 </Link>
                             </div>
                         </div>
