@@ -75,6 +75,17 @@ class UserService{
 
     }
 
+    getFine(orderId, token){
+        // /lms/v1/return/calculatefine/{order_id}
+        return axios.get("http://localhost:8085/lms/v1/return/calculatefine/"+orderId,  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }
+            }
+        )
+    }
+
 
 }
 export default new UserService()   //exporting the object of this class

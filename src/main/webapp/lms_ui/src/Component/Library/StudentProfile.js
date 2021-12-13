@@ -27,16 +27,16 @@ class StudentProfile extends Component{
         this.convertDate=this.convertDate.bind(this)
         this.returnBook=this.returnBook.bind(this)
         this.viewFine=this.viewFine.bind(this)
+        this.collectFine=this.collectFine.bind(this)
     }
 
-    convertDate(dateTime)
-    {
+    convertDate(dateTime) {
         let date=new Date(dateTime)
         date=date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear()
         return date
     }
-    approveReservation(reservationId)
-    {
+
+    approveReservation(reservationId) {
         swal({
             title: "Approve reservation??",
             text: "",
@@ -61,8 +61,7 @@ class StudentProfile extends Component{
 
 
     }
-    viewBook(bookId)
-    {
+    viewBook(bookId) {
         StudentService.getBookDetails(bookId, this.state.token).then(res=>{
             if(res!==undefined)
             {
@@ -77,8 +76,7 @@ class StudentProfile extends Component{
             }
         })
     }
-    returnBook(orderId, memberId, isLost)
-    {
+    returnBook(orderId, memberId, isLost) {
         let text="Do you want to return this book?"
         let textResponse="The book has been successfully returned"
         let textHeading="Returned"
@@ -112,6 +110,29 @@ class StudentProfile extends Component{
             }
         });
     }
+    viewFine(orderId){
+        UserService.getFine(orderId, this.state.token).then(res=>{
+            if(res!==undefined){
+                swal("Fine","Pending Fine:  "+res.data.fine)
+            }
+        })
+    }
+    collectFine(orderId, memberId){
+        let fineObj={
+            "orderId":10,
+            "memberId":1,
+            "fineAmount":40,
+            "paymentMode":"UPI"
+        }
+
+        LibrarianService.collectFine(fineObj, this.state.token).then(res=>{
+            if(res!==undefined){
+                alert("collected")
+            }
+        })
+
+    }
+
 
     getReservations(){
         StudentService.getAllReservations(this.state.userId,this.state.token).then(res => {
@@ -147,9 +168,6 @@ class StudentProfile extends Component{
         })
     }
 
-    viewFine(){
-
-    }
 
     loadAllData(){
         this.getReservations()
@@ -300,7 +318,14 @@ class StudentProfile extends Component{
                                             <a href="#"
                                                onClick={()=>this.returnBook(book.orderId, book.memberId,1)}
                                                style={{"display":book.status==="Lost"?"none":"block"}}>
-                                                Return Lost Book
+                                                Report Lost Book
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#"
+                                               onClick={()=>this.collectFine(book.orderId, book.memberId)}
+                                               >
+                                                CollectFine
                                             </a>
                                         </td>
                                     </tr>

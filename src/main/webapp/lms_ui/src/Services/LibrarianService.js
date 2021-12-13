@@ -148,6 +148,29 @@ class LibrarianService{
         })
     }
 
+    collectFine(fineObj,token)
+    {
+        // http://localhost:8080/lms/v1/return/collectfine
+        // { "orderId":5, "memberId":6, "fineAmount":100, "paymentMode":"UPI" }
+        return axios.post("http://localhost:"+port+"/lms/v1/return/collectfine",fineObj,{
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token,
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(error.response);
+                console.log(error.response.headers);
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            swal("Error", "error");
+            console.log(error.config);
+        });
+    }
+
 
 
 }
