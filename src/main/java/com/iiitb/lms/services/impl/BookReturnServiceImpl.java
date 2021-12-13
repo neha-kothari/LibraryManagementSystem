@@ -113,6 +113,10 @@ public class BookReturnServiceImpl extends AbstractBookItemService {
         return fine;
     }
 
+    public float calculateFine(int orderId){
+        return calculateFine(issuedBooksRepository.findBookLendingByOrderId(orderId));
+    }
+
     protected void returnBookSuccessfully(BookLending issuedBookOrder) {
         issuedBookOrder.setReturnDate(new Date());
         issuedBookOrder.setStatus(LMSConstants.BOOK_LEND_STATUS_RETURNED);

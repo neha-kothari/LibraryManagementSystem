@@ -1,5 +1,6 @@
 package com.iiitb.lms.controllers;
 
+import com.iiitb.lms.beans.Member;
 import com.iiitb.lms.beans.User;
 import com.iiitb.lms.beans.dto.BookIssueDetailsDTO;
 import com.iiitb.lms.beans.dto.BookReturnDetailsDTO;
@@ -9,6 +10,8 @@ import com.iiitb.lms.services.impl.BookLendingServiceImpl;
 import com.iiitb.lms.services.impl.BookReturnServiceImpl;
 import com.iiitb.lms.services.impl.FineTransactionServiceImpl;
 import com.iiitb.lms.utils.LMSConstants;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -92,6 +95,27 @@ public class BookReturnController {
         return ResponseEntity.created(null)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(fineTransaction);
+    }
+
+    @CrossOrigin(origins = "*")
+    @GetMapping("/calculatefine/{order_id}")
+    @ResponseBody
+    public ResponseEntity<String> calculateFine(Authentication auth, @PathVariable int order_id) throws JSONException {
+        User librarian = userService.getUserFromEmailId(auth.getName());
+        JSONObject jsonObject = new JSONObject();
+        if (librarian == null || librarian.getUserType() != LMSConstants.USER_TYPE_LIBRARIAN || librarian.getAccountStatus() == LMSConstants.ACCOUNT_STATUS_BLOCKED) {
+            jsonObject.put("error", "User is not allowed to perform this action.");
+            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.UNAUTHORIZED);
+        }
+
+        try {
+            float fine = bookReturnService.calculateFine(order_id);
+            jsonObject.put("fine", fine);
+            return new ResponseEntity<String>(jsonObject.toString(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 
