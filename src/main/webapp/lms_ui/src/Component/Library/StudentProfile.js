@@ -148,7 +148,7 @@ class StudentProfile extends Component{
     }
 
     viewFine(){
-        
+
     }
 
     loadAllData(){
