@@ -3,7 +3,7 @@ import swal from "sweetalert";
 import LibrarianService from "../../Services/LibrarianService";
 import {Link} from "react-router-dom";
 
-class studentItem extends React.Component{
+class manageStudentItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -85,4 +85,4 @@ class studentItem extends React.Component{
 }
 
 
-export default studentItem;
+export default manageStudentItem;

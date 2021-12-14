@@ -27,6 +27,9 @@ class manageBookItem extends React.Component{
                     swal("Deleted", {
                         icon: "success",
                     });
+                    window.setTimeout(function() {
+                        window.location.reload()
+                    }, 3000)
                 });
             }
         });

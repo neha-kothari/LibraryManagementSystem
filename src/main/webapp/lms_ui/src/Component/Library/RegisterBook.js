@@ -80,6 +80,10 @@ class RegisterBook extends Component{
                 if(res!==undefined )
                 {
                     swal("Successful","New Book Added", "success")
+                    window.setTimeout(function() {
+                        window.location.reload()
+                    }, 3000)
+
                 }
             });
         }
