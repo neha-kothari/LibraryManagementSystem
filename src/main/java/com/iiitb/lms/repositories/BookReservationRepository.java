@@ -18,4 +18,7 @@ public interface BookReservationRepository extends JpaRepository<BookReservation
     List<BookReservation> getCurrentReservations(@Param("userId") Integer userId);
 
     BookReservation findByReservationId(Integer reservationId);
+
+    @Query(value = "SELECT * FROM book_reservation WHERE validity_till < CURRENT_DATE AND reservation_status = 'R' AND del_flag = false", nativeQuery = true)
+    List<BookReservation> getOldReservations();
 }
