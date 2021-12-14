@@ -2,7 +2,7 @@ import React from "react";
 import swal from "sweetalert";
 import StudentService from "../../Services/StudentService"
 
-class bookItemStud extends React.Component{
+class studentReserveBookItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -12,6 +12,7 @@ class bookItemStud extends React.Component{
         this.bookDetailsPopUp=this.bookDetailsPopUp.bind(this)
     }
 
+    //Reserves book to user if it is not reference only
     reserveBook() {
         swal({
             title: "Reserve " + this.props.bookTitle + " ?",
@@ -30,13 +31,16 @@ class bookItemStud extends React.Component{
                         swal("Reserved " +this.props.bookTitle, {
                             icon: "success",
                         });
+                        window.setTimeout(function() {
+                            window.location.reload()
+                        }, 2000)
                     }
-
                 });
             }
         });
     }
 
+    //Displays details of the book
     bookDetailsPopUp(){
         swal(this.props.bookTitle,"Author: "+this.props.authors.join(", ")+"\nPublisher:  " +this.props.publisher+
         "\n ISBN:  " +this.props.isbnNumber + "\n Available Copies:  "+this.props.availableCopies+"\n Language:  "+this.props.language+
@@ -64,4 +68,4 @@ class bookItemStud extends React.Component{
 }
 
 
-export default bookItemStud;
+export default studentReserveBookItem;

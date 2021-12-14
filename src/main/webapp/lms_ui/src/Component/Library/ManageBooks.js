@@ -4,6 +4,7 @@ import Item from "../Items/manageBookItem";
 import Fuse from "fuse.js";
 import LibNavbar from "./LibNavbar";
 import LibrarianService from "../../Services/LibrarianService";
+import UserService from "../../Services/UserService";
 
 
 class ManageBooks extends Component {
@@ -20,7 +21,7 @@ class ManageBooks extends Component {
     componentDidMount() {
 
         let token=localStorage.getItem("token")
-        LibrarianService.getAllBooks(token).then(res => {
+        UserService.getAllBooks(token).then(res => {
             console.log("Fetching all books....", res);
             if(res!==undefined)
             {

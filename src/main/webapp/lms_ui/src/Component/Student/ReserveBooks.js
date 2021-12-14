@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
-import Item from "../Items/bookItemStud";
+import Item from "../Items/studentReserveBookItem";
 import Fuse from "fuse.js";
 import StudentNavbar from "./StudentNavbar";
-import LibrarianService from "../../Services/LibrarianService";
+import UserService from "../../Services/UserService";
 
 
 class ReserveBooks extends Component {
@@ -17,11 +17,12 @@ class ReserveBooks extends Component {
         }
         this.searchItem = this.searchItem.bind(this)
     }
-    componentDidMount() {
 
+
+    //On load, all books present are loaded
+    componentDidMount() {
         let token=localStorage.getItem("token")
-        LibrarianService.getAllBooks(token).then(res => {
-            console.log("Fetching all books....", res);
+        UserService.getAllBooks(token).then(res => {
             if(res!==undefined)
             {
                 this.setState({
@@ -29,10 +30,10 @@ class ReserveBooks extends Component {
                     searchData:res.data
                 })
             }
-            console.log(this.state.allData)
         });
     }
 
+    //Searches the books against given keywords and returns result
     searchItem = (query) => {
         if(query===""){
             this.setState({searchData: this.state.allData})
@@ -58,7 +59,6 @@ class ReserveBooks extends Component {
         return (
             <div>
                 <StudentNavbar/>
-
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
                 <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css"/>
                 <link rel="stylesheet"

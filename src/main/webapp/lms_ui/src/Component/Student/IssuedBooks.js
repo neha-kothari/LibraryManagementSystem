@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import StudentNavbar from "./StudentNavbar";
 import StudentService from "../../Services/StudentService";
-import ReserveItem from "../Items/reservedBookItem"
-import IssueItem from "../Items/issuedBookItem"
+import ReserveItem from "../Items/studentReservedBookItem"
+import IssueItem from "../Items/studentIssuedBookItem"
 import UserService from "../../Services/UserService";
 import swal from "sweetalert";
 
@@ -28,6 +28,7 @@ class IssuedBooks extends Component {
 
     }
 
+    //Generate details of given book ID
     viewBook(bookId) {
         StudentService.getBookDetails(bookId, this.state.token).then(res => {
             if (res !== undefined) {
@@ -41,6 +42,7 @@ class IssuedBooks extends Component {
         })
     }
 
+    //Fetching reserved books
     getReservations() {
         StudentService.getAllReservations(this.state.userId, this.state.token).then(res => {
             console.log("Fetching all reserved books....", res);
@@ -55,6 +57,7 @@ class IssuedBooks extends Component {
         });
     }
 
+    //Fetching previously issued Books
     getOldIssues() {
         UserService.getIssueHistory(this.state.userId, this.state.token, 0).then(res => {
             console.log("Fetching all issued books....", res);
@@ -63,14 +66,11 @@ class IssuedBooks extends Component {
                     oldIssueData: res.data,
                 })
             }
-            // if(res.data.length!==0)
-            // {
-            //     this.setState({isIssueEmpty:false})
-            // }
         });
 
     }
 
+    //Fetching issued Books
     getIssues() {
         UserService.getIssueHistory(this.state.userId, this.state.token, 1).then(res => {
             console.log("Fetching all issued books....", res);
@@ -85,6 +85,7 @@ class IssuedBooks extends Component {
         });
     }
 
+    //Loading All data (reservations and issues)
     loadData() {
         this.getReservations()
         this.getIssues()

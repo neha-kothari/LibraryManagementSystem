@@ -14,6 +14,7 @@ class SignIn extends Component {
         this.getDetails = this.getDetails.bind(this)
     }
 
+    //Maps state variables with inputs
     handleChange(event) {
         const {name, value} = event.target;
         this.setState({
@@ -21,18 +22,16 @@ class SignIn extends Component {
         })
     }
 
+    //Checking if the user can be logged in
     async onSubmit(e) {
         e.preventDefault();
-        console.log("Tyring to sign in")
 
         let user = {
             emailAddress: this.state.email,
             password: this.state.password
         }
-        console.log(user)
 
         UserService.loginUser(user).then(res => {
-            console.log("SignIn Component", res);
             if(res!==undefined)
             {
                 let token = res.data.token;
@@ -42,10 +41,8 @@ class SignIn extends Component {
         });
     }
 
+    //Gets user details from token, and redirects to Student dashboard or Librarian Dashboard
     getDetails(t){
-        console.log("Getting user details.....");
-        console.log(t)
-
         UserService.getUserDetails(t).then(res=>{
             if(res!==undefined)
             {
@@ -63,8 +60,23 @@ class SignIn extends Component {
         });
     }
 
-    render() {
+    //Redirects to Dashboard if Logout is not performed
+    componentDidMount() {
+        if(localStorage.getItem("userData")!==null)
+        {
+            let userDataObj=JSON.parse(localStorage.getItem("userData"))
+            if(userDataObj["userType"]==="Librarian")
+            {
+                this.props.history.push("/LibraryDashboard")
+            }
+            else
+            {
+                this.props.history.push("/StudentDashboard")
+            }
+        }
+    }
 
+    render() {
         return (
             <div className="SignIn" >
                 <div className="text-justify">

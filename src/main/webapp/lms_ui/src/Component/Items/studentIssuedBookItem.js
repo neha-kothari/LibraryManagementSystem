@@ -1,11 +1,14 @@
 import React from "react";
 import StudentService from "../../Services/StudentService"
+import UserService from "../../Services/UserService";
+import swal from "sweetalert";
 
-class issuedBookItem extends React.Component{
+class studentIssuedBookItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
             token:"",
+            orderId:this.props.orderId,
             bookId:this.props.bookId,
             issueDate:this.props.issueDate,
             dueDate:this.props.dueDate,
@@ -21,7 +24,20 @@ class issuedBookItem extends React.Component{
         }
         this.getBookDetails=this.getBookDetails.bind(this)
         this.convertDate=this.convertDate.bind(this)
+        this.checkFine=this.checkFine.bind(this)
 
+    }
+
+    checkFine(){
+        UserService.getFine(this.state.orderId,this.state.token).then(res=>{
+            if(res!==undefined)
+            {
+                swal("Fine Generated: Rs."+res.data.fine)
+            }
+            else {
+                swal("Error","Please check again later","error")
+            }
+        })
     }
 
     getBookDetails(){
@@ -77,6 +93,7 @@ class issuedBookItem extends React.Component{
                         <h6 className="card-subtitle mb-2 "><b>Status:</b> {this.state.status} </h6>
                         <h6 className="card-subtitle mb-2 " ><b>Issue Date:</b> {this.convertDate(this.state.issueDate)} </h6>
                         <h6 className="card-subtitle mb-2" style={{color:color}}><b>Due Date:</b> {this.convertDate(this.state.dueDate)} </h6>
+                        {/*<a href="#" className="card-link" onClick={() => this.checkFine()}>Check Fine</a>*/}
 
                     </div>
                 </div>
@@ -86,4 +103,4 @@ class issuedBookItem extends React.Component{
 }
 
 
-export default issuedBookItem;
+export default studentIssuedBookItem;

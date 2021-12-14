@@ -17,6 +17,8 @@ class StudentDashboard extends Component{
         this.logOut=this.logOut.bind(this)
         this.calculateFine=this.calculateFine.bind(this)
     }
+
+    //Calculate total pending fine of student
     calculateFine()
     {
         let token=localStorage.getItem("token")
@@ -32,6 +34,7 @@ class StudentDashboard extends Component{
         })
     }
 
+    //Logging out user
     logOut(e){
         console.log("logout called")
         swal({
@@ -53,6 +56,8 @@ class StudentDashboard extends Component{
             }
         });
     }
+
+
     componentDidMount() {
         this.calculateFine()
 

@@ -103,9 +103,6 @@ class LibDashboard extends Component{
                                     <Card title ="Manage Students"/>
                                 </Link>
                             </div>
-                            <div  className="approveC">
-                                <Card title ="Approve Reservations"/>
-                            </div>
                         </div>
                     </div>
                 </div>

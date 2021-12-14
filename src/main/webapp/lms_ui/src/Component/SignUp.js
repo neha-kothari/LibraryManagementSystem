@@ -21,6 +21,7 @@ class SignUp extends Component {
         this.reset=this.reset.bind(this)
     }
 
+    //Removes all data present in input fields
     reset(){
         this.setState({
             email:"",
@@ -31,6 +32,7 @@ class SignUp extends Component {
         })
     }
 
+    //Maps state variables with input fields
     handleChange(event) {
         const {name, value} = event.target;
         this.setState({
@@ -38,7 +40,7 @@ class SignUp extends Component {
         })
     }
 
-
+    //Saving user and checking for errors
     saveUser = (e) => {
         e.preventDefault();
         console.log("save user");
@@ -72,9 +74,6 @@ class SignUp extends Component {
                 errorMsg+=payload.errors.phoneNumber+"\n"
             swal("Incorrect Input",errorMsg,"error")
         }
-
-
-
     }
 
     render() {

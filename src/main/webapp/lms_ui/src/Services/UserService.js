@@ -4,6 +4,8 @@ import swal from 'sweetalert';
 const port = 8085; //change this according to own system
 class UserService{
 
+
+    //API call to register new user
     createUser(user)
     {
         console.log("Creating user", user);
@@ -19,8 +21,6 @@ class UserService{
                 console.log(error.response.headers);
             } else if (error.request) {
                 // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
                 console.log(error.request);
                 swal("Error", "error");
             } else {
@@ -31,6 +31,8 @@ class UserService{
             console.log(error.config);
         });
     }
+
+    //API call to login new user
     loginUser(user)
     {
         return axios.post("http://localhost:"+port+"/lms/v1/login",user).catch(function (error) {
@@ -50,9 +52,10 @@ class UserService{
             console.log(error.config);
         });
     }
+
+    //API call to Fetch details of currently logged in User using token returned
     getUserDetails(token)
     {
-        console.log("get user details:",token)
         return axios.get("http://localhost:8085/lms/v1/users/profile",  {
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,6 +64,8 @@ class UserService{
             }
         )
     }
+
+    //API call to
     getIssueHistory(userId,token,isActive)
     {
         //1-->active
@@ -75,9 +80,21 @@ class UserService{
 
     }
 
+    //API call to return outstanding fine of user on a particular issue
     getFine(orderId, token){
-        // /lms/v1/return/calculatefine/{order_id}
         return axios.get("http://localhost:8085/lms/v1/return/calculatefine/"+orderId,  {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': token,
+                }
+            }
+        )
+    }
+
+    //API to return all books
+    getAllBooks(token)
+    {
+        return axios.get("http://localhost:"+port+"/lms/v1/books",  {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': token,

@@ -1,6 +1,7 @@
 import React,{Component} from "react"
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
+import {withRouter} from "react-router-dom";
 
 
 class LibNavbar extends Component{
@@ -13,10 +14,24 @@ class LibNavbar extends Component{
         this.logOut=this.logOut.bind(this)
     }
     logOut(e){
-        console.log("logout called")
-        swal("Log out successful", {
-                        icon: "success",
-                    });
+        swal({
+            title: "Logout",
+            text: "Are you sure?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+
+                localStorage.removeItem("token")
+                localStorage.removeItem("userData")
+
+                swal("Log out successful", {
+                    icon: "success",
+                });
+                this.props.history.push("/SignIn")
+            }
+        });
     }
 
     render() {
@@ -57,12 +72,10 @@ class LibNavbar extends Component{
                             {/*</li>*/}
                         </ul>
                     </div>
-                    <Link to="/">
                         <a className="nav-link float-right text-light" onClick={this.logOut} >LOGOUT <span className="sr-only">(current)</span></a>
-                    </Link>
                 </nav>
             </div>
         );
     }
 }
-export default (LibNavbar)
+export default withRouter(LibNavbar)

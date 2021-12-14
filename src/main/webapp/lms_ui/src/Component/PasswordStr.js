@@ -1,5 +1,7 @@
 import React from 'react';
 
+
+//Calculate strength of password and assign color accordingly
 const PasswordStr = props => {
     var strColor;
     var strWidth;

@@ -1,3 +1,4 @@
+//Module to validate various form inputs and return appropriate errors
 const validator = require("validator");
 
 const validateSignUpForm = payload => {
@@ -75,7 +76,6 @@ const validateLoginForm = payload => {
     };
 };
 
-
 const validateRegisterBook = book => {
     const errors = {};
     let message = "";
@@ -151,8 +151,6 @@ const validateEditBook = book => {
         errors
     };
 };
-
-
 
 
 module.exports = {

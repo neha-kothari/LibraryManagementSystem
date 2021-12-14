@@ -2,7 +2,7 @@ import React from "react";
 import StudentService from "../../Services/StudentService"
 import swal from "sweetalert";
 
-class reservedBookItem extends React.Component{
+class studentReservedBookItem extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -23,7 +23,7 @@ class reservedBookItem extends React.Component{
     }
 
 
-
+    //Getting all the details of book of given ID when component mounts
     componentDidMount() {
         let token = localStorage.getItem("token")
         let bookList;
@@ -44,13 +44,15 @@ class reservedBookItem extends React.Component{
             }
         });
     }
+
+    //Displaying extra details of book
     bookDetailsPopUp(){
         swal(this.state.bookTitle,"Author: "+this.state.authors.join(", ")+"\nPublisher:  " +this.state.publisher+
             "\n ISBN:  " +this.state.isbnNumber + "\n Available Copies:  "+this.state.availableCopies+"\n Language:  "+this.state.language+
             "\n Pages:  " + this.state.noOfPages +"\nPublication Year:  " +this.state.publicationYear +"\nPublisher:  " +this.state.publisher )
     }
 
-
+    //Cancelling reservation of book
     cancelReservation() {
         swal({
             title: "Cancel Reservation" ,
@@ -62,6 +64,9 @@ class reservedBookItem extends React.Component{
             if (willDelete) {
                 let token = localStorage.getItem("token")
                 StudentService.deleteReservation(this.state.reservationId, token)
+                window.setTimeout(function() {
+                    window.location.reload()
+                }, 3000)
             }
         });
     }
@@ -72,11 +77,11 @@ class reservedBookItem extends React.Component{
             <div>
                 <div className="card m-3 shadow p-3 bg-white rounded bookItemInner" style={{width: '18rem'}}>
                     <div className="card-body">
-                        <h5 className="card-title">{this.state.bookTitle}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">by {this.state.authors.join(", ")}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Publisher: {this.props.bookId}</h6>
-                        <h6 className="card-subtitle mb-2 text-muted">ISBN: {this.state.isbnNumber} </h6>
-                        <h6 className="card-subtitle mb-2 text-muted">Language: {this.state.language} </h6>
+                        <h4 className="card-title"><b>{this.state.bookTitle}</b></h4>
+                        <h6 className="card-subtitle mb-2 "><b>by </b>{this.state.authors.join(", ")}</h6>
+                        <h6 className="card-subtitle mb-2 "><b>Publisher: </b>{this.props.bookId}</h6>
+                        <h6 className="card-subtitle mb-2 "><b>ISBN: </b>{this.state.isbnNumber} </h6>
+                        <h6 className="card-subtitle mb-2 "><b>Language: </b>{this.state.language} </h6>
                         <a href="#" className="card-link "  onClick={() => this.bookDetailsPopUp()} >Details</a>
                         <a href="#" className="card-link "  onClick={() => this.cancelReservation()} >Cancel Reservation</a>
                     </div>
@@ -87,4 +92,4 @@ class reservedBookItem extends React.Component{
 }
 
 
-export default reservedBookItem;
+export default studentReservedBookItem;
