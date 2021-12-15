@@ -122,7 +122,7 @@ class LibrarianService{
             if (error.response) {
                 console.log("ERRROORRRRRRR---->",error.response);
                 if(error.response.status===400)
-                    swal("Error", "ISBN is already used", "error");
+                    swal("Error", "User is not allowed to issue books", "error");
                 console.log(error.response.headers);
             } else if (error.request) {
                 // The request was made but no response was received

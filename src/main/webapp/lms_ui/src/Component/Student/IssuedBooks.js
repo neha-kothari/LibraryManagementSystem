@@ -176,7 +176,7 @@ class IssuedBooks extends Component {
                     </h1>
 
                     {/*Empty List*/}
-                    <div style={{"display": this.state.issueData.length === 0 ? "block" : "none"}}>
+                    <div style={{"display": this.state.oldIssueData.length === 0 ? "block" : "none"}}>
                         <br/><br/>
                         <h4 className="display-8 text-center border shadow p-3 mb-5 bg-white rounded">
                             No Previous Books Found..</h4>

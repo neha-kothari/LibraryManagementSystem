@@ -47,13 +47,14 @@ class StudentProfile extends Component {
             if (willApprove) {
                 LibrarianService.approveReservation(reservationId, this.state.token).then(res => {
                     if (res === undefined) {
-                        swal("Something went wrong", " Try again later", "error")
                     } else {
-                        swal("Reservation approved", "", "success").then(window.location.reload())
+                        swal("Reservation approved", "", "success")
                     }
                 })
-
             }
+            window.setTimeout(function() {
+                window.location.reload()
+            }, 3000)
         });
     }
 
@@ -69,7 +70,10 @@ class StudentProfile extends Component {
             }
         })
     }
-
+    //
+    // reportLost(orderId, memberId, isLost){
+    //
+    // }
     returnBook(orderId, memberId, isLost) {
         let text = "Do you want to return this book?"
         let textResponse = "The book has been successfully returned"
@@ -94,16 +98,23 @@ class StudentProfile extends Component {
                     lost: isLost
                 }
                 LibrarianService.returnBook(returnBookObj, this.state.token).then(res => {
+                    console.log(res)
                     if (res !== undefined && res.data.error===null) {
                         swal(textHeading, textResponse, "success")
                         console.log(res)
-                        window.location.reload()
                     }
                     else
                     {
-                        swal("Cannot be Returned","Please collect fine to return this book", "error")
+                        if(!isLost)
+                            swal("Cannot be Returned","Please collect fine to return this book", "error")
+                        else
+                            swal("Reported Lost","Please collect fine","success")
                     }
                 })
+
+                window.setTimeout(function() {
+                    window.location.reload()
+                }, 3000)
             }
         });
     }
@@ -147,7 +158,9 @@ class StudentProfile extends Component {
                         LibrarianService.collectFine(fineObj, this.state.token).then(res => {
                             if (res !== undefined) {
                                 swal("Fine Collected")
-                                window.location.reload()
+                                window.setTimeout(function() {
+                                    window.location.reload()
+                                }, 3000)
                             }
                         })
                     }
